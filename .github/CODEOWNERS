@@ -1,0 +1,23 @@
+# AEGIS™ Docs Code Owners
+
+# Default Repository Owner(s)
+* @finnoybu
+
+# Site Content
+/src/content/ @finnoybu
+
+# Site Components and Layout
+/src/components/ @finnoybu
+/src/layouts/ @finnoybu
+/src/pages/ @finnoybu
+
+# Build Configuration
+/astro.config.mjs @finnoybu
+/package.json @finnoybu
+
+# GitHub Configuration and Automation
+/.github/ @finnoybu
+
+# Root Governance Files
+/CLAUDE.md @finnoybu
+/README.md @finnoybu

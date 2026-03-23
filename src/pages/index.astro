@@ -1,0 +1,197 @@
+---
+// Landing page for aegis-docs.com
+// Follows the same custom Astro pattern as aegis-constitution
+---
+
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AEGIS Documentation</title>
+    <meta name="description" content="Public documentation for the AEGIS ecosystem — governance, architecture, APIs, and developer guides" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="AEGIS Documentation" />
+    <meta property="og:description" content="Public documentation for the AEGIS ecosystem — governance, architecture, APIs, and developer guides" />
+    <meta property="og:url" content="https://aegis-docs.com" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://aegis-docs.com" />
+
+    <style>
+      @font-face {
+        font-family: "IBM Plex Sans";
+        src: url("/fonts/ibmplexsans-variablefont_wdthwght-webfont.woff2") format("woff2");
+        font-weight: 100 700;
+        font-style: normal;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "Poppins";
+        src: url("/fonts/poppins-light-webfont.woff2") format("woff2");
+        font-weight: 300;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      :root {
+        --color-bg: #ffffff;
+        --color-text: #1b1b1b;
+        --color-text-secondary: #454545;
+        --color-accent: #005ea2;
+        --color-accent-high: #1a4480;
+        --color-border: #c9c9c9;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --color-bg: #1b1b1b;
+          --color-text: #f0f0f0;
+          --color-text-secondary: #c9c9c9;
+          --color-accent: #73b3e7;
+          --color-accent-high: #a3cef1;
+          --color-border: #5c5c5c;
+        }
+      }
+
+      html { font-size: 16px; }
+
+      body {
+        font-family: "Poppins", system-ui, sans-serif;
+        font-weight: 300;
+        background-color: var(--color-bg);
+        color: var(--color-text);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .hero {
+        text-align: center;
+        max-width: 44rem;
+      }
+
+      .hero-title {
+        font-family: "IBM Plex Sans", system-ui, sans-serif;
+        font-weight: 400;
+        font-size: 3.5rem;
+        line-height: 1.15;
+        margin-bottom: 1rem;
+      }
+
+      .hero-tagline {
+        font-size: 1.25rem;
+        line-height: 1.6;
+        color: var(--color-text-secondary);
+        margin-bottom: 2.5rem;
+      }
+
+      .nav-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+        gap: 1rem;
+        margin-bottom: 2.5rem;
+        text-align: left;
+      }
+
+      .nav-card {
+        display: block;
+        padding: 1.25rem 1.5rem;
+        border: 1px solid var(--color-border);
+        border-radius: 0.5rem;
+        text-decoration: none;
+        color: var(--color-text);
+        transition: border-color 0.15s, color 0.15s;
+      }
+
+      .nav-card:hover {
+        border-color: var(--color-accent);
+        color: var(--color-accent);
+      }
+
+      .nav-card h2 {
+        font-family: "IBM Plex Sans", system-ui, sans-serif;
+        font-weight: 500;
+        font-size: 1.1rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .nav-card p {
+        font-size: 0.9rem;
+        color: var(--color-text-secondary);
+        line-height: 1.4;
+      }
+
+      .footer-links {
+        display: flex;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .footer-links a {
+        color: var(--color-accent);
+        text-decoration: none;
+        font-size: 0.95rem;
+      }
+
+      .footer-links a:hover {
+        text-decoration: underline;
+      }
+
+      @media (max-width: 640px) {
+        .hero-title { font-size: 2.5rem; }
+        .hero-tagline { font-size: 1.1rem; }
+        .nav-grid { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="hero">
+      <h1 class="hero-title">AEGIS Documentation</h1>
+      <p class="hero-tagline">
+        Public documentation for the AEGIS ecosystem — governance, architecture, APIs, and developer guides.
+      </p>
+
+      <nav class="nav-grid">
+        <a href="/docs/" class="nav-card">
+          <h2>Getting Started</h2>
+          <p>Introduction to the AEGIS ecosystem and core concepts.</p>
+        </a>
+        <a href="/docs/governance/" class="nav-card">
+          <h2>Governance</h2>
+          <p>Constitution, doctrine, and governance charter.</p>
+        </a>
+        <a href="/docs/architecture/" class="nav-card">
+          <h2>Architecture</h2>
+          <p>ADRs, system design, and cross-component specs.</p>
+        </a>
+        <a href="/docs/platform/" class="nav-card">
+          <h2>Platform API</h2>
+          <p>REST API reference and integration guides.</p>
+        </a>
+        <a href="/docs/sdk/" class="nav-card">
+          <h2>SDK</h2>
+          <p>Client SDK documentation and usage examples.</p>
+        </a>
+        <a href="/docs/contributing/" class="nav-card">
+          <h2>Contributing</h2>
+          <p>How to contribute to the AEGIS ecosystem.</p>
+        </a>
+      </nav>
+
+      <div class="footer-links">
+        <a href="https://aegis-constitution.com">Constitution</a>
+        <a href="https://aegissystems.app">AEGIS Systems</a>
+        <a href="https://github.com/aegis-initiative">GitHub</a>
+      </div>
+    </main>
+  </body>
+</html>

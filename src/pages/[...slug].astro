@@ -1,0 +1,64 @@
+---
+// Dynamic documentation pages
+// Full implementation will use DocLayout from the shared design system
+// This is a minimal stub that renders content collection entries
+
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const docs = await getCollection('docs');
+  return docs.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{entry.data.title} | AEGIS Documentation</title>
+    {entry.data.description && <meta name="description" content={entry.data.description} />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      :root {
+        --color-bg: #ffffff;
+        --color-text: #1b1b1b;
+        --color-accent: #005ea2;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --color-bg: #1b1b1b;
+          --color-text: #f0f0f0;
+          --color-accent: #73b3e7;
+        }
+      }
+      body {
+        font-family: system-ui, sans-serif;
+        background: var(--color-bg);
+        color: var(--color-text);
+        max-width: 48rem;
+        margin: 0 auto;
+        padding: 2rem 1.5rem;
+        line-height: 1.7;
+      }
+      a { color: var(--color-accent); }
+      h1 { margin-bottom: 1rem; }
+      h2, h3 { margin-top: 2rem; margin-bottom: 0.5rem; }
+      p { margin-bottom: 1rem; }
+      .back { display: inline-block; margin-bottom: 2rem; font-size: 0.9rem; }
+    </style>
+  </head>
+  <body>
+    <a href="/" class="back">&larr; Back to docs</a>
+    <article>
+      <Content />
+    </article>
+  </body>
+</html>

@@ -1,0 +1,9 @@
+name: Docs Consistency
+on:
+  push:
+    paths: ['**/*.md']
+  pull_request:
+    paths: ['**/*.md']
+jobs:
+  consistency:
+    uses: aegis-initiative/aegis-ops/.github/workflows/reusable/docs-consistency.yml@main

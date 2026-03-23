@@ -1,0 +1,182 @@
+---
+const pathname = Astro.url.pathname;
+
+const nav = [
+  {
+    label: 'Getting Started',
+    slug: 'getting-started',
+    items: [
+      { label: 'Introduction', slug: 'getting-started' },
+      { label: 'Quick Start', slug: 'getting-started/quick-start' },
+      { label: 'Installation', slug: 'getting-started/installation' },
+      { label: 'Core Concepts', slug: 'getting-started/core-concepts' },
+    ],
+  },
+  {
+    label: 'Architecture',
+    slug: 'architecture',
+    items: [
+      { label: 'Overview', slug: 'architecture' },
+      { label: 'System Design', slug: 'architecture/system-design' },
+      { label: 'Security Model', slug: 'architecture/security-model' },
+      { label: 'Data Flow', slug: 'architecture/data-flow' },
+      { label: 'Decision Records', slug: 'architecture/adr' },
+    ],
+  },
+  {
+    label: 'API Reference',
+    slug: 'api',
+    items: [
+      { label: 'Overview', slug: 'api' },
+      { label: 'Authentication', slug: 'api/authentication' },
+      { label: 'Governance', slug: 'api/governance' },
+      { label: 'Enforcement', slug: 'api/enforcement' },
+      { label: 'Audit', slug: 'api/audit' },
+    ],
+  },
+  {
+    label: 'SDK',
+    slug: 'sdk',
+    items: [
+      { label: 'Overview', slug: 'sdk' },
+      { label: 'JavaScript / TypeScript', slug: 'sdk/javascript' },
+      { label: 'Python', slug: 'sdk/python' },
+      { label: 'Configuration', slug: 'sdk/configuration' },
+    ],
+  },
+  {
+    label: 'Guides',
+    slug: 'guides',
+    items: [
+      { label: 'Overview', slug: 'guides' },
+      { label: 'Policy Authoring', slug: 'guides/policy-authoring' },
+      { label: 'Deployment', slug: 'guides/deployment' },
+      { label: 'Monitoring', slug: 'guides/monitoring' },
+      { label: 'Troubleshooting', slug: 'guides/troubleshooting' },
+    ],
+  },
+  {
+    label: 'Contributing',
+    slug: 'contributing',
+    items: [
+      { label: 'Overview', slug: 'contributing' },
+      { label: 'Development Setup', slug: 'contributing/development-setup' },
+      { label: 'Code of Conduct', slug: 'contributing/code-of-conduct' },
+      { label: 'Pull Request Guide', slug: 'contributing/pull-requests' },
+    ],
+  },
+];
+
+function isActive(slug: string): boolean {
+  return pathname ===  || pathname === ;
+}
+
+function isGroupActive(items: { slug: string }[]): boolean {
+  return items.some(item => isActive(item.slug));
+}
+---
+
+<nav class="sidebar" id="sidebar" aria-label="Documentation navigation">
+  <div class="sidebar-inner">
+    {nav.map((group) => (
+      <details class="nav-group" open={isGroupActive(group.items)}>
+        <summary class="nav-group-label">
+          <span>{group.label}</span>
+          <svg class="caret" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 9l6 6 6-6"/>
+          </svg>
+        </summary>
+        <ul class="nav-items">
+          {group.items.map((item) => (
+            <li>
+              <a href={} class={} aria-current={isActive(item.slug) ? 'page' : undefined}>{item.label}</a>
+            </li>
+          ))}
+        </ul>
+      </details>
+    ))}
+  </div>
+</nav>
+
+<!-- Mobile overlay -->
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+<style>
+  .sidebar {
+    width: 320px;
+    flex-shrink: 0;
+    background-color: var(--sidebar-bg);
+    border-right: 1px solid var(--color-border-subtle);
+    overflow-y: auto;
+    position: fixed;
+    top: 4rem; 
+
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 50;
+  }
+
+  /* Wide screens: show sidebar, hide sidebar version badge */
+  @media (min-width: 1024px) {
+    .sidebar {
+      display: flex;
+    }
+    .sidebar-version {
+      display: none;
+    }
+  }
+
+  /* Mobile: sidebar as drawer */
+  .sidebar.open {
+    display: flex;
+    position: fixed;
+    top: 4rem; /* below header + breadcrumb */
+    left: 0;
+    height: calc(100vh - 4rem);
+    z-index: 60;
+    width: min(320px, 85vw);
+  }
+
+  .sidebar-overlay.open {
+    display: block;
+  }
+</style>
+
+<script>
+  // Accordion — only one group open at a time
+  const details = document.querySelectorAll<HTMLDetailsElement>('.nav-group');
+  details.forEach((detail) => {
+    detail.addEventListener('toggle', () => {
+      if (detail.open) {
+        details.forEach((other) => {
+          if (other !== detail && other.open) other.open = false;
+        });
+      }
+    });
+  });
+
+  // Mobile drawer toggle
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+
+  function openSidebar() {
+    sidebar?.classList.add('open');
+    overlay?.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSidebar() {
+    sidebar?.classList.remove('open');
+    overlay?.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  overlay?.addEventListener('click', closeSidebar);
+
+  // Expose for header menu button
+  (window as any).openSidebar = openSidebar;
+  (window as any).closeSidebar = closeSidebar;
+</script>

@@ -68,7 +68,7 @@ const nav = [
 ];
 
 function isActive(slug: string): boolean {
-  return pathname ===  || pathname === ;
+  return pathname === `/${slug}/` || pathname === `/${slug}`;
 }
 
 function isGroupActive(items: { slug: string }[]): boolean {
@@ -89,7 +89,7 @@ function isGroupActive(items: { slug: string }[]): boolean {
         <ul class="nav-items">
           {group.items.map((item) => (
             <li>
-              <a href={} class={} aria-current={isActive(item.slug) ? 'page' : undefined}>{item.label}</a>
+              <a href={`/${item.slug}/`} class={`nav-link ${isActive(item.slug) ? 'active' : ''}`} aria-current={isActive(item.slug) ? 'page' : undefined}>{item.label}</a>
             </li>
           ))}
         </ul>

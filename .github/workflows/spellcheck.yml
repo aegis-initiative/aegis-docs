@@ -1,0 +1,9 @@
+name: Spellcheck
+on:
+  push:
+    paths: ['**/*.md']
+  pull_request:
+    paths: ['**/*.md']
+jobs:
+  spell:
+    uses: aegis-initiative/aegis-ops/.github/workflows/reusable/spellcheck.yml@main

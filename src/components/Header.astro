@@ -76,6 +76,24 @@ if (isCalVer) {
         </svg>
       </button>
 
+      <!-- Print PDF -->
+      <a href="/AEGIS_Constitution_print.pdf" target="_blank" rel="noopener" aria-label="Print PDF" class="tool-btn pdf-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M 5.4545454,18.545458 H 3.2727273 A 2.1818182,2.1818186 0 0 1 1.0909091,16.363639 V 10.909093 A 2.1818182,2.1818186 0 0 1 3.2727273,8.727274 H 20.727272 a 2.1818182,2.1818186 0 0 1 2.181819,2.181819 v 5.454546 a 2.1818182,2.1818186 0 0 1 -2.181819,2.181819 h -2.181817" style="stroke-width:2.18181"/>
+          <path d="M 5.4545454,8.727274 V 2.1818184 A 1.0909091,1.0909093 0 0 1 6.5454545,1.0909091 H 17.454545 a 1.0909091,1.0909093 0 0 1 1.09091,1.0909093 V 8.727274" style="stroke-width:2.18181"/>
+          <rect x="5.4545455" y="14.181821" width="13.090909" height="8.7272739" rx="1.0909091" style="stroke-width:2.18181"/>
+        </svg>
+      </a>
+
+      <!-- Download PDF -->
+      <a href="/AEGIS_Constitution.pdf" download aria-label="Download PDF" class="tool-btn pdf-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M 12,15.600002 V 1.1999995" style="stroke-width:2.4"/>
+          <path d="m 22.800001,15.600002 v 4.800001 A 2.4000002,2.4000004 0 0 1 20.4,22.800004 H 3.5999997 A 2.4000002,2.4000004 0 0 1 1.1999995,20.400003 v -4.800001" style="stroke-width:2.4"/>
+          <path d="M 5.9999998,9.6000014 12,15.600002 18.000001,9.6000014" style="stroke-width:2.4"/>
+        </svg>
+      </a>
+
       <!-- Version badge — hidden on mobile, shown at 1024px+ -->
       {isCalVer ? (
         <a href={versionHref} class="version-badge" aria-label={`Version ${version} — view release notes`}>{version}</a>
@@ -103,6 +121,8 @@ if (isCalVer) {
 </header>
 
 <style>
+  /* ── Main header ─────────────────────────────────────────────── */
+
   .site-header {
     position: sticky;
     top: 0;
@@ -122,6 +142,8 @@ if (isCalVer) {
     max-width: 100%;
   }
 
+  /* ── Logo ────────────────────────────────────────────────────── */
+
   .site-title {
     display: flex;
     align-items: center;
@@ -137,10 +159,24 @@ if (isCalVer) {
     overflow: hidden;
   }
 
-  .site-name { display: none; }
-  @media (min-width: 400px) { .site-name { display: inline; } }
-  .site-title:hover { color: var(--color-accent); }
-  .site-title :global(.aegis-logo) { flex-shrink: 0; --color-brand-gray: var(--header-text); }
+  .site-name {
+    display: none;
+  }
+
+  @media (min-width: 400px) {
+    .site-name { display: inline; }
+  }
+
+  .site-title:hover {
+    color: var(--color-accent);
+  }
+
+  .site-title :global(.aegis-logo) {
+    flex-shrink: 0;
+    --color-brand-gray: var(--header-text);
+  }
+
+  /* ── Right tools ─────────────────────────────────────────────── */
 
   .header-tools {
     display: flex;
@@ -166,8 +202,15 @@ if (isCalVer) {
     transition: color 0.15s;
   }
 
-  .tool-btn:hover { color: var(--color-accent); }
-  .tool-btn svg { width: 1rem; height: 1rem; flex-shrink: 0; }
+  .tool-btn:hover {
+    color: var(--color-accent);
+  }
+
+  .tool-btn svg {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+  }
 
   .search-btn { display: flex; }
   .menu-btn { display: flex; }
@@ -183,14 +226,25 @@ if (isCalVer) {
     padding: 0.125rem 0.25rem;
   }
 
-  .version-badge:hover { color: var(--color-accent); text-decoration: underline; }
-  .version-badge--dev { color: var(--color-text-muted); }
+  .version-badge:hover {
+    color: var(--color-accent);
+    text-decoration: underline;
+  }
+
+  .version-badge--dev {
+    color: var(--color-text-muted);
+  }
+
+  .pdf-btn { display: none; }
 
   @media (min-width: 1024px) {
     .search-btn { display: none; }
     .menu-btn { display: none; }
     .version-badge { display: inline; }
+    .pdf-btn { display: flex; }
   }
+
+  /* ── ToC button (injected by TableOfContents.astro) ──────────── */
 
   :global(.toc-btn) {
     display: none;
@@ -218,8 +272,14 @@ if (isCalVer) {
     color: var(--header-text);
   }
 
-  :global(.toc-btn svg) { flex-shrink: 0; transition: transform 0.2s ease; }
-  :global(.toc-btn[aria-expanded="true"] svg) { transform: rotate(180deg); }
+  :global(.toc-btn svg) {
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+  }
+
+  :global(.toc-btn[aria-expanded="true"] svg) {
+    transform: rotate(180deg);
+  }
 
   @media (min-width: 1024px) and (max-width: 1366px) {
     :global(.toc-btn) { display: flex; }

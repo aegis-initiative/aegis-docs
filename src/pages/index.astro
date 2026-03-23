@@ -1,23 +1,36 @@
 ---
-// Landing page for aegis-docs.com
-// Follows the same custom Astro pattern as aegis-constitution
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import AegisLogo from '../components/AegisLogo.astro';
 ---
 
 <!doctype html>
-<html lang="en" dir="ltr">
+<html lang="en" dir="ltr" data-theme="auto">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>AEGIS Documentation</title>
+    <title>AEGIS™ Documentation</title>
     <meta name="description" content="Public documentation for the AEGIS ecosystem — governance, architecture, APIs, and developer guides" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="AEGIS Documentation" />
+    <meta property="og:title" content="AEGIS™ Documentation" />
     <meta property="og:description" content="Public documentation for the AEGIS ecosystem — governance, architecture, APIs, and developer guides" />
     <meta property="og:url" content="https://aegis-docs.com" />
+    <meta property="og:site_name" content="AEGIS™ Documentation" />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="canonical" href="https://aegis-docs.com" />
+
+    <link rel="preload" href="/fonts/ibmplexsans-variablefont_wdthwght-webfont.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/poppins-light-webfont.woff2" as="font" type="font/woff2" crossorigin />
+
+    <script is:inline>
+      (function () {
+        const stored = localStorage.getItem('aegis-theme');
+        const preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = stored || preferred;
+      })();
+    </script>
 
     <style>
       @font-face {
@@ -41,23 +54,26 @@
         --color-bg: #ffffff;
         --color-text: #1b1b1b;
         --color-text-secondary: #454545;
+        --color-text-muted: #757575;
         --color-accent: #005ea2;
         --color-accent-high: #1a4480;
         --color-border: #c9c9c9;
+        --header-bg: #1b1b1f;
+        --header-border: #2a2a2e;
+        --header-text: #f0f0f0;
+        --header-text-muted: #a0a0a0;
+        --color-brand-gray: #9ca3af;
       }
 
-      @media (prefers-color-scheme: dark) {
-        :root {
-          --color-bg: #1b1b1b;
-          --color-text: #f0f0f0;
-          --color-text-secondary: #c9c9c9;
-          --color-accent: #73b3e7;
-          --color-accent-high: #a3cef1;
-          --color-border: #5c5c5c;
-        }
+      html[data-theme="dark"] {
+        --color-bg: #1b1b1b;
+        --color-text: #f0f0f0;
+        --color-text-secondary: #c9c9c9;
+        --color-text-muted: #8a8a8a;
+        --color-accent: #73b3e7;
+        --color-accent-high: #a3cef1;
+        --color-border: #5c5c5c;
       }
-
-      html { font-size: 16px; }
 
       body {
         font-family: "Poppins", system-ui, sans-serif;
@@ -67,15 +83,21 @@
         min-height: 100vh;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 2rem;
         -webkit-font-smoothing: antialiased;
       }
 
       .hero {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 3rem 2rem;
         text-align: center;
-        max-width: 44rem;
+      }
+
+      .hero-logo {
+        margin-bottom: 1.5rem;
       }
 
       .hero-title {
@@ -91,6 +113,7 @@
         line-height: 1.6;
         color: var(--color-text-secondary);
         margin-bottom: 2.5rem;
+        max-width: 44rem;
       }
 
       .nav-grid {
@@ -99,6 +122,8 @@
         gap: 1rem;
         margin-bottom: 2.5rem;
         text-align: left;
+        max-width: 50rem;
+        width: 100%;
       }
 
       .nav-card {
@@ -129,23 +154,6 @@
         line-height: 1.4;
       }
 
-      .footer-links {
-        display: flex;
-        gap: 1.5rem;
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-
-      .footer-links a {
-        color: var(--color-accent);
-        text-decoration: none;
-        font-size: 0.95rem;
-      }
-
-      .footer-links a:hover {
-        text-decoration: underline;
-      }
-
       @media (max-width: 640px) {
         .hero-title { font-size: 2.5rem; }
         .hero-tagline { font-size: 1.1rem; }
@@ -154,8 +162,13 @@
     </style>
   </head>
   <body>
+    <Header />
+
     <main class="hero">
-      <h1 class="hero-title">AEGIS Documentation</h1>
+      <div class="hero-logo">
+        <AegisLogo size={80} />
+      </div>
+      <h1 class="hero-title">AEGIS™ Documentation</h1>
       <p class="hero-tagline">
         Public documentation for the AEGIS ecosystem — governance, architecture, APIs, and developer guides.
       </p>
@@ -186,12 +199,8 @@
           <p>How to contribute to the AEGIS ecosystem.</p>
         </a>
       </nav>
-
-      <div class="footer-links">
-        <a href="https://aegis-constitution.com">Constitution</a>
-        <a href="https://aegissystems.app">AEGIS Systems</a>
-        <a href="https://github.com/aegis-initiative">GitHub</a>
-      </div>
     </main>
+
+    <Footer />
   </body>
 </html>

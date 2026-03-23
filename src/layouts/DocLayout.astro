@@ -1,9 +1,9 @@
 ---
-import Header from '../components/Header.astro';
-import Sidebar from '../components/Sidebar.astro';
-import Footer from '../components/Footer.astro';
-import TableOfContents from '../components/TableOfContents.astro';
-import AegisWordmark from '../components/AegisWordmark.astro';
+import Header from "../components/Header.astro";
+import Sidebar from "../components/Sidebar.astro";
+import Footer from "../components/Footer.astro";
+import TableOfContents from "../components/TableOfContents.astro";
+import AegisWordmark from "../components/AegisWordmark.astro";
 
 interface Props {
   title: string;
@@ -12,7 +12,7 @@ interface Props {
 
 const {
   title,
-  description = 'Official documentation for the AEGIS ecosystem — architecture, APIs, SDK, and guides',
+  description = "Official documentation for the AEGIS ecosystem — architecture, APIs, SDK, and guides",
 } = Astro.props;
 ---
 
@@ -26,7 +26,7 @@ const {
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content={} />
+    <meta property="og:title" content={`${title} | AEGIS™ Documentation`} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site).toString()} />
     <meta property="og:image" content={new URL('/OG_image.png', Astro.site).toString()} />
@@ -36,7 +36,7 @@ const {
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={} />
+    <meta name="twitter:title" content={`${title} | AEGIS™ Documentation`} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={new URL('/OG_image.png', Astro.site).toString()} />
 
@@ -51,17 +51,17 @@ const {
     <script is:inline>
       // Prevent FOUC — apply theme before paint
       (function () {
-        const stored = localStorage.getItem('aegis-theme');
-        const preferred = window.matchMedia('(prefers-color-scheme: dark)')
+        const stored = localStorage.getItem("aegis-theme");
+        const preferred = window.matchMedia("(prefers-color-scheme: dark)")
           .matches
-          ? 'dark'
-          : 'light';
+          ? "dark"
+          : "light";
         document.documentElement.dataset.theme = stored || preferred;
       })();
     </script>
   </head>
   <body>
-
+    
     <Header />
     <slot name="breadcrumb" />
     <div class="page-wrapper">

@@ -1,0 +1,9 @@
+name: Link Check
+on:
+  push:
+    paths: ['**/*.md']
+  pull_request:
+    paths: ['**/*.md']
+jobs:
+  links:
+    uses: aegis-initiative/aegis-ops/.github/workflows/reusable/markdown-link-check.yml@main

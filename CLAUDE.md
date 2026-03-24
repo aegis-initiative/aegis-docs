@@ -7,7 +7,7 @@ The public AEGIS documentation site at aegis-docs.com -- built with a custom Ast
 - GitHub Org: github.com/aegis-initiative
 - IP Owner: Finnoybu IP LLC
 - Parent Ecosystem: Finnoybu Holdings LLC
-- Domain: aegis-docs.com (public docs), aegissystems.app (platform)
+- Domain: aegis-docs.com (public docs), aegis-platform.net (platform)
 
 ## This Repo's Role
 aegis-docs is the public-facing documentation hub for the entire AEGIS ecosystem. It aggregates content from multiple source repos -- governance from aegis-constitution, architecture from aegis, API docs from aegis-platform, and SDK docs from aegis-sdk. All rendered as a unified documentation site.

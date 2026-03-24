@@ -68,9 +68,9 @@ All other markup, props, CSS, ARIA, and responsive behavior are identical.
 
 | Link | Constitution | Docs |
 |---|---|---|
-| About | /about/ | https://aegissystems.app/about/ |
-| Contact | /legal/impressum/#contact | https://aegissystems.app/legal/impressum/#contact |
-| Legal | /legal/ | https://aegissystems.app/legal/ |
+| About | /about/ | https://aegis-initiative.com/about/ |
+| Contact | /legal/impressum/#contact | https://aegis-initiative.com/legal/impressum/#contact |
+| Legal | /legal/ | https://aegis-initiative.com/legal/ |
 
 All other markup, CSS, responsive behavior, and computed values (year, buildDate) are identical.
 

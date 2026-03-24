@@ -110,11 +110,84 @@ function isGroupActive(items: { slug: string }[]): boolean {
     overflow-y: auto;
     position: fixed;
     top: 4rem;
-    bottom: 0;
     left: 0;
     height: calc(100vh - 4rem);
-    display: none;
+    display: flex;
     flex-direction: column;
+    z-index: 40;
+    display: none;
+  }
+
+  .sidebar-inner {
+    padding: 1rem 0;
+    flex: 1;
+  }
+
+  .nav-group-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1.25rem;
+    cursor: pointer;
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    list-style: none;
+    user-select: none;
+  }
+
+  .nav-group-label::-webkit-details-marker {
+    display: none;
+  }
+
+  .nav-group-label:hover {
+    color: var(--color-accent);
+  }
+
+  .caret {
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  details[open] .caret {
+    transform: rotate(180deg);
+  }
+
+  .nav-items {
+    list-style: none;
+    padding: 0.25rem 0 0.75rem;
+    margin-left: 1.25rem;
+    border-left: 1px solid var(--color-border);
+  }
+
+  .nav-link {
+    display: block;
+    padding: 0.3rem 1rem 0.3rem 1rem;
+    margin-left: -1px;
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    line-height: 1.4;
+    border-left: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s, background-color 0.15s;
+  }
+
+  .nav-link:hover {
+    color: var(--color-accent);
+    border-left-color: var(--color-text-muted);
+  }
+
+  .nav-link.active {
+    color: #ffffff;
+    background-color: var(--color-accent);
+    border-left-color: var(--color-accent);
+    font-weight: 600;
+    border-radius: 0 4px 4px 0;
+  }
+
+  :global([data-theme="dark"]) .nav-link.active {
+    color: #161616;
   }
 
   .sidebar-overlay {
@@ -125,21 +198,16 @@ function isGroupActive(items: { slug: string }[]): boolean {
     z-index: 50;
   }
 
-  /* Wide screens: show sidebar, hide sidebar version badge */
   @media (min-width: 1024px) {
     .sidebar {
       display: flex;
     }
-    .sidebar-version {
-      display: none;
-    }
   }
 
-  /* Mobile: sidebar as drawer */
   .sidebar.open {
     display: flex;
     position: fixed;
-    top: 4rem; /* below header + breadcrumb */
+    top: 4rem;
     left: 0;
     height: calc(100vh - 4rem);
     z-index: 60;

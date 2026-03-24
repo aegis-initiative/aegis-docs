@@ -7,7 +7,7 @@ description: The POST /api/v1/governance/propose endpoint -- submit action propo
 
 The governance API is the primary integration point for AI systems. It accepts action proposals, evaluates them against registered capabilities, agent grants, and policies, and returns deterministic decisions.
 
-> **Status:** The API is running locally at `http://127.0.0.1:8000` and is functional. It is not yet deployed to `aegis-platform.net`. Authentication is not yet implemented -- requests are currently accepted without credentials.
+> **Status:** The API is running locally at `https://demo.aegis-platform.net` and is functional. It is not yet deployed to `aegis-platform.net`. Authentication is not yet implemented -- requests are currently accepted without credentials.
 
 ## POST /api/v1/governance/propose
 
@@ -62,7 +62,7 @@ The governance engine supports four outcomes. When multiple policies match, the 
 The action is approved. The agent may proceed.
 
 ```bash
-curl -s -X POST http://127.0.0.1:8000/api/v1/governance/propose \
+curl -s -X POST https://demo.aegis-platform.net/api/v1/governance/propose \
   -H "Content-Type: application/json" \
   -d '{"agent_id": "demo-agent", "action": "file.read", "target": "file.read"}'
 ```
@@ -79,7 +79,7 @@ curl -s -X POST http://127.0.0.1:8000/api/v1/governance/propose \
 The action is rejected. The agent must not proceed.
 
 ```bash
-curl -s -X POST http://127.0.0.1:8000/api/v1/governance/propose \
+curl -s -X POST https://demo.aegis-platform.net/api/v1/governance/propose \
   -H "Content-Type: application/json" \
   -d '{"agent_id": "demo-agent", "action": "file.write", "target": "file.write"}'
 ```
@@ -98,7 +98,7 @@ Note: `demo-agent` is not granted the `file.write` capability, so the request is
 The action requires elevated review. It is neither approved nor denied -- a human or higher-authority system must make the final call.
 
 ```bash
-curl -s -X POST http://127.0.0.1:8000/api/v1/governance/propose \
+curl -s -X POST https://demo.aegis-platform.net/api/v1/governance/propose \
   -H "Content-Type: application/json" \
   -d '{"agent_id": "demo-agent", "action": "network.fetch", "target": "network.fetch"}'
 ```
@@ -115,7 +115,7 @@ curl -s -X POST http://127.0.0.1:8000/api/v1/governance/propose \
 The action needs explicit human confirmation before the agent may proceed.
 
 ```bash
-curl -s -X POST http://127.0.0.1:8000/api/v1/governance/propose \
+curl -s -X POST https://demo.aegis-platform.net/api/v1/governance/propose \
   -H "Content-Type: application/json" \
   -d '{"agent_id": "demo-agent", "action": "shell.exec", "target": "shell.exec"}'
 ```
@@ -136,7 +136,7 @@ curl -s -X POST http://127.0.0.1:8000/api/v1/governance/propose \
 Returned when the request body is missing required fields or is malformed.
 
 ```bash
-curl -s -X POST http://127.0.0.1:8000/api/v1/governance/propose \
+curl -s -X POST https://demo.aegis-platform.net/api/v1/governance/propose \
   -H "Content-Type: application/json" \
   -d '{}'
 ```

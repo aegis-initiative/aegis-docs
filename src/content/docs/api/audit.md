@@ -7,7 +7,7 @@ description: Query the audit event log for governance decisions and compliance r
 
 The audit API provides read access to the governance audit log. Every governance decision is recorded and queryable through this endpoint.
 
-> **Status:** The `GET /api/v1/audit/events` endpoint is implemented and functional at `http://127.0.0.1:8000`. The API is not yet deployed to `aegis-platform.net`. Authentication is not yet implemented.
+> **Status:** The `GET /api/v1/audit/events` endpoint is implemented and functional at `https://demo.aegis-platform.net`. The API is not yet deployed to `aegis-platform.net`. Authentication is not yet implemented.
 
 ## GET /api/v1/audit/events
 
@@ -16,7 +16,7 @@ Query the audit event log. Returns all recorded governance decision events.
 ### Request
 
 ```bash
-curl -s http://127.0.0.1:8000/api/v1/audit/events
+curl -s https://demo.aegis-platform.net/api/v1/audit/events
 ```
 
 ### Response
@@ -61,12 +61,12 @@ After submitting several proposals, you can inspect the audit trail:
 
 ```bash
 # Submit a proposal
-curl -s -X POST http://127.0.0.1:8000/api/v1/governance/propose \
+curl -s -X POST https://demo.aegis-platform.net/api/v1/governance/propose \
   -H "Content-Type: application/json" \
   -d '{"agent_id": "demo-agent", "action": "shell.exec", "target": "shell.exec"}'
 
 # Then query the audit log
-curl -s http://127.0.0.1:8000/api/v1/audit/events
+curl -s https://demo.aegis-platform.net/api/v1/audit/events
 ```
 
 The audit log will include the `REQUIRE_CONFIRMATION` decision for the `shell.exec` proposal.

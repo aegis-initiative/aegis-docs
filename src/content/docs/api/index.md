@@ -7,12 +7,12 @@ description: Overview of the AEGIS platform API -- working endpoints, base URL, 
 
 The AEGIS platform exposes a REST API for governance operations, capability inspection, health checking, and audit queries.
 
-> **Status:** The API is running locally at `http://127.0.0.1:8000` and is functional. It is not yet deployed to `aegis-platform.net`. Authentication is not yet implemented -- all requests are currently accepted without credentials.
+> **Status:** The API is running locally at `https://demo.aegis-platform.net` and is functional. It is not yet deployed to `aegis-platform.net`. Authentication is not yet implemented -- all requests are currently accepted without credentials.
 
 ## Base URL
 
 ```
-http://127.0.0.1:8000
+https://demo.aegis-platform.net
 ```
 
 All API routes are under `/api/v1/`. When the platform is deployed, the base URL will change to `https://api.aegis-platform.net`.
@@ -33,13 +33,13 @@ These four endpoints are implemented and tested:
 ### Health Check
 
 ```bash
-curl -s http://127.0.0.1:8000/api/v1/health
+curl -s https://demo.aegis-platform.net/api/v1/health
 ```
 
 ### List Capabilities
 
 ```bash
-curl -s http://127.0.0.1:8000/api/v1/capabilities
+curl -s https://demo.aegis-platform.net/api/v1/capabilities
 ```
 
 The demo configuration registers four capabilities: `file.read`, `file.write`, `network.fetch`, and `shell.exec`.
@@ -47,7 +47,7 @@ The demo configuration registers four capabilities: `file.read`, `file.write`, `
 ### Submit a Governance Proposal
 
 ```bash
-curl -s -X POST http://127.0.0.1:8000/api/v1/governance/propose \
+curl -s -X POST https://demo.aegis-platform.net/api/v1/governance/propose \
   -H "Content-Type: application/json" \
   -d '{"agent_id": "demo-agent", "action": "file.read", "target": "file.read"}'
 ```
@@ -62,7 +62,7 @@ curl -s -X POST http://127.0.0.1:8000/api/v1/governance/propose \
 ### Query Audit Events
 
 ```bash
-curl -s http://127.0.0.1:8000/api/v1/audit/events
+curl -s https://demo.aegis-platform.net/api/v1/audit/events
 ```
 
 ## Response Format

@@ -13,10 +13,10 @@ The enforcement API provides endpoints for inspecting and managing the governanc
 
 ### GET /api/v1/capabilities
 
-List all registered capabilities. This endpoint is working at `http://127.0.0.1:8000`.
+List all registered capabilities. This endpoint is working at `https://demo.aegis-platform.net`.
 
 ```bash
-curl -s http://127.0.0.1:8000/api/v1/capabilities
+curl -s https://demo.aegis-platform.net/api/v1/capabilities
 ```
 
 The demo configuration returns four capabilities:

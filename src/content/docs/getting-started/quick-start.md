@@ -26,7 +26,7 @@ python -m uvicorn api.main:app --host 127.0.0.1 --port 8000
 Verify it's running:
 
 ```bash
-curl http://127.0.0.1:8000/api/v1/health
+curl https://demo.aegis-platform.net/api/v1/health
 ```
 
 ```json
@@ -37,7 +37,7 @@ curl http://127.0.0.1:8000/api/v1/health
 }
 ```
 
-> The interactive API explorer is available at [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs).
+> The interactive API explorer is available at [https://demo.aegis-platform.net/docs](https://demo.aegis-platform.net/docs).
 
 ## 2. Make Your First Governance Call
 
@@ -46,7 +46,7 @@ The demo environment comes pre-configured with a `demo-agent` that has specific 
 ### ALLOW — Agent has permission
 
 ```bash
-curl -X POST http://127.0.0.1:8000/api/v1/governance/propose \
+curl -X POST https://demo.aegis-platform.net/api/v1/governance/propose \
   -H "Content-Type: application/json" \
   -d '{
     "actor": {"id": "demo-agent", "type": "ai-agent"},
@@ -72,7 +72,7 @@ The agent has the `file.read` capability and a matching allow policy. Action app
 ### DENY — Agent lacks permission
 
 ```bash
-curl -X POST http://127.0.0.1:8000/api/v1/governance/propose \
+curl -X POST https://demo.aegis-platform.net/api/v1/governance/propose \
   -H "Content-Type: application/json" \
   -d '{
     "actor": {"id": "demo-agent", "type": "ai-agent"},
@@ -98,7 +98,7 @@ The agent doesn't have `file.write` granted. Default-deny: if not explicitly all
 ### ESCALATE — Requires elevated review
 
 ```bash
-curl -X POST http://127.0.0.1:8000/api/v1/governance/propose \
+curl -X POST https://demo.aegis-platform.net/api/v1/governance/propose \
   -H "Content-Type: application/json" \
   -d '{
     "actor": {"id": "demo-agent", "type": "ai-agent"},
@@ -124,7 +124,7 @@ The agent has the `network.fetch` capability, but the escalation policy requires
 ### REQUIRE_CONFIRMATION — Needs human approval
 
 ```bash
-curl -X POST http://127.0.0.1:8000/api/v1/governance/propose \
+curl -X POST https://demo.aegis-platform.net/api/v1/governance/propose \
   -H "Content-Type: application/json" \
   -d '{
     "actor": {"id": "demo-agent", "type": "ai-agent"},
@@ -152,7 +152,7 @@ The agent has `shell.exec` capability, but the confirmation policy requires expl
 Every governance decision is recorded in an immutable audit log:
 
 ```bash
-curl http://127.0.0.1:8000/api/v1/audit/events?limit=5
+curl https://demo.aegis-platform.net/api/v1/audit/events?limit=5
 ```
 
 This returns the most recent decisions with agent IDs, action types, outcomes, and timestamps.
@@ -183,7 +183,7 @@ pip install aegis-sdk
 ```python
 from aegis_sdk import AegisClient
 
-aegis = AegisClient(endpoint="http://127.0.0.1:8000")
+aegis = AegisClient(endpoint="https://demo.aegis-platform.net")
 
 decision = aegis.propose(
     capability="file.read",
@@ -203,7 +203,7 @@ npm install @aegis-initiative/sdk
 ```typescript
 import { AegisClient } from '@aegis-initiative/sdk';
 
-const aegis = new AegisClient({ endpoint: 'http://127.0.0.1:8000' });
+const aegis = new AegisClient({ endpoint: 'https://demo.aegis-platform.net' });
 
 const decision = await aegis.propose({
   capability: 'file.read',

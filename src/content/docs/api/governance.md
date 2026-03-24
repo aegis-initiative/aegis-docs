@@ -7,7 +7,7 @@ description: The POST /api/v1/governance/propose endpoint -- submit action propo
 
 The governance API is the primary integration point for AI systems. It accepts action proposals, evaluates them against registered capabilities, agent grants, and policies, and returns deterministic decisions.
 
-> **Status:** The API is running locally at `http://127.0.0.1:8000` and is functional. It is not yet deployed to `aegissystems.live`. Authentication is not yet implemented -- requests are currently accepted without credentials.
+> **Status:** The API is running locally at `http://127.0.0.1:8000` and is functional. It is not yet deployed to `aegis-platform.net`. Authentication is not yet implemented -- requests are currently accepted without credentials.
 
 ## POST /api/v1/governance/propose
 

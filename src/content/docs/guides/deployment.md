@@ -5,7 +5,7 @@ description: Deploy the AEGIS governance runtime in your infrastructure.
 
 # Deployment Guide
 
-> **Note:** The managed platform, operator dashboard, container images, and deployment tooling described on this page are under active development and not yet available. There is no running service at `aegissystems.live` today. The content below describes the planned deployment model. Check back soon.
+> **Note:** The managed platform, operator dashboard, container images, and deployment tooling described on this page are under active development and not yet available. There is no running service at `aegis-platform.net` today. The content below describes the planned deployment model. Check back soon.
 
 This guide covers deployment options for integrating AEGIS governance into your infrastructure. AEGIS can be consumed as a managed service or self-hosted.
 
@@ -13,7 +13,7 @@ This guide covers deployment options for integrating AEGIS governance into your 
 
 ### Managed Platform (Recommended)
 
-The simplest path to production. The managed platform at [aegissystems.live](https://aegissystems.live) provides:
+The simplest path to production. The managed platform at [aegis-platform.net](https://aegis-platform.net) provides:
 
 - Hosted governance runtime with high availability
 - Operator dashboard for policy management and monitoring
@@ -22,7 +22,7 @@ The simplest path to production. The managed platform at [aegissystems.live](htt
 
 To get started:
 
-1. Create an organization at [aegissystems.live](https://aegissystems.live)
+1. Create an organization at [aegis-platform.net](https://aegis-platform.net)
 2. Configure capabilities and policies through the dashboard
 3. Generate API keys for your AI agents
 4. Integrate using the [SDK](/sdk/) or [API](/api/)

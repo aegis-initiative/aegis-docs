@@ -1,48 +1,42 @@
 ---
 title: Authentication
-description: How to authenticate with the AEGIS platform API using API keys, JWT tokens, and mutual TLS.
+description: Authentication for the AEGIS platform API -- current status and planned model.
 ---
 
 # Authentication
 
-> **Note:** Authentication is under active development and not yet available. There is no authentication system implemented today -- no API keys, no JWT tokens, no mTLS, and no operator dashboard. The content below describes the planned authentication model. Check back soon.
+> **Authentication is not yet implemented.** The AEGIS platform API currently accepts all requests without credentials. No API keys, JWT tokens, mTLS, or any other authentication mechanism is enforced. The content below describes the planned authentication model for future releases.
 
-All AEGIS platform API requests require authentication. This page covers the supported authentication methods and how to configure them.
+## Current Status
 
-## API Key Authentication
-
-API keys are the most common authentication method for server-to-server integrations and SDK usage.
-
-### Obtaining an API Key
-
-1. Sign in to the operator dashboard at [aegissystems.live](https://aegissystems.live) *(coming soon -- the operator dashboard is not yet available)*
-2. Navigate to **Settings > API Keys**
-3. Click **Create API Key**
-4. Assign a name and select the appropriate permission scope
-5. Copy the generated key -- it will only be shown once
-
-### Using an API Key
-
-Include the API key in the `Authorization` header of every request:
+The API at `http://127.0.0.1:8000` accepts unauthenticated requests to all endpoints:
 
 ```bash
-curl -H "Authorization: Bearer aegis_sk_live_abc123..." \
-  https://api.aegissystems.live/api/v1/governance/propose \
-  -X POST -d '...'
+# No Authorization header needed -- requests are accepted as-is
+curl -s http://127.0.0.1:8000/api/v1/health
+curl -s http://127.0.0.1:8000/api/v1/capabilities
+curl -s -X POST http://127.0.0.1:8000/api/v1/governance/propose \
+  -H "Content-Type: application/json" \
+  -d '{"agent_id": "demo-agent", "action": "file.read", "target": "file.read"}'
 ```
 
-With the SDK:
+This is acceptable for local development and testing. Authentication will be required before the API is deployed to `aegissystems.live`.
 
-```typescript
-const aegis = new AegisClient({
-  endpoint: 'https://api.aegissystems.live',
-  apiKey: process.env.AEGIS_API_KEY,
-});
+---
+
+## Planned Authentication Model
+
+The following authentication methods are planned:
+
+### API Key Authentication
+
+API keys will be the primary method for server-to-server integrations and SDK usage.
+
+```
+Authorization: Bearer aegis_sk_live_...
 ```
 
-### API Key Scopes
-
-API keys can be scoped to limit their permissions:
+**Planned scopes:**
 
 | Scope | Permissions |
 |---|---|
@@ -53,37 +47,25 @@ API keys can be scoped to limit their permissions:
 | `policies:manage` | Create and update policies |
 | `admin` | Full administrative access |
 
-## JWT Bearer Tokens
+API keys will be provisioned through the operator dashboard at [aegissystems.live](https://aegissystems.live) once it is available.
 
-JWT tokens are used for user sessions and dashboard interactions. They are issued by the AEGIS authentication service upon login.
+### JWT Bearer Tokens
 
-```
-Authorization: Bearer eyJhbGciOiJSUzI1NiIs...
-```
+JWT tokens are planned for user sessions and dashboard interactions. They will be issued by the AEGIS authentication service upon login.
 
-JWT tokens include claims for the authenticated user, their organization, and their roles. Token expiration and refresh are handled automatically by the dashboard and SDKs.
+### Mutual TLS (mTLS)
 
-## Mutual TLS (mTLS)
-
-For high-security deployments, the platform supports mutual TLS authentication. Both the client and server present certificates, providing cryptographic proof of identity.
-
-mTLS is recommended for:
-
-- Production deployments with strict compliance requirements
-- Service mesh integrations
-- Environments where API keys alone are insufficient
-
-Contact the AEGIS team for mTLS certificate provisioning.
+For high-security deployments, the platform will support mutual TLS authentication where both client and server present certificates.
 
 ## Security Best Practices
 
-- **Never embed API keys in client-side code** -- API keys should only be used in server-side environments
-- **Use environment variables** -- Store keys in `AEGIS_API_KEY` rather than hardcoding them
-- **Rotate keys regularly** -- Generate new keys periodically and revoke old ones
-- **Use the narrowest scope possible** -- Only grant the permissions your integration needs
-- **Monitor key usage** -- Review API key activity in the operator dashboard
+Even though authentication is not yet enforced, follow these practices in preparation:
+
+- **Never embed API keys in client-side code** -- keys should only be used server-side
+- **Use environment variables** -- store keys in `AEGIS_API_KEY` rather than hardcoding
+- **Use the narrowest scope possible** -- only grant permissions your integration needs
 
 ## Further Reading
 
-- [API Overview](/api/) -- Full API endpoint reference
-- [SDK Overview](/sdk/) -- SDKs handle authentication automatically
+- [API Overview](/api/) -- All available endpoints
+- [SDK Overview](/sdk/) -- SDKs will handle authentication automatically

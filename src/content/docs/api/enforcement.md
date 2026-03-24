@@ -5,56 +5,64 @@ description: Endpoints for managing capabilities, policies, and enforcement conf
 
 # Enforcement API
 
-> **Note:** The only enforcement-related endpoint implemented today is `GET /api/v1/capabilities` (in `aegis-platform/api/main.py`). The remaining endpoints described below (POST capabilities, policies CRUD, actor grants) represent the planned API design and are not yet available. The API is not yet deployed to a public URL. Check back soon.
+The enforcement API provides endpoints for inspecting and managing the governance configuration -- capabilities, policies, and actor grants.
 
-The enforcement API provides endpoints for managing the governance configuration -- registering capabilities, defining policies, and configuring enforcement behavior.
+> **Status:** Only `GET /api/v1/capabilities` is implemented today. All other endpoints described on this page (creating capabilities, policy CRUD, actor grants) are planned but not yet available. Authentication is not yet implemented.
 
-## Capabilities
+## Implemented Endpoints
 
 ### GET /api/v1/capabilities
 
-List all registered capabilities.
+List all registered capabilities. This endpoint is working at `http://127.0.0.1:8000`.
 
-```json
-{
-  "capabilities": [
-    {
-      "id": "cap_abc123",
-      "name": "database.query",
-      "description": "Execute a read-only database query",
-      "risk_level": "low",
-      "parameter_schema": { "type": "object", "properties": { "query": { "type": "string" } } },
-      "created_at": "2026-03-01T00:00:00Z"
-    }
-  ],
-  "total": 12,
-  "cursor": "next_abc"
-}
+```bash
+curl -s http://127.0.0.1:8000/api/v1/capabilities
 ```
 
-### POST /api/v1/capabilities
+The demo configuration returns four capabilities:
 
-Register a new capability.
+- `file.read`
+- `file.write`
+- `network.fetch`
+- `shell.exec`
 
-```json
-{
-  "name": "infrastructure.deploy",
-  "description": "Deploy a service to the target environment",
-  "risk_level": "critical",
-  "parameter_schema": {
-    "type": "object",
-    "required": ["service", "environment"],
-    "properties": {
-      "service": { "type": "string" },
-      "environment": { "type": "string", "enum": ["staging", "production"] }
-    }
-  }
-}
-```
+These capabilities define the universe of actions that agents can request through the [governance proposal endpoint](/api/governance/).
 
-### Risk Levels
+---
 
-Capabilities are assigned a base risk level that feeds into risk scoring:
+## Planned Endpoints
+
+The following endpoints are designed but not yet implemented:
+
+### Capabilities Management
+
+| Method | Path | Status | Description |
+|---|---|---|---|
+| `GET` | `/api/v1/capabilities` | Implemented | List registered capabilities |
+| `POST` | `/api/v1/capabilities` | Planned | Register a new capability |
+| `GET` | `/api/v1/capabilities/:id` | Planned | Get capability details |
+
+### Policies
+
+| Method | Path | Status | Description |
+|---|---|---|---|
+| `GET` | `/api/v1/policies` | Planned | List active policies |
+| `POST` | `/api/v1/policies` | Planned | Create a new policy |
+| `PUT` | `/api/v1/policies/:id` | Planned | Update an existing policy |
+
+### Actor Grants
+
+| Method | Path | Status | Description |
+|---|---|---|---|
+| `GET` | `/api/v1/actors/:id/grants` | Planned | List capability grants for an actor |
+| `POST` | `/api/v1/actors/:id/grants` | Planned | Grant a capability to an actor |
+| `DELETE` | `/api/v1/actors/:id/grants/:capability` | Planned | Revoke a capability grant |
+
+---
+
+## Capability Risk Levels (Planned)
+
+When capability registration is implemented, capabilities will be assigned a base risk level:
 
 | Level | Description |
 |---|---|
@@ -63,15 +71,9 @@ Capabilities are assigned a base risk level that feeds into risk scoring:
 | `high` | Operations that affect production systems or sensitive data |
 | `critical` | Operations with potential for significant damage or irreversibility |
 
-## Policies
+## Policy Format (Planned)
 
-### GET /api/v1/policies
-
-List active policies.
-
-### POST /api/v1/policies
-
-Create a new governance policy.
+When policy management is implemented, policies will follow this structure:
 
 ```json
 {
@@ -89,38 +91,8 @@ Create a new governance policy.
 }
 ```
 
-### PUT /api/v1/policies/:id
-
-Update an existing policy. Policy updates take effect immediately and are recorded in the audit log.
-
-## Actor Grants
-
-### GET /api/v1/actors/:id/grants
-
-List capability grants for a specific actor.
-
-### POST /api/v1/actors/:id/grants
-
-Grant a capability to an actor.
-
-```json
-{
-  "capability": "database.query",
-  "constraints": {
-    "time_window": { "start": "09:00", "end": "17:00", "timezone": "UTC" },
-    "rate_limit": { "max_requests": 100, "window_seconds": 3600 }
-  }
-}
-```
-
-### DELETE /api/v1/actors/:id/grants/:capability
-
-Revoke a capability grant from an actor.
-
 ## Further Reading
 
-- [API Overview](/api/) -- Full endpoint listing
+- [API Overview](/api/) -- All available endpoints
 - [Governance API](/api/governance/) -- Submitting action proposals
-- [Policy Authoring Guide](/guides/policy-authoring/) -- How to write effective governance policies
-
-> **Note:** The enforcement API is under active development. See the [aegis-platform repository](https://github.com/aegis-initiative/aegis-platform) for the latest OpenAPI specification.
+- [Audit API](/api/audit/) -- Querying the audit event log

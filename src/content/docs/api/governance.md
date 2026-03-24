@@ -1,40 +1,25 @@
 ---
 title: Governance API
-description: The ACTION_PROPOSE endpoint -- how to submit action proposals for governance evaluation.
+description: The POST /api/v1/governance/propose endpoint -- submit action proposals for governance evaluation.
 ---
 
 # Governance API
 
-> **Note:** The `POST /api/v1/governance/propose` endpoint exists in `aegis-platform/api/main.py` but the API is not yet deployed to a public URL. The additional endpoints (`GET /api/v1/governance/decisions/:id`, `GET /api/v1/governance/decisions`) described below are planned but not yet implemented. Authentication (API keys, scopes) is not yet available. Check back soon.
+The governance API is the primary integration point for AI systems. It accepts action proposals, evaluates them against registered capabilities, agent grants, and policies, and returns deterministic decisions.
 
-The governance API is the primary integration point for AI systems. It accepts action proposals, evaluates them against the governance runtime, and returns deterministic decisions.
+> **Status:** The API is running locally at `http://127.0.0.1:8000` and is functional. It is not yet deployed to `aegissystems.live`. Authentication is not yet implemented -- requests are currently accepted without credentials.
 
 ## POST /api/v1/governance/propose
 
-Submit an action proposal for governance evaluation. This is the API equivalent of the `ACTION_PROPOSE` message in the AGP-1 protocol.
+Submit an action proposal for governance evaluation. The engine checks whether the requesting agent has the required capability grant, then evaluates matching policies to produce an outcome.
 
-### Request
+### Request Format
 
 ```json
 {
-  "actor": {
-    "id": "agent-001",
-    "type": "ai-agent"
-  },
-  "action": {
-    "capability": "database.query",
-    "parameters": {
-      "query": "SELECT * FROM users LIMIT 10",
-      "database": "production"
-    }
-  },
-  "context": {
-    "session_id": "sess_abc123",
-    "metadata": {
-      "source": "customer-support-bot",
-      "environment": "production"
-    }
-  }
+  "agent_id": "demo-agent",
+  "action": "file.read",
+  "target": "file.read"
 }
 ```
 
@@ -42,24 +27,16 @@ Submit an action proposal for governance evaluation. This is the API equivalent 
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `actor.id` | string | Yes | Unique identifier for the requesting actor |
-| `actor.type` | string | Yes | Actor type: `ai-agent`, `ai-copilot`, `automation`, or `human` |
-| `action.capability` | string | Yes | The registered capability being requested |
-| `action.parameters` | object | Yes | Parameters for the requested operation |
-| `context.session_id` | string | No | Session identifier for correlating related proposals |
-| `context.metadata` | object | No | Additional context for risk scoring and policy evaluation |
+| `agent_id` | string | Yes | Identifier of the agent requesting the action |
+| `action` | string | Yes | The action being requested (maps to a registered capability) |
+| `target` | string | Yes | The target resource for the action |
 
-### Response
+### Response Format
 
 ```json
 {
-  "decision_id": "dec_7f3a2b1c",
-  "outcome": "ALLOW",
-  "reason": "Capability 'database.query' authorized for actor 'agent-001'. Policy 'read-access-default' permits read-only queries. Risk score 0.12 within threshold.",
-  "risk_score": 0.12,
-  "constraints": {},
-  "timestamp": "2026-03-23T12:00:00Z",
-  "audit_ref": "aud_9e8d7c6b"
+  "decision": "ALLOW",
+  "reason": "Approved by policy 'Allow file reads'."
 }
 ```
 
@@ -67,63 +44,145 @@ Submit an action proposal for governance evaluation. This is the API equivalent 
 
 | Field | Type | Description |
 |---|---|---|
-| `decision_id` | string | Unique identifier for this governance decision |
-| `outcome` | string | `ALLOW`, `DENY`, `ESCALATE`, or `REQUIRE_CONFIRMATION` |
-| `reason` | string | Human-readable explanation of the decision |
-| `risk_score` | number | Computed risk score (0.0 to 1.0) |
-| `constraints` | object | Any constraints applied to the allowed action |
-| `timestamp` | string | ISO 8601 timestamp of the decision |
-| `audit_ref` | string | Reference to the full audit trail entry |
+| `decision` | string | One of `ALLOW`, `DENY`, `ESCALATE`, or `REQUIRE_CONFIRMATION` |
+| `reason` | string | Human-readable explanation of why the decision was made |
 
-### Outcome Semantics
+All governance outcomes return HTTP 200. The `decision` field determines the result. HTTP error codes (4xx) indicate request-level validation failures, not governance decisions.
 
-| Outcome | HTTP Status | Meaning |
-|---|---|---|
-| `ALLOW` | 200 | Action approved -- safe to execute |
-| `DENY` | 200 | Action rejected -- do not execute |
-| `ESCALATE` | 200 | Requires elevated review; action not yet decided |
-| `REQUIRE_CONFIRMATION` | 200 | Requires explicit human approval before proceeding |
+---
 
-All outcomes return HTTP 200. The `outcome` field in the response body determines the governance decision. HTTP error codes (4xx, 5xx) indicate request-level failures, not governance decisions.
+## Decision Outcomes
 
-### Error Responses
+The governance engine supports four outcomes. When multiple policies match, the strictest outcome wins according to this precedence rule:
+
+**DENY > ESCALATE > REQUIRE_CONFIRMATION > ALLOW**
+
+### ALLOW
+
+The action is approved. The agent may proceed.
+
+```bash
+curl -s -X POST http://127.0.0.1:8000/api/v1/governance/propose \
+  -H "Content-Type: application/json" \
+  -d '{"agent_id": "demo-agent", "action": "file.read", "target": "file.read"}'
+```
+
+```json
+{
+  "decision": "ALLOW",
+  "reason": "Approved by policy 'Allow file reads'."
+}
+```
+
+### DENY
+
+The action is rejected. The agent must not proceed.
+
+```bash
+curl -s -X POST http://127.0.0.1:8000/api/v1/governance/propose \
+  -H "Content-Type: application/json" \
+  -d '{"agent_id": "demo-agent", "action": "file.write", "target": "file.write"}'
+```
+
+```json
+{
+  "decision": "DENY",
+  "reason": "Agent 'demo-agent' lacks a capability covering action 'file_write' on target 'file.write'."
+}
+```
+
+Note: `demo-agent` is not granted the `file.write` capability, so the request is denied at the capability-check stage before policy evaluation.
+
+### ESCALATE
+
+The action requires elevated review. It is neither approved nor denied -- a human or higher-authority system must make the final call.
+
+```bash
+curl -s -X POST http://127.0.0.1:8000/api/v1/governance/propose \
+  -H "Content-Type: application/json" \
+  -d '{"agent_id": "demo-agent", "action": "network.fetch", "target": "network.fetch"}'
+```
+
+```json
+{
+  "decision": "ESCALATE",
+  "reason": "Escalation required by policy 'Escalate network requests'."
+}
+```
+
+### REQUIRE_CONFIRMATION
+
+The action needs explicit human confirmation before the agent may proceed.
+
+```bash
+curl -s -X POST http://127.0.0.1:8000/api/v1/governance/propose \
+  -H "Content-Type: application/json" \
+  -d '{"agent_id": "demo-agent", "action": "shell.exec", "target": "shell.exec"}'
+```
+
+```json
+{
+  "decision": "REQUIRE_CONFIRMATION",
+  "reason": "Human confirmation required by policy 'Require confirmation for shell execution'."
+}
+```
+
+---
+
+## Error Handling
+
+### 400 -- Validation Error
+
+Returned when the request body is missing required fields or is malformed.
+
+```bash
+curl -s -X POST http://127.0.0.1:8000/api/v1/governance/propose \
+  -H "Content-Type: application/json" \
+  -d '{}'
+```
+
+Returns HTTP 400 with a validation error describing which fields are missing.
+
+### Other Error Codes
 
 | HTTP Status | Meaning |
 |---|---|
-| 400 | Invalid request body (missing required fields, invalid capability format) |
-| 401 | Authentication failure |
-| 403 | API key does not have `governance:propose` scope |
-| 429 | Rate limit exceeded |
-| 500 | Internal server error (fail-closed: treated as DENY) |
+| 400 | Invalid request body (missing required fields, malformed JSON) |
+| 500 | Internal server error |
 
-## GET /api/v1/governance/decisions/:id
+> **Note:** Authentication (401/403) and rate limiting (429) are not yet implemented.
 
-Retrieve a specific governance decision by its `decision_id`.
+---
 
-### Response
+## How Decisions Are Made
 
-Returns the same structure as the `propose` response, plus additional audit information.
+The governance engine evaluates proposals in this order:
 
-## GET /api/v1/governance/decisions
+1. **Capability check** -- Does the agent have a grant covering the requested action? If not, the result is `DENY` immediately.
+2. **Policy evaluation** -- All matching policies are evaluated. If multiple policies match, the strictest outcome wins per the precedence rule: `DENY > ESCALATE > REQUIRE_CONFIRMATION > ALLOW`.
 
-List recent governance decisions with pagination and filtering.
+### Demo Configuration
 
-### Query Parameters
+The current demo environment is configured with:
 
-| Parameter | Type | Description |
+**Capabilities:** `file.read`, `file.write`, `network.fetch`, `shell.exec`
+
+**Agent grants for `demo-agent`:** `file.read`, `network.fetch`, `shell.exec`
+(Note: `demo-agent` is deliberately not granted `file.write`)
+
+**Policies:**
+
+| Policy | Capability | Outcome |
 |---|---|---|
-| `actor_id` | string | Filter by actor |
-| `capability` | string | Filter by capability |
-| `outcome` | string | Filter by outcome (ALLOW, DENY, etc.) |
-| `since` | string | ISO 8601 timestamp for start of range |
-| `until` | string | ISO 8601 timestamp for end of range |
-| `limit` | integer | Results per page (default 50, max 200) |
-| `cursor` | string | Pagination cursor |
+| Allow file reads | `file.read` | ALLOW |
+| Deny file writes | `file.write` | DENY |
+| Escalate network requests | `network.fetch` | ESCALATE |
+| Require confirmation for shell execution | `shell.exec` | REQUIRE_CONFIRMATION |
+
+---
 
 ## Further Reading
 
-- [API Overview](/api/) -- Full endpoint listing
-- [Audit API](/api/audit/) -- Query the audit log for full decision details
-- [SDK Reference](/sdk/) -- Use the SDK instead of calling the API directly
-
-> **Note:** The governance API is under active development. Request and response schemas may evolve before general availability. See the [aegis-platform repository](https://github.com/aegis-initiative/aegis-platform) for the latest OpenAPI specification.
+- [API Overview](/api/) -- All available endpoints
+- [Audit API](/api/audit/) -- Query the audit event log
+- [Enforcement API](/api/enforcement/) -- Capabilities and policy management

@@ -44,11 +44,11 @@ pip install aegis-sdk
 
 ## Platform Access
 
-> **Note:** The managed platform at [aegissystems.live](https://aegissystems.live) is coming soon and not yet available. There is no operator dashboard or API key provisioning system yet. The instructions below describe the planned setup flow.
+> **Note:** The managed platform at [aegis-platform.net](https://aegis-platform.net) is coming soon and not yet available. There is no operator dashboard or API key provisioning system yet. The instructions below describe the planned setup flow.
 
 To use the AEGIS governance platform, you need:
 
-1. **An organization account** at [aegissystems.live](https://aegissystems.live)
+1. **An organization account** at [aegis-platform.net](https://aegis-platform.net)
 2. **An API key** generated from the operator dashboard
 
 ### Creating an API Key
@@ -61,7 +61,7 @@ To use the AEGIS governance platform, you need:
 
 ### Configuring the SDK
 
-> **Note:** The code examples below reference `https://api.aegissystems.live`, which is not yet active. These examples will work once the platform is deployed and the SDK packages are published.
+> **Note:** The code examples below reference `https://demo.aegis-platform.net`, which is not yet active. These examples will work once the platform is deployed and the SDK packages are published.
 
 Set your API key as an environment variable:
 
@@ -75,7 +75,7 @@ Then initialize the client:
 import { AegisClient } from '@aegis-initiative/sdk';
 
 const aegis = new AegisClient({
-  endpoint: 'https://api.aegissystems.live',
+  endpoint: 'https://demo.aegis-platform.net',
   apiKey: process.env.AEGIS_API_KEY,
 });
 ```
@@ -85,7 +85,7 @@ from aegis_sdk import AegisClient
 import os
 
 aegis = AegisClient(
-    endpoint="https://api.aegissystems.live",
+    endpoint="https://demo.aegis-platform.net",
     api_key=os.environ["AEGIS_API_KEY"],
 )
 ```

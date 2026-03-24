@@ -10,7 +10,7 @@ This guide covers setting up a local development environment for contributing to
 ## Prerequisites
 
 - **Git** -- Version control ([git-scm.com](https://git-scm.com/))
-- **Node.js 18+** -- Required for the documentation site and TypeScript SDK
+- **Node.js 22+** -- Required for the documentation site and TypeScript SDK
 - **Python 3.10+** -- Required for the Python SDK and runtime
 - **GitHub CLI** -- Recommended for pull request workflows (`gh`)
 

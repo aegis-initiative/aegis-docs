@@ -9,7 +9,7 @@ This guide walks you through making your first AEGIS governance call. You'll pro
 
 ## Prerequisites
 
-- Python 3.10+ or Node.js 18+
+- Python 3.10+ or Node.js 22+
 - Git (to clone the repos)
 - A terminal
 

@@ -24,7 +24,7 @@ yarn add @aegis-initiative/sdk
 pnpm add @aegis-initiative/sdk
 ```
 
-**Requirements:** Node.js 18 or later.
+**Requirements:** Node.js 22 or later.
 
 ### Python
 

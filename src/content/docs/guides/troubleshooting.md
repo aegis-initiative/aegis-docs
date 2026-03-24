@@ -5,6 +5,8 @@ description: Diagnose and resolve common issues with AEGIS governance integratio
 
 # Troubleshooting
 
+> **Note:** The platform API at `api.aegissystems.live` is not yet deployed, and authentication is not yet implemented. The troubleshooting scenarios below describe the planned integration experience and will be applicable once the platform is available.
+
 This guide covers common issues encountered when integrating with the AEGIS governance platform and how to resolve them.
 
 ## Connection Issues

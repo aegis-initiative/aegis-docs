@@ -5,6 +5,8 @@ description: How to authenticate with the AEGIS platform API using API keys, JWT
 
 # Authentication
 
+> **Note:** Authentication is under active development and not yet available. There is no authentication system implemented today -- no API keys, no JWT tokens, no mTLS, and no operator dashboard. The content below describes the planned authentication model. Check back soon.
+
 All AEGIS platform API requests require authentication. This page covers the supported authentication methods and how to configure them.
 
 ## API Key Authentication
@@ -13,7 +15,7 @@ API keys are the most common authentication method for server-to-server integrat
 
 ### Obtaining an API Key
 
-1. Sign in to the operator dashboard at [aegissystems.live](https://aegissystems.live)
+1. Sign in to the operator dashboard at [aegissystems.live](https://aegissystems.live) *(coming soon -- the operator dashboard is not yet available)*
 2. Navigate to **Settings > API Keys**
 3. Click **Create API Key**
 4. Assign a name and select the appropriate permission scope

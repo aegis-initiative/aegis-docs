@@ -23,6 +23,6 @@ AEGIS (Adaptive Ethics Governance for Intelligent Systems) is an ecosystem for c
 
 ## Quick Links
 
-- [AEGIS Constitution](https://aegis-constitution.com) — The canonical governance charter
-- [GitHub Organization](https://github.com/aegis-initiative) — Source code and issue tracking
-- [AEGIS Systems](https://aegissystems.app) — Production platform
+- [AEGIS Constitution](https://aegis-constitution.com) -- The canonical governance charter
+- [GitHub Organization](https://github.com/aegis-initiative) -- Source code and issue tracking
+- [AEGIS Systems](https://aegissystems.app) -- Production platform *(coming soon -- the platform is not yet deployed)*

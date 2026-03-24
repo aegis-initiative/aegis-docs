@@ -5,6 +5,8 @@ description: Advanced configuration options for the AEGIS TypeScript and Python 
 
 # SDK Configuration
 
+> **Note:** The SDK packages are not yet published to npm or PyPI, and the platform API at `api.aegissystems.live` is not yet deployed. The configuration options and code examples below describe the intended SDK behavior and will be usable once the packages are published. You can build and test the SDKs from source today -- see the [aegis-sdk repository](https://github.com/aegis-initiative/aegis-sdk).
+
 Both AEGIS SDKs support a range of configuration options for customizing behavior, handling retries, and integrating with different deployment environments.
 
 ## Environment Variables

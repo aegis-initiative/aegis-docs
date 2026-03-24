@@ -9,11 +9,13 @@ This guide walks you through installing the AEGIS SDK and making your first gove
 
 ## Prerequisites
 
-- An AEGIS platform account at [aegissystems.live](https://aegissystems.live)
+- An AEGIS platform account at [aegissystems.live](https://aegissystems.live) *(coming soon -- not yet available)*
 - Node.js 18+ (for TypeScript) or Python 3.10+ (for Python)
-- An API key from the AEGIS operator dashboard
+- An API key from the AEGIS operator dashboard *(coming soon -- no authentication system yet)*
 
 ## Install the SDK
+
+> **Note:** The SDK packages are not yet published to npm or PyPI. The install commands below will not work until the packages are published. You can build the SDKs from source -- see the [aegis-sdk repository](https://github.com/aegis-initiative/aegis-sdk).
 
 ### TypeScript / JavaScript
 
@@ -28,6 +30,8 @@ pip install aegis-sdk
 ```
 
 ## Make Your First Governance Call
+
+> **Note:** The code examples below reference `https://api.aegissystems.live`, which is not yet deployed, and require the SDK packages which are not yet published. These examples illustrate the intended usage pattern and will work once the platform and packages are available.
 
 ### TypeScript
 

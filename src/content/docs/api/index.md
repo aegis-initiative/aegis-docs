@@ -5,13 +5,17 @@ description: Overview of the AEGIS platform API -- endpoints, authentication, an
 
 # API Reference
 
-The AEGIS platform exposes a REST and GraphQL API for governance operations, policy management, audit queries, and system administration. This API is the programmatic interface consumed by the [AEGIS SDK](/sdk/) and third-party integrations.
+> **Note:** The API is not yet deployed to a public URL. There is no GraphQL endpoint. The only implemented endpoints today are: `POST /api/v1/governance/propose`, `GET /api/v1/health`, `GET /api/v1/capabilities`, and `GET /api/v1/audit/events` (in `aegis-platform/api/main.py`). Authentication (API keys, JWT, mTLS) is not yet implemented. The content below describes the planned API surface. Check back soon.
+
+The AEGIS platform exposes a REST API for governance operations, policy management, audit queries, and system administration. This API is the programmatic interface consumed by the [AEGIS SDK](/sdk/) and third-party integrations.
 
 ## Base URL
 
 ```
 https://api.aegissystems.live/api/v1/
 ```
+
+> **Note:** The base URL `api.aegissystems.live` is coming soon and not yet active.
 
 All API routes are versioned under `/api/v1/`. OpenAPI specifications are maintained in the [aegis-platform repository](https://github.com/aegis-initiative/aegis-platform).
 
@@ -25,7 +29,7 @@ All API requests require authentication. The platform supports:
 | Bearer Token (JWT) | User sessions, dashboard interactions |
 | Mutual TLS | High-security deployments, service mesh integrations |
 
-API keys are provisioned through the operator dashboard at [aegissystems.live](https://aegissystems.live). Include the key in the `Authorization` header:
+API keys will be provisioned through the operator dashboard at [aegissystems.live](https://aegissystems.live) *(coming soon -- the operator dashboard and authentication system are not yet available)*. Include the key in the `Authorization` header:
 
 ```
 Authorization: Bearer <your-api-key>
@@ -80,6 +84,8 @@ All responses use JSON. Governance decisions follow a consistent structure:
 ```
 
 ## Rate Limits
+
+> **Note:** Rate limiting is under active development and not yet available. The model below describes the planned design.
 
 API rate limits are configured per API key and depend on the subscription tier. Rate limit headers are included in every response:
 

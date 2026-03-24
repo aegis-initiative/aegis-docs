@@ -5,6 +5,8 @@ description: Deploy the AEGIS governance runtime in your infrastructure.
 
 # Deployment Guide
 
+> **Note:** The managed platform, operator dashboard, container images, and deployment tooling described on this page are under active development and not yet available. There is no running service at `aegissystems.live` today. The content below describes the planned deployment model. Check back soon.
+
 This guide covers deployment options for integrating AEGIS governance into your infrastructure. AEGIS can be consumed as a managed service or self-hosted.
 
 ## Deployment Options

@@ -80,6 +80,8 @@ The computed score is compared against configurable thresholds. Actions exceedin
 
 ## Authentication and Actor Resolution
 
+> **Note:** Authentication is under active development and not yet implemented. The authentication methods listed below describe the planned design. There is no API key, mTLS, JWT, or service account authentication system today.
+
 Every incoming request is authenticated before any governance evaluation occurs. The system supports:
 
 - API key authentication

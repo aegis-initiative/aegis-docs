@@ -5,6 +5,8 @@ description: The ACTION_PROPOSE endpoint -- how to submit action proposals for g
 
 # Governance API
 
+> **Note:** The `POST /api/v1/governance/propose` endpoint exists in `aegis-platform/api/main.py` but the API is not yet deployed to a public URL. The additional endpoints (`GET /api/v1/governance/decisions/:id`, `GET /api/v1/governance/decisions`) described below are planned but not yet implemented. Authentication (API keys, scopes) is not yet available. Check back soon.
+
 The governance API is the primary integration point for AI systems. It accepts action proposals, evaluates them against the governance runtime, and returns deterministic decisions.
 
 ## POST /api/v1/governance/propose

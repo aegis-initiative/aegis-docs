@@ -19,7 +19,7 @@ Deploy the AEGIS governance runtime in your infrastructure. Covers self-hosted d
 
 ### [Monitoring](/guides/monitoring/)
 
-Monitor governance activity in real time. Covers the operator dashboard, audit log queries, alerting on governance events, and building compliance reports.
+Monitor governance activity in real time. Covers the planned operator dashboard, audit log queries, alerting on governance events, and building compliance reports. *(The operator dashboard and alerting integrations are not yet available.)*
 
 ### [Troubleshooting](/guides/troubleshooting/)
 

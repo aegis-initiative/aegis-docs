@@ -17,7 +17,7 @@ The runtime is **not** a model -- it does not learn, predict, or use probabilist
 - Failures result in denial, never implicit approval (fail-closed)
 - Every decision is fully attributable and auditable
 
-The runtime can be self-hosted or accessed as a managed service via the [AEGIS platform](https://aegissystems.live).
+The runtime can be self-hosted or accessed as a managed service via the [AEGIS platform](https://aegissystems.live). *(The managed platform at aegissystems.live is coming soon and not yet available. The governance runtime exists today as a working Python implementation in the [aegis-governance](https://github.com/aegis-initiative/aegis-governance) repository.)*
 
 ## Capabilities
 

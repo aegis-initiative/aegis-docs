@@ -39,13 +39,13 @@ AEGIS is designed for organizations that deploy AI systems in operational contex
 | Component | Purpose |
 |---|---|
 | [aegis-governance](https://github.com/aegis-initiative/aegis-governance) | Architecture specifications, protocol definitions, and threat model |
-| [aegis-platform](https://github.com/aegis-initiative/aegis-platform) | Hosted governance runtime, operator dashboard, and API surface |
+| [aegis-platform](https://github.com/aegis-initiative/aegis-platform) | FastAPI governance API *(operator dashboard and hosted runtime not yet available)* |
 | [aegis-sdk](https://github.com/aegis-initiative/aegis-sdk) | TypeScript and Python client libraries |
 | [aegis-constitution](https://github.com/aegis-initiative/aegis-constitution) | Public governance charter |
 | [aegis-ops](https://github.com/aegis-initiative/aegis-ops) | CI/CD pipelines and infrastructure-as-code |
 
 ## Next Steps
 
-- [Quick Start](/getting-started/quick-start/) -- Install the SDK and make your first governance call
+- [Quick Start](/getting-started/quick-start/) -- Install the SDK and make your first governance call *(SDK packages not yet published; see the quick start page for details)*
 - [Core Concepts](/getting-started/core-concepts/) -- Understand the governance runtime, capabilities, policies, and risk scoring
 - [Architecture Overview](/architecture/) -- See how the components fit together

@@ -67,7 +67,7 @@ The AEGIS ecosystem is distributed across several repositories, each with a dist
 | Component | Repository | Role |
 |---|---|---|
 | Governance Specs | [aegis-governance](https://github.com/aegis-initiative/aegis-governance) | Architecture, protocol (AGP-1), threat model, federation spec |
-| Platform | [aegis-platform](https://github.com/aegis-initiative/aegis-platform) | Hosted runtime, operator dashboard, REST/GraphQL API |
+| Platform | [aegis-platform](https://github.com/aegis-initiative/aegis-platform) | FastAPI wrapper with governance and audit endpoints *(operator dashboard and GraphQL are not yet implemented)* |
 | Client SDKs | [aegis-sdk](https://github.com/aegis-initiative/aegis-sdk) | TypeScript and Python client libraries |
 | Operations | [aegis-ops](https://github.com/aegis-initiative/aegis-ops) | CI/CD pipelines, infrastructure-as-code, deployment configs |
 | Constitution | [aegis-constitution](https://github.com/aegis-initiative/aegis-constitution) | Public governance charter |

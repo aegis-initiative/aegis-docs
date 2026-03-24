@@ -5,6 +5,8 @@ description: Query the immutable audit log for governance decisions, compliance 
 
 # Audit API
 
+> **Note:** The only audit endpoint implemented today is `GET /api/v1/audit/events` (in `aegis-platform/api/main.py`). The endpoints described below (`/api/v1/audit/log`, `/api/v1/audit/log/:decision_id`) represent the planned API design and are not yet available. The API is not yet deployed to a public URL. Check back soon.
+
 The audit API provides read access to the immutable governance audit log. Every governance decision, policy change, and enforcement action is recorded and queryable through this API.
 
 ## GET /api/v1/audit/log

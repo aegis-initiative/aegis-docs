@@ -5,11 +5,13 @@ description: Monitor AEGIS governance activity, audit decisions, and build compl
 
 # Monitoring Guide
 
+> **Note:** The operator dashboard, alerting integrations, and Prometheus metrics described on this page are under active development and not yet available. There is no operator dashboard at `aegissystems.live` today, and no Prometheus-compatible metrics endpoint exists yet. The content below describes the planned monitoring model. Check back soon.
+
 This guide covers monitoring governance activity in AEGIS -- using the operator dashboard, querying the audit log, setting up alerts, and generating compliance reports.
 
 ## Operator Dashboard
 
-The AEGIS operator dashboard at [aegissystems.live](https://aegissystems.live) provides real-time visibility into governance activity:
+The AEGIS operator dashboard at [aegissystems.live](https://aegissystems.live) *(coming soon)* provides real-time visibility into governance activity:
 
 - **Decision feed** -- Live stream of governance decisions with outcome, actor, and capability details
 - **Policy activity** -- Which policies are being triggered and how often
@@ -20,6 +22,8 @@ The AEGIS operator dashboard at [aegissystems.live](https://aegissystems.live) p
 ## Audit Log Queries
 
 The [Audit API](/api/audit/) provides programmatic access to the full governance audit trail. Common query patterns:
+
+> **Note:** The audit log query examples below reference `api.aegissystems.live` which is not yet deployed, and the `/api/v1/audit/log` endpoint which is not yet implemented. The only audit endpoint available today is `GET /api/v1/audit/events`. Authentication is also not yet available.
 
 ### Recent Denials
 
@@ -59,7 +63,7 @@ Configure alerts to be notified of governance events that require attention:
 - **Policy changes** -- A governance policy was created or modified
 - **Risk threshold breaches** -- Actions with unusually high risk scores
 
-Alerting integrations (webhook, Slack, PagerDuty) are configurable through the operator dashboard.
+Alerting integrations (webhook, Slack, PagerDuty) will be configurable through the operator dashboard. *(Alerting integrations are not yet implemented.)*
 
 ## Metrics and Observability
 
@@ -73,7 +77,7 @@ AEGIS exposes governance metrics for integration with existing observability sta
 | `aegis.policies.evaluated` | Number of policies evaluated per decision |
 | `aegis.capabilities.usage` | Capability usage counts |
 
-Metrics are available in Prometheus-compatible format for integration with Grafana, Datadog, and similar platforms.
+Metrics will be available in Prometheus-compatible format for integration with Grafana, Datadog, and similar platforms. *(Prometheus metrics are not yet implemented.)*
 
 ## Compliance Reporting
 

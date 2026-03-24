@@ -42,7 +42,7 @@ Key considerations:
 - **Risk level** -- Assign an appropriate base risk (`low`, `medium`, `high`, `critical`)
 - **Parameter schema** -- Define the expected parameters using JSON Schema
 
-Register the capability via the [Enforcement API](/api/enforcement/) or the operator dashboard.
+Register the capability via the [Enforcement API](/api/enforcement/) or the operator dashboard. *(The operator dashboard is not yet available; the Enforcement API endpoints for creating capabilities and policies are not yet implemented.)*
 
 ## Step 2: Grant Capabilities to Actors
 
@@ -111,6 +111,8 @@ DENY > ESCALATE > REQUIRE_CONFIRMATION > ALLOW
 This ensures that safety-critical policies always override permissive ones.
 
 ## Step 5: Test Your Policies
+
+> **Note:** The code example below requires the SDK packages to be published and the platform API to be deployed, neither of which is available yet. The governance runtime can be tested locally using the [aegis-governance/aegis-runtime](https://github.com/aegis-initiative/aegis-governance) Python package (176 tests passing).
 
 Before deploying policies to production, test them using the governance API with test actor credentials:
 

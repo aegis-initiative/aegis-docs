@@ -9,10 +9,12 @@ The AEGIS SDK provides client libraries for integrating AI systems with the AEGI
 
 ## Supported Languages
 
+> **Note:** The SDK packages are not yet published to npm or PyPI. The install commands below will not work until the packages are published. You can build the SDKs from source -- see the [aegis-sdk repository](https://github.com/aegis-initiative/aegis-sdk).
+
 | Package | Language | Registry | Install |
 |---|---|---|---|
-| `@aegis-initiative/sdk` | TypeScript / JavaScript | npm | `npm install @aegis-initiative/sdk` |
-| `aegis-sdk` | Python | PyPI | `pip install aegis-sdk` |
+| `@aegis-initiative/sdk` | TypeScript / JavaScript | npm *(not yet published)* | `npm install @aegis-initiative/sdk` |
+| `aegis-sdk` | Python | PyPI *(not yet published)* | `pip install aegis-sdk` |
 
 ## What the SDK Provides
 

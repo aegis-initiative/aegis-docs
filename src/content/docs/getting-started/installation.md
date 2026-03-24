@@ -9,6 +9,8 @@ This page covers installing the AEGIS SDK in your project and configuring access
 
 ## SDK Installation
 
+> **Note:** The SDK packages are not yet published to npm or PyPI. The install commands below will not work until the packages are published. In the meantime, you can build the SDKs from source -- see the [aegis-sdk repository](https://github.com/aegis-initiative/aegis-sdk) and the [Development Setup](/contributing/development-setup/) guide.
+
 ### TypeScript / JavaScript
 
 ```bash
@@ -42,6 +44,8 @@ pip install aegis-sdk
 
 ## Platform Access
 
+> **Note:** The managed platform at [aegissystems.live](https://aegissystems.live) is coming soon and not yet available. There is no operator dashboard or API key provisioning system yet. The instructions below describe the planned setup flow.
+
 To use the AEGIS governance platform, you need:
 
 1. **An organization account** at [aegissystems.live](https://aegissystems.live)
@@ -56,6 +60,8 @@ To use the AEGIS governance platform, you need:
 5. Copy the key and store it securely
 
 ### Configuring the SDK
+
+> **Note:** The code examples below reference `https://api.aegissystems.live`, which is not yet active. These examples will work once the platform is deployed and the SDK packages are published.
 
 Set your API key as an environment variable:
 
@@ -85,6 +91,8 @@ aegis = AegisClient(
 ```
 
 ## Verifying Your Setup
+
+> **Note:** This verification step requires the SDK packages to be published and the platform API to be deployed, neither of which is available yet.
 
 Make a test governance call to verify connectivity:
 

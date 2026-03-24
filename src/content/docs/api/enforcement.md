@@ -5,6 +5,8 @@ description: Endpoints for managing capabilities, policies, and enforcement conf
 
 # Enforcement API
 
+> **Note:** The only enforcement-related endpoint implemented today is `GET /api/v1/capabilities` (in `aegis-platform/api/main.py`). The remaining endpoints described below (POST capabilities, policies CRUD, actor grants) represent the planned API design and are not yet available. The API is not yet deployed to a public URL. Check back soon.
+
 The enforcement API provides endpoints for managing the governance configuration -- registering capabilities, defining policies, and configuring enforcement behavior.
 
 ## Capabilities

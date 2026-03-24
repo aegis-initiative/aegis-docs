@@ -9,6 +9,8 @@ The `@aegis-initiative/sdk` package provides a TypeScript-first client for the A
 
 ## Installation
 
+> **Note:** The `@aegis-initiative/sdk` package is not yet published to npm. The install commands below will not work until the package is published. You can build the TypeScript SDK from source at [aegis-sdk/packages/sdk-ts](https://github.com/aegis-initiative/aegis-sdk/tree/main/packages/sdk-ts).
+
 ```bash
 npm install @aegis-initiative/sdk
 ```
@@ -21,6 +23,8 @@ pnpm add @aegis-initiative/sdk
 ```
 
 ## Setup
+
+> **Note:** The endpoint `https://api.aegissystems.live` is coming soon and not yet active. Authentication via API keys is not yet implemented.
 
 ```typescript
 import { AegisClient } from '@aegis-initiative/sdk';

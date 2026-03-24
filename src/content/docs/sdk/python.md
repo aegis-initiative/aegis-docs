@@ -9,6 +9,8 @@ The `aegis-sdk` package provides a Python client for the AEGIS governance platfo
 
 ## Installation
 
+> **Note:** The `aegis-sdk` package is not yet published to PyPI. The install commands below will not work until the package is published. You can build the Python SDK from source at [aegis-sdk/packages/sdk-py](https://github.com/aegis-initiative/aegis-sdk/tree/main/packages/sdk-py).
+
 ```bash
 pip install aegis-sdk
 ```
@@ -22,6 +24,8 @@ pip install aegis-sdk
 ```
 
 ## Setup
+
+> **Note:** The endpoint `https://api.aegissystems.live` is coming soon and not yet active. Authentication via API keys is not yet implemented.
 
 ```python
 from aegis_sdk import AegisClient

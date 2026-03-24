@@ -41,6 +41,9 @@ const {
     <meta name="twitter:image" content={new URL('/OG_image.png', Astro.site).toString()} />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <!-- AEGIS Ecosystem Navigation Bar -->
+    <script src="https://aegis-initiative.com/shared/aegis-nav.js" defer></script>
     <link
       rel="canonical"
       href={new URL(Astro.url.pathname, Astro.site).toString()}
@@ -299,12 +302,12 @@ const {
     line-height: 1.3;
     letter-spacing: 0.01em;
     color: var(--color-text);
-    scroll-margin-top: 5rem;
+    scroll-margin-top: calc(5rem + var(--aegis-nav-height, 0px));
   }
 
   /* Ensure all anchor targets clear the fixed header + show HR above */
   [id] {
-    scroll-margin-top: 6.55rem;
+    scroll-margin-top: calc(6.55rem + var(--aegis-nav-height, 0px));
   }
 
   h1 {
@@ -536,7 +539,7 @@ const {
   /* ── ToC dropdown — global rules to bypass Astro scoping ── */
   #toc-dropdown {
     position: fixed;
-    top: 3.75rem;
+    top: calc(3.75rem + var(--aegis-nav-height, 0px));
     right: 1rem;
     width: 280px;
     background: var(--color-bg-subtle);

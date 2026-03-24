@@ -22,7 +22,7 @@
   .toc-rail {
     display: none;
     position: fixed;
-    top: 4rem;
+    top: calc(4rem + var(--aegis-nav-height, 0px));
     right: 0;
     width: 320px;
     height: calc(100vh - 4rem);
@@ -92,7 +92,7 @@
 
   .toc-dropdown {
     position: fixed;
-    top: 3.75rem; /* just below header */
+    top: calc(3.75rem + var(--aegis-nav-height, 0px)); /* just below header */
     right: 1rem;
     width: 280px;
     background: var(--color-bg-subtle);

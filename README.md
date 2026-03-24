@@ -19,7 +19,7 @@
 
 ## Overview
 
-`aegis-docs` is the public-facing documentation site for the AEGIS™ ecosystem, deployed at [aegissystems.app](https://aegis-docs.com). It is the primary reference for developers, operators, researchers, and anyone building with or learning about AEGIS™.
+`aegis-docs` is the public-facing documentation site for the AEGIS™ ecosystem, deployed at [aegis-docs.com](https://aegis-docs.com). It is the primary reference for developers, operators, researchers, and anyone building with or learning about AEGIS™.
 
 > **Capability without constraint is not intelligence™**
 
@@ -45,7 +45,7 @@
 
 - **[Astro](https://astro.build/)** with [Starlight](https://starlight.astro.build/) theme
 - Content authored in Markdown / MDX
-- Deployed to [aegissystems.app](https://aegis-docs.com)
+- Deployed to [aegis-docs.com](https://aegis-docs.com)
 
 ---
 

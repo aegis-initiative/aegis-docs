@@ -5,13 +5,13 @@ description: Monitor AEGIS governance activity, audit decisions, and build compl
 
 # Monitoring Guide
 
-> **Note:** The operator dashboard, alerting integrations, and Prometheus metrics described on this page are under active development and not yet available. There is no operator dashboard at `aegissystems.live` today, and no Prometheus-compatible metrics endpoint exists yet. The content below describes the planned monitoring model. Check back soon.
+> **Note:** The operator dashboard, alerting integrations, and Prometheus metrics described on this page are under active development and not yet available. There is no operator dashboard at `aegis-platform.net` today, and no Prometheus-compatible metrics endpoint exists yet. The content below describes the planned monitoring model. Check back soon.
 
 This guide covers monitoring governance activity in AEGIS -- using the operator dashboard, querying the audit log, setting up alerts, and generating compliance reports.
 
 ## Operator Dashboard
 
-The AEGIS operator dashboard at [aegissystems.live](https://aegissystems.live) *(coming soon)* provides real-time visibility into governance activity:
+The AEGIS operator dashboard at [aegis-platform.net](https://aegis-platform.net) *(coming soon)* provides real-time visibility into governance activity:
 
 - **Decision feed** -- Live stream of governance decisions with outcome, actor, and capability details
 - **Policy activity** -- Which policies are being triggered and how often
@@ -23,34 +23,34 @@ The AEGIS operator dashboard at [aegissystems.live](https://aegissystems.live) *
 
 The [Audit API](/api/audit/) provides programmatic access to the full governance audit trail. Common query patterns:
 
-> **Note:** The audit log query examples below reference `api.aegissystems.live` which is not yet deployed, and the `/api/v1/audit/log` endpoint which is not yet implemented. The only audit endpoint available today is `GET /api/v1/audit/events`. Authentication is also not yet available.
+> **Note:** The audit log query examples below reference `api.aegis-platform.net` which is not yet deployed, and the `/api/v1/audit/log` endpoint which is not yet implemented. The only audit endpoint available today is `GET /api/v1/audit/events`. Authentication is also not yet available.
 
 ### Recent Denials
 
 ```bash
 curl -H "Authorization: Bearer $AEGIS_API_KEY" \
-  "https://api.aegissystems.live/api/v1/audit/log?outcome=DENY&limit=20"
+  "https://api.aegis-platform.net/api/v1/audit/log?outcome=DENY&limit=20"
 ```
 
 ### Activity for a Specific Agent
 
 ```bash
 curl -H "Authorization: Bearer $AEGIS_API_KEY" \
-  "https://api.aegissystems.live/api/v1/audit/log?actor_id=agent-001&since=2026-03-22T00:00:00Z"
+  "https://api.aegis-platform.net/api/v1/audit/log?actor_id=agent-001&since=2026-03-22T00:00:00Z"
 ```
 
 ### Escalation Events
 
 ```bash
 curl -H "Authorization: Bearer $AEGIS_API_KEY" \
-  "https://api.aegissystems.live/api/v1/audit/log?outcome=ESCALATE&limit=50"
+  "https://api.aegis-platform.net/api/v1/audit/log?outcome=ESCALATE&limit=50"
 ```
 
 ### Policy Changes
 
 ```bash
 curl -H "Authorization: Bearer $AEGIS_API_KEY" \
-  "https://api.aegissystems.live/api/v1/audit/log?event_type=policy.updated&since=2026-03-01T00:00:00Z"
+  "https://api.aegis-platform.net/api/v1/audit/log?event_type=policy.updated&since=2026-03-01T00:00:00Z"
 ```
 
 ## Alerting

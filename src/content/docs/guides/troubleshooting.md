@@ -5,7 +5,7 @@ description: Diagnose and resolve common issues with AEGIS governance integratio
 
 # Troubleshooting
 
-> **Note:** The platform API at `api.aegissystems.live` is not yet deployed, and authentication is not yet implemented. The troubleshooting scenarios below describe the planned integration experience and will be applicable once the platform is available.
+> **Note:** The platform API at `api.aegis-platform.net` is not yet deployed, and authentication is not yet implemented. The troubleshooting scenarios below describe the planned integration experience and will be applicable once the platform is available.
 
 This guide covers common issues encountered when integrating with the AEGIS governance platform and how to resolve them.
 
@@ -17,10 +17,10 @@ This guide covers common issues encountered when integrating with the AEGIS gove
 
 **Checklist:**
 
-1. Verify the endpoint URL is correct: `https://api.aegissystems.live`
+1. Verify the endpoint URL is correct: `https://api.aegis-platform.net`
 2. Check that your network allows outbound HTTPS (port 443)
 3. If behind a corporate proxy, configure the SDK with a custom HTTP client (see [SDK Configuration](/sdk/configuration/))
-4. Test connectivity: `curl -I https://api.aegissystems.live/health`
+4. Test connectivity: `curl -I https://api.aegis-platform.net/health`
 
 ### Authentication failures (401)
 
@@ -49,7 +49,7 @@ This guide covers common issues encountered when integrating with the AEGIS gove
 
 ```bash
 curl -H "Authorization: Bearer $AEGIS_API_KEY" \
-  "https://api.aegissystems.live/api/v1/audit/log/<decision_id>"
+  "https://api.aegis-platform.net/api/v1/audit/log/<decision_id>"
 ```
 
 ### Rate limit exceeded

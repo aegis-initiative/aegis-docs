@@ -7,7 +7,7 @@ description: Query the audit event log for governance decisions and compliance r
 
 The audit API provides read access to the governance audit log. Every governance decision is recorded and queryable through this endpoint.
 
-> **Status:** The `GET /api/v1/audit/events` endpoint is implemented and functional at `http://127.0.0.1:8000`. The API is not yet deployed to `aegissystems.live`. Authentication is not yet implemented.
+> **Status:** The `GET /api/v1/audit/events` endpoint is implemented and functional at `http://127.0.0.1:8000`. The API is not yet deployed to `aegis-platform.net`. Authentication is not yet implemented.
 
 ## GET /api/v1/audit/events
 

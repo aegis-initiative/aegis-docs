@@ -1,146 +1,133 @@
 ---
 title: SDK Configuration
-description: Advanced configuration options for the AEGIS TypeScript and Python SDKs.
+description: Configuration options for the AEGIS TypeScript and Python SDKs.
 ---
 
 # SDK Configuration
 
-> **Note:** The SDK packages are not yet published to npm or PyPI, and the platform API at `api.aegissystems.live` is not yet deployed. The configuration options and code examples below describe the intended SDK behavior and will be usable once the packages are published. You can build and test the SDKs from source today -- see the [aegis-sdk repository](https://github.com/aegis-initiative/aegis-sdk).
+This page documents the configuration options available in both AEGIS SDKs, and is honest about what is implemented versus planned.
 
-Both AEGIS SDKs support a range of configuration options for customizing behavior, handling retries, and integrating with different deployment environments.
+## Constructor Options
 
-## Environment Variables
+Both SDKs currently accept a minimal set of constructor options. Additional configuration (retries, timeouts, logging) is planned but not yet implemented.
 
-Both SDKs respect the following environment variables:
+### Python
+
+```python
+from aegis_sdk import AegisClient
+
+client = AegisClient(
+    base_url="http://127.0.0.1:8000",
+    api_key="your-api-key",          # optional
+)
+```
+
+| Parameter | Type | Required | Default | Status |
+|---|---|---|---|---|
+| `base_url` | `str` | Yes | -- | Implemented |
+| `api_key` | `str \| None` | No | `None` | Implemented (stored, not yet sent in requests) |
+
+### TypeScript
+
+```typescript
+import { AegisClient } from "@aegis-initiative/sdk";
+
+const client = new AegisClient({
+  baseUrl: "http://127.0.0.1:8000",
+  apiKey: "your-api-key",            // optional
+});
+```
+
+| Property | Type | Required | Default | Status |
+|---|---|---|---|---|
+| `baseUrl` | `string` | Yes | -- | Implemented |
+| `apiKey` | `string` | No | `undefined` | Implemented (stored, not yet sent in requests) |
+
+## What Is Implemented
+
+The SDKs currently implement:
+
+- **Client construction** with `base_url`/`baseUrl` and optional `api_key`/`apiKey`
+- **`propose()` method signature** accepting an `ActionProposal` and returning `Promise<GovernanceDecision>` -- currently stubbed with `NotImplementedError` / `Error`
+- **Type definitions** -- `ActionProposal`, `GovernanceDecision`, `Verdict` enum
+- **Error hierarchy** -- `AegisError`, `AegisConnectionError`, `AegisAuthError`, `AegisDeniedError`
+
+## What Is Planned (Not Yet Implemented)
+
+The following features are planned but do not exist in the current source code:
+
+### Timeout Configuration
+
+Not yet available. When implemented, both SDKs will support a configurable request timeout.
+
+### Retry Logic
+
+Not yet available. Planned behavior:
+- Automatic retries for transient failures (network errors, timeouts, 5xx responses)
+- Governance decisions (including `DENY`) will never be retried
+- Exponential backoff with jitter
+
+### Environment Variables
+
+Not yet implemented. Planned variables:
 
 | Variable | Description |
 |---|---|
 | `AEGIS_API_KEY` | API key for authentication |
-| `AEGIS_ENDPOINT` | Platform API URL (overrides constructor argument) |
-| `AEGIS_TIMEOUT` | Request timeout (milliseconds for TS, seconds for Python) |
-| `AEGIS_RETRIES` | Number of retry attempts |
-| `AEGIS_LOG_LEVEL` | Logging verbosity: `debug`, `info`, `warn`, `error` |
+| `AEGIS_ENDPOINT` | Platform API URL |
 
-When both an environment variable and a constructor argument are provided, the constructor argument takes precedence.
+### Logging
 
-## Retry Configuration
+Not yet available. The SDKs do not currently emit logs. Standard Python `logging` integration and a TypeScript `logLevel` option are planned.
 
-Both SDKs implement automatic retries for transient failures (network errors, timeouts, 5xx responses). Governance decisions (including `DENY`) are never retried -- only transport-level failures trigger retries.
+### Custom HTTP Client
 
-### TypeScript
+Not yet available. The SDKs do not currently accept a custom HTTP client or fetch implementation.
 
-```typescript
-const aegis = new AegisClient({
-  endpoint: 'https://api.aegissystems.live',
-  apiKey: process.env.AEGIS_API_KEY,
-  retries: 3,
-  retryDelay: 1000,   // Base delay in ms (exponential backoff)
-});
-```
+### Async Client (Python)
+
+There is no separate `AsyncAegisClient` class. The existing `AegisClient.propose()` method is already `async`. A synchronous wrapper may be added in the future.
+
+## Local Development
+
+For local development against a running aegis-platform instance:
 
 ### Python
 
 ```python
-aegis = AegisClient(
-    endpoint="https://api.aegissystems.live",
-    api_key=os.environ["AEGIS_API_KEY"],
-    retries=3,
-    retry_delay=1.0,   # Base delay in seconds (exponential backoff)
+from aegis_sdk import AegisClient, ActionProposal
+
+client = AegisClient(base_url="http://127.0.0.1:8000")
+
+proposal = ActionProposal(
+    capability="file:write",
+    resource="/tmp/test.txt",
+    parameters={"content": "hello"},
 )
+
+# Will raise NotImplementedError until platform API is deployed
+decision = await client.propose(proposal)
 ```
-
-Retry delays use exponential backoff: the delay doubles with each attempt (1s, 2s, 4s, etc.) with a small amount of jitter to avoid thundering herd effects.
-
-## Timeout Configuration
-
-Timeouts apply to individual HTTP requests, not to the overall `propose()` call (which may include retries).
-
-| SDK | Default | Unit |
-|---|---|---|
-| TypeScript | 30000 | milliseconds |
-| Python | 30.0 | seconds |
-
-For latency-sensitive applications, consider reducing the timeout and increasing the retry count.
-
-## Logging
-
-Both SDKs emit structured logs that can help diagnose integration issues.
 
 ### TypeScript
 
 ```typescript
-const aegis = new AegisClient({
-  endpoint: 'https://api.aegissystems.live',
-  apiKey: process.env.AEGIS_API_KEY,
-  logLevel: 'debug',
-});
-```
+import { AegisClient } from "@aegis-initiative/sdk";
 
-### Python
-
-```python
-import logging
-logging.basicConfig(level=logging.DEBUG)
-
-aegis = AegisClient(
-    endpoint="https://api.aegissystems.live",
-    api_key=os.environ["AEGIS_API_KEY"],
-)
-```
-
-## Custom HTTP Client
-
-For advanced use cases (custom TLS configuration, proxy support, request interceptors), both SDKs allow injecting a custom HTTP client.
-
-### TypeScript
-
-```typescript
-import { AegisClient } from '@aegis-initiative/sdk';
-
-const aegis = new AegisClient({
-  endpoint: 'https://api.aegissystems.live',
-  apiKey: process.env.AEGIS_API_KEY,
-  httpClient: customFetchImplementation,
-});
-```
-
-### Python
-
-```python
-import httpx
-
-custom_client = httpx.Client(
-    verify="/path/to/custom-ca.pem",
-    proxy="http://proxy.internal:8080",
-)
-
-aegis = AegisClient(
-    endpoint="https://api.aegissystems.live",
-    api_key=os.environ["AEGIS_API_KEY"],
-    http_client=custom_client,
-)
-```
-
-## Multi-Environment Setup
-
-For organizations running multiple AEGIS environments (development, staging, production), configure separate clients:
-
-```typescript
-const aegisDev = new AegisClient({
-  endpoint: 'https://api.dev.aegissystems.live',
-  apiKey: process.env.AEGIS_API_KEY_DEV,
+const client = new AegisClient({
+  baseUrl: "http://127.0.0.1:8000",
 });
 
-const aegisProd = new AegisClient({
-  endpoint: 'https://api.aegissystems.live',
-  apiKey: process.env.AEGIS_API_KEY_PROD,
+// Will throw Error until platform API is deployed
+const decision = await client.propose({
+  capability: "file:write",
+  resource: "/tmp/test.txt",
+  parameters: { content: "hello" },
 });
 ```
 
 ## Further Reading
 
-- [TypeScript SDK](/sdk/javascript/) -- Language-specific guide
-- [Python SDK](/sdk/python/) -- Language-specific guide
-- [Authentication](/api/authentication/) -- API key management and scopes
-
-> **Note:** Configuration options may expand as the SDKs mature. See the [aegis-sdk repository](https://github.com/aegis-initiative/aegis-sdk) for the latest configuration reference.
+- [Python SDK](/sdk/python/) -- Full Python reference
+- [TypeScript SDK](/sdk/javascript/) -- Full TypeScript reference
+- [Source code](https://github.com/aegis-initiative/aegis-sdk)

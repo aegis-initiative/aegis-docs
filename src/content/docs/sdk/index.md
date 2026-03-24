@@ -5,84 +5,101 @@ description: Client SDK libraries for integrating with the AEGIS governance plat
 
 # SDK Overview
 
-The AEGIS SDK provides client libraries for integrating AI systems with the AEGIS governance platform. Rather than calling the REST API directly, the SDK handles authentication, request formatting, retries, and response parsing.
+The AEGIS SDK provides client libraries for submitting action proposals to the AEGIS governance engine and receiving typed governance decisions. Both SDKs wrap the `POST /v1/governance/propose` REST endpoint.
+
+## Current Status
+
+Both SDKs are in early development. The `propose()` method is stubbed -- it raises `NotImplementedError` (Python) / throws `Error` (TypeScript) until the aegis-platform API is deployed. The type definitions, error hierarchy, and client structure are implemented and usable for development.
+
+**The packages are not yet published to npm or PyPI.** Install from source:
+
+```bash
+# Python
+git clone https://github.com/aegis-initiative/aegis-sdk.git
+cd aegis-sdk/packages/sdk-py
+pip install -e .
+
+# TypeScript
+git clone https://github.com/aegis-initiative/aegis-sdk.git
+cd aegis-sdk/packages/sdk-ts
+npm install && npm run build
+```
 
 ## Supported Languages
 
-> **Note:** The SDK packages are not yet published to npm or PyPI. The install commands below will not work until the packages are published. You can build the SDKs from source -- see the [aegis-sdk repository](https://github.com/aegis-initiative/aegis-sdk).
-
-| Package | Language | Registry | Install |
+| Package | Language | Version | Registry |
 |---|---|---|---|
-| `@aegis-initiative/sdk` | TypeScript / JavaScript | npm *(not yet published)* | `npm install @aegis-initiative/sdk` |
-| `aegis-sdk` | Python | PyPI *(not yet published)* | `pip install aegis-sdk` |
+| `aegis-sdk` | Python 3.10+ | 0.0.1 | PyPI *(not yet published)* |
+| `@aegis-initiative/sdk` | TypeScript | 0.0.1 | npm *(not yet published)* |
 
-## What the SDK Provides
+## What the SDK Provides Today
 
-- **Action proposal** -- Submit governance proposals with a simple `propose()` call
-- **Decision handling** -- Typed responses with outcome, reasoning, and constraints
-- **Authentication** -- Automatic API key management and token refresh
-- **Retries** -- Configurable retry logic with exponential backoff
-- **Error handling** -- Typed errors for governance failures vs. transport failures
+- **Action proposal** -- Submit governance proposals via `propose()` (stubbed, awaiting platform API)
+- **Typed models** -- `ActionProposal` and `GovernanceDecision` dataclasses/interfaces matching the AGP schema
+- **Verdict enum** -- `ALLOW`, `DENY`, `ESCALATE`, `REQUIRE_CONFIRMATION`
+- **Error hierarchy** -- `AegisError`, `AegisConnectionError`, `AegisDeniedError`, `AegisAuthError`, each with documentation URLs
 - **Type safety** -- Full TypeScript types and Python type hints
 
 ## Quick Example
 
-### TypeScript
-
-```typescript
-import { AegisClient } from '@aegis-initiative/sdk';
-
-const aegis = new AegisClient({
-  endpoint: 'https://api.aegissystems.live',
-  apiKey: process.env.AEGIS_API_KEY,
-});
-
-const decision = await aegis.propose({
-  actor: { id: 'agent-001', type: 'ai-agent' },
-  action: { capability: 'database.query', parameters: { query: '...' } },
-});
-
-if (decision.outcome === 'ALLOW') {
-  // execute
-}
-```
-
 ### Python
 
 ```python
-from aegis_sdk import AegisClient
+from aegis_sdk import AegisClient, ActionProposal, Verdict
 
-aegis = AegisClient(
-    endpoint="https://api.aegissystems.live",
-    api_key=os.environ["AEGIS_API_KEY"],
+client = AegisClient(base_url="http://127.0.0.1:8000")
+
+proposal = ActionProposal(
+    capability="file:write",
+    resource="/etc/config",
+    parameters={"content": "new config"},
 )
 
-decision = aegis.propose(
-    actor={"id": "agent-001", "type": "ai-agent"},
-    action={"capability": "database.query", "parameters": {"query": "..."}},
-)
+# Once the platform API is deployed:
+decision = await client.propose(proposal)
 
-if decision.outcome == "ALLOW":
-    # execute
+if decision.decision == Verdict.ALLOW:
+    # Safe to proceed
     pass
 ```
 
-## Governance Outcomes
+### TypeScript
 
-Both SDKs return one of four governance outcomes:
+```typescript
+import { AegisClient, Verdict } from "@aegis-initiative/sdk";
 
-| Outcome | Meaning |
+const client = new AegisClient({
+  baseUrl: "http://127.0.0.1:8000",
+});
+
+// Once the platform API is deployed:
+const decision = await client.propose({
+  capability: "file:write",
+  resource: "/etc/config",
+  parameters: { content: "new config" },
+});
+
+if (decision.decision === Verdict.ALLOW) {
+  // Safe to proceed
+}
+```
+
+## Governance Verdicts
+
+Both SDKs use the same four verdicts, defined in the `Verdict` enum:
+
+| Verdict | Meaning |
 |---|---|
-| `ALLOW` | Action approved -- proceed with execution |
-| `DENY` | Action rejected -- do not execute |
-| `ESCALATE` | Requires elevated review before proceeding |
-| `REQUIRE_CONFIRMATION` | Requires explicit human approval |
+| `ALLOW` | Action is permitted under current policy |
+| `DENY` | Action is forbidden under current policy |
+| `ESCALATE` | Action requires review by a higher authority |
+| `REQUIRE_CONFIRMATION` | Action is permitted only after explicit human confirmation |
 
 ## Language-Specific Guides
 
-- [TypeScript / JavaScript SDK](/sdk/javascript/) -- Installation, configuration, and usage
-- [Python SDK](/sdk/python/) -- Installation, configuration, and usage
-- [SDK Configuration](/sdk/configuration/) -- Advanced configuration options
+- [Python SDK](/sdk/python/) -- Full reference for the Python client
+- [TypeScript / JavaScript SDK](/sdk/javascript/) -- Full reference for the TypeScript client
+- [SDK Configuration](/sdk/configuration/) -- Constructor options and planned configuration
 
 ## Source Code
 
@@ -94,5 +111,3 @@ aegis-sdk/
     sdk-ts/        # TypeScript/JavaScript SDK
     sdk-py/        # Python SDK
 ```
-
-> **Note:** The AEGIS SDKs are under active development. Packages will be published to npm and PyPI as the platform reaches general availability.

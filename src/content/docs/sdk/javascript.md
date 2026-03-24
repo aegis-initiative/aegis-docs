@@ -1,169 +1,324 @@
 ---
-title: JavaScript / TypeScript SDK
-description: Getting started with the AEGIS TypeScript/JavaScript SDK.
+title: TypeScript / JavaScript SDK
+description: Full reference for the AEGIS TypeScript SDK.
 ---
 
-# JavaScript / TypeScript SDK
+# TypeScript / JavaScript SDK
 
-The `@aegis-initiative/sdk` package provides a TypeScript-first client for the AEGIS governance platform. It works in Node.js, Deno, and any TypeScript/JavaScript runtime.
+The `@aegis-initiative/sdk` package provides a typed TypeScript client for submitting action proposals to the AEGIS governance engine.
 
 ## Installation
 
-> **Note:** The `@aegis-initiative/sdk` package is not yet published to npm. The install commands below will not work until the package is published. You can build the TypeScript SDK from source at [aegis-sdk/packages/sdk-ts](https://github.com/aegis-initiative/aegis-sdk/tree/main/packages/sdk-ts).
+The package is not yet published to npm. Install from source:
 
 ```bash
-npm install @aegis-initiative/sdk
+git clone https://github.com/aegis-initiative/aegis-sdk.git
+cd aegis-sdk/packages/sdk-ts
+npm install
+npm run build
 ```
 
-Or with other package managers:
+## AegisClient
 
-```bash
-yarn add @aegis-initiative/sdk
-pnpm add @aegis-initiative/sdk
-```
-
-## Setup
-
-> **Note:** The endpoint `https://api.aegissystems.live` is coming soon and not yet active. Authentication via API keys is not yet implemented.
+The client is constructed with an `AegisClientOptions` object:
 
 ```typescript
-import { AegisClient } from '@aegis-initiative/sdk';
+import { AegisClient } from "@aegis-initiative/sdk";
 
-const aegis = new AegisClient({
-  endpoint: 'https://api.aegissystems.live',
-  apiKey: process.env.AEGIS_API_KEY,
+// Minimal -- no auth (local development)
+const client = new AegisClient({
+  baseUrl: "http://127.0.0.1:8000",
+});
+
+// With API key
+const client = new AegisClient({
+  baseUrl: "http://127.0.0.1:8000",
+  apiKey: "your-api-key",
 });
 ```
 
-### Configuration Options
-
-| Option | Type | Required | Default | Description |
-|---|---|---|---|---|
-| `endpoint` | string | Yes | -- | AEGIS platform API URL |
-| `apiKey` | string | Yes | -- | API key for authentication |
-| `timeout` | number | No | 30000 | Request timeout in milliseconds |
-| `retries` | number | No | 3 | Number of retry attempts on transient failures |
-| `retryDelay` | number | No | 1000 | Base delay between retries in milliseconds |
-
-## Proposing an Action
+### AegisClientOptions
 
 ```typescript
-const decision = await aegis.propose({
-  actor: {
-    id: 'agent-001',
-    type: 'ai-agent',
-  },
-  action: {
-    capability: 'database.query',
-    parameters: {
-      query: 'SELECT * FROM users LIMIT 10',
-      database: 'production',
-    },
-  },
-  context: {
-    session_id: 'sess_abc123',
-    metadata: {
-      source: 'customer-support-bot',
-    },
-  },
+interface AegisClientOptions {
+  /** Base URL of the AEGIS Platform API */
+  baseUrl: string;
+  /** Optional API key for authentication */
+  apiKey?: string;
+}
+```
+
+| Property | Type | Required | Description |
+|---|---|---|---|
+| `baseUrl` | `string` | Yes | Base URL of the AEGIS Platform API |
+| `apiKey` | `string` | No | API key for authentication |
+
+### `propose()` Method
+
+```typescript
+async propose(proposal: ActionProposal): Promise<GovernanceDecision>
+```
+
+Submits an `ActionProposal` to the governance engine and returns a `GovernanceDecision`.
+
+**Current status:** Throws `Error("Not yet implemented -- awaiting aegis-platform API")` until the HTTP call to `POST /v1/governance/propose` is implemented.
+
+```typescript
+const decision = await client.propose({
+  capability: "database:query",
+  resource: "production.users",
+  parameters: { query: "SELECT * FROM users LIMIT 10" },
+  traceId: "req-abc-123",
 });
 ```
 
-## Handling Decisions
+## ActionProposal
+
+An interface representing an action to be evaluated by the governance engine.
 
 ```typescript
-switch (decision.outcome) {
-  case 'ALLOW':
-    // Safe to execute the action
-    const result = await executeQuery(decision);
+interface ActionProposal {
+  /** The capability being invoked (e.g. "file:write", "network:request") */
+  capability: string;
+  /** The target resource for the action */
+  resource: string;
+  /** Action-specific parameters */
+  parameters: Record<string, unknown>;
+  /** Optional trace ID for request correlation */
+  traceId?: string;
+}
+```
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `capability` | `string` | Yes | The capability being invoked |
+| `resource` | `string` | Yes | The target resource for the action |
+| `parameters` | `Record<string, unknown>` | Yes | Action-specific parameters |
+| `traceId` | `string` | No | Optional trace ID for request correlation |
+
+### Examples
+
+```typescript
+// File write
+const proposal = {
+  capability: "file:write",
+  resource: "/etc/config",
+  parameters: { content: "server.port=8080" },
+};
+
+// Network request with trace ID
+const proposal = {
+  capability: "network:request",
+  resource: "https://api.example.com/data",
+  parameters: { method: "POST", body: { key: "value" } },
+  traceId: "trace-456",
+};
+```
+
+## GovernanceDecision
+
+An interface returned by `propose()`, containing the governance verdict.
+
+```typescript
+interface GovernanceDecision {
+  /** The unique ID of the evaluated action */
+  actionId: string;
+  /** The governance verdict */
+  decision: Verdict;
+  /** Human-readable explanation of the decision */
+  reason?: string;
+  /** IDs of the policies that influenced this decision */
+  policyIds?: string[];
+  /** ISO 8601 timestamp of the decision */
+  timestamp: string;
+}
+```
+
+| Field | Type | Description |
+|---|---|---|
+| `actionId` | `string` | Unique ID of the evaluated action |
+| `decision` | `Verdict` | The governance verdict |
+| `reason` | `string \| undefined` | Human-readable explanation (may be absent) |
+| `policyIds` | `string[] \| undefined` | IDs of the policies that influenced this decision |
+| `timestamp` | `string` | ISO 8601 timestamp of the decision |
+
+### Handling Decisions
+
+```typescript
+import { Verdict } from "@aegis-initiative/sdk";
+
+const decision = await client.propose(proposal);
+
+switch (decision.decision) {
+  case Verdict.ALLOW:
+    console.log("Approved -- proceeding");
+    await executeAction();
     break;
 
-  case 'DENY':
-    console.log(`Action denied: ${decision.reason}`);
+  case Verdict.DENY:
+    console.log(`Denied: ${decision.reason}`);
+    console.log(`Policies: ${decision.policyIds}`);
     break;
 
-  case 'ESCALATE':
-    // Route to human reviewer
+  case Verdict.ESCALATE:
+    console.log("Escalated -- routing to human reviewer");
     await notifyReviewer(decision);
     break;
 
-  case 'REQUIRE_CONFIRMATION':
-    // Present to user for approval
-    const confirmed = await promptUser(decision);
-    if (confirmed) {
-      // Resubmit with confirmation token
-    }
+  case Verdict.REQUIRE_CONFIRMATION:
+    console.log("Awaiting human confirmation");
+    await requestConfirmation(decision);
     break;
 }
 ```
 
-## Decision Object
-
-The `propose()` method returns a typed `Decision` object:
+## Verdict Enum
 
 ```typescript
-interface Decision {
-  decision_id: string;
-  outcome: 'ALLOW' | 'DENY' | 'ESCALATE' | 'REQUIRE_CONFIRMATION';
-  reason: string;
-  risk_score: number;
-  constraints: Record<string, unknown>;
-  timestamp: string;
-  audit_ref: string;
+enum Verdict {
+  ALLOW = "ALLOW",
+  DENY = "DENY",
+  ESCALATE = "ESCALATE",
+  REQUIRE_CONFIRMATION = "REQUIRE_CONFIRMATION",
 }
 ```
 
-## Error Handling
+## Error Classes
 
-The SDK distinguishes between governance decisions and transport/system errors:
+All errors include a `helpUrl` property pointing to troubleshooting documentation at `https://aegis-docs.com/sdk/errors`.
+
+### AegisError
+
+Base error for all AEGIS SDK errors. Extends the native `Error`.
 
 ```typescript
-import { AegisClient, AegisError, GovernanceError } from '@aegis-initiative/sdk';
+import { AegisError } from "@aegis-initiative/sdk";
 
 try {
-  const decision = await aegis.propose({ ... });
+  const decision = await client.propose(proposal);
 } catch (error) {
-  if (error instanceof GovernanceError) {
-    // Governance system error (e.g., invalid capability)
-    console.error(`Governance error: ${error.message}`);
-  } else if (error instanceof AegisError) {
-    // Transport error (network, timeout, auth failure)
-    console.error(`Transport error: ${error.message}`);
+  if (error instanceof AegisError) {
+    console.log(error.message); // Human-readable description
+    console.log(error.helpUrl); // Link to troubleshooting docs
   }
 }
 ```
 
-## Integration Patterns
+**Constructor:** `new AegisError(message: string, helpUrl?: string)`
 
-### Express Middleware
+Default `helpUrl`: `https://aegis-docs.com/sdk/errors/general`
+
+### AegisConnectionError
+
+Thrown when the SDK cannot reach the AEGIS platform API. Subclass of `AegisError`.
 
 ```typescript
-import { AegisClient } from '@aegis-initiative/sdk';
+import { AegisConnectionError } from "@aegis-initiative/sdk";
 
-const aegis = new AegisClient({ ... });
-
-function governedAction(capability: string) {
-  return async (req, res, next) => {
-    const decision = await aegis.propose({
-      actor: { id: req.agentId, type: 'ai-agent' },
-      action: { capability, parameters: req.body },
-    });
-
-    if (decision.outcome === 'ALLOW') {
-      req.governanceDecision = decision;
-      next();
-    } else {
-      res.status(403).json({ outcome: decision.outcome, reason: decision.reason });
-    }
-  };
+try {
+  const decision = await client.propose(proposal);
+} catch (error) {
+  if (error instanceof AegisConnectionError) {
+    console.log(error.message); // e.g. "Connection refused"
+    console.log(error.helpUrl); // https://aegis-docs.com/sdk/errors/connection
+  }
 }
+```
+
+Common causes: wrong `baseUrl`, network issues, DNS failure.
+
+### AegisAuthError
+
+Thrown when authentication fails (HTTP 401/403). Subclass of `AegisError`.
+
+```typescript
+import { AegisAuthError } from "@aegis-initiative/sdk";
+
+try {
+  const decision = await client.propose(proposal);
+} catch (error) {
+  if (error instanceof AegisAuthError) {
+    console.log(error.message); // e.g. "Invalid API key"
+    console.log(error.helpUrl); // https://aegis-docs.com/sdk/errors/auth
+  }
+}
+```
+
+Common causes: missing API key, expired key, insufficient permissions.
+
+### AegisDeniedError
+
+Thrown when a governance proposal is denied. Subclass of `AegisError`. Includes the denial reason and the policies that caused it.
+
+```typescript
+import { AegisDeniedError } from "@aegis-initiative/sdk";
+
+try {
+  const decision = await client.propose(proposal);
+} catch (error) {
+  if (error instanceof AegisDeniedError) {
+    console.log(error.reason);    // Why the action was denied
+    console.log(error.policyIds); // Policy IDs that caused the denial
+    console.log(error.helpUrl);   // https://aegis-docs.com/sdk/errors/denied
+  }
+}
+```
+
+**Constructor:** `new AegisDeniedError(reason: string, policyIds: string[])`
+
+### Error Hierarchy
+
+```
+AegisError
+  +-- AegisConnectionError
+  +-- AegisAuthError
+  +-- AegisDeniedError
+```
+
+### Combined Error Handling
+
+```typescript
+import {
+  AegisError,
+  AegisConnectionError,
+  AegisAuthError,
+  AegisDeniedError,
+} from "@aegis-initiative/sdk";
+
+try {
+  const decision = await client.propose(proposal);
+} catch (error) {
+  if (error instanceof AegisDeniedError) {
+    console.warn(`Denied by policies ${error.policyIds}: ${error.reason}`);
+  } else if (error instanceof AegisAuthError) {
+    console.error(`Auth failed: ${error.message}`);
+  } else if (error instanceof AegisConnectionError) {
+    console.error(`Cannot reach AEGIS: ${error.message}`);
+  } else if (error instanceof AegisError) {
+    console.error(`Unexpected AEGIS error: ${error.message}`);
+  }
+}
+```
+
+## Exports
+
+The following are exported from `@aegis-initiative/sdk`:
+
+```typescript
+// Classes
+export { AegisClient } from "./client";
+
+// Types and enums
+export { Verdict } from "./types";
+export type { GovernanceDecision, ActionProposal } from "./types";
+
+// Errors (from ./errors)
+export { AegisError, AegisConnectionError, AegisDeniedError, AegisAuthError };
 ```
 
 ## Further Reading
 
-- [SDK Overview](/sdk/) -- All supported languages
+- [SDK Overview](/sdk/) -- Both SDKs at a glance
 - [Python SDK](/sdk/python/) -- Python equivalent
-- [SDK Configuration](/sdk/configuration/) -- Advanced configuration
-- [API Reference](/api/) -- Underlying API endpoints
-
-> **Note:** The TypeScript SDK is under active development. The package will be published to npm as the platform reaches general availability. See the [aegis-sdk repository](https://github.com/aegis-initiative/aegis-sdk) for current status.
+- [SDK Configuration](/sdk/configuration/) -- Constructor options and planned features
+- [Source code](https://github.com/aegis-initiative/aegis-sdk/tree/main/packages/sdk-ts)

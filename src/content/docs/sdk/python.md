@@ -1,189 +1,306 @@
 ---
 title: Python SDK
-description: Getting started with the AEGIS Python SDK.
+description: Full reference for the AEGIS Python SDK.
 ---
 
 # Python SDK
 
-The `aegis-sdk` package provides a Python client for the AEGIS governance platform. It supports Python 3.10+ and provides both synchronous and asynchronous interfaces.
+The `aegis-sdk` Python package provides a typed client for submitting action proposals to the AEGIS governance engine. It requires Python 3.10+ and uses `dataclasses`, `StrEnum`, and `from __future__ import annotations`.
 
 ## Installation
 
-> **Note:** The `aegis-sdk` package is not yet published to PyPI. The install commands below will not work until the package is published. You can build the Python SDK from source at [aegis-sdk/packages/sdk-py](https://github.com/aegis-initiative/aegis-sdk/tree/main/packages/sdk-py).
+The package is not yet published to PyPI. Install from source:
 
 ```bash
-pip install aegis-sdk
+git clone https://github.com/aegis-initiative/aegis-sdk.git
+cd aegis-sdk/packages/sdk-py
+pip install -e .
 ```
 
-Or with a virtual environment:
+## AegisClient
 
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install aegis-sdk
-```
-
-## Setup
-
-> **Note:** The endpoint `https://api.aegissystems.live` is coming soon and not yet active. Authentication via API keys is not yet implemented.
+The client is constructed with a `base_url` and an optional `api_key`:
 
 ```python
 from aegis_sdk import AegisClient
-import os
 
-aegis = AegisClient(
-    endpoint="https://api.aegissystems.live",
-    api_key=os.environ["AEGIS_API_KEY"],
+# Minimal -- no auth (local development)
+client = AegisClient(base_url="http://127.0.0.1:8000")
+
+# With API key
+client = AegisClient(
+    base_url="http://127.0.0.1:8000",
+    api_key="your-api-key",
 )
 ```
 
-### Configuration Options
+### Constructor Parameters
 
-| Option | Type | Required | Default | Description |
+| Parameter | Type | Required | Default | Description |
 |---|---|---|---|---|
-| `endpoint` | str | Yes | -- | AEGIS platform API URL |
-| `api_key` | str | Yes | -- | API key for authentication |
-| `timeout` | float | No | 30.0 | Request timeout in seconds |
-| `retries` | int | No | 3 | Number of retry attempts on transient failures |
-| `retry_delay` | float | No | 1.0 | Base delay between retries in seconds |
+| `base_url` | `str` | Yes | -- | Base URL of the AEGIS Platform API |
+| `api_key` | `str \| None` | No | `None` | API key for authentication |
 
-## Proposing an Action
+Both parameters are keyword-only.
+
+### `propose()` Method
 
 ```python
-decision = aegis.propose(
-    actor={"id": "agent-001", "type": "ai-agent"},
-    action={
-        "capability": "database.query",
-        "parameters": {
-            "query": "SELECT * FROM users LIMIT 10",
-            "database": "production",
-        },
-    },
-    context={
-        "session_id": "sess_abc123",
-        "metadata": {"source": "customer-support-bot"},
-    },
+async def propose(self, proposal: ActionProposal) -> GovernanceDecision
+```
+
+Submits an `ActionProposal` to the governance engine and returns a `GovernanceDecision`. This is an `async` method.
+
+**Current status:** Raises `NotImplementedError` -- the HTTP call to `POST /v1/governance/propose` is stubbed until the aegis-platform API is deployed.
+
+```python
+from aegis_sdk import AegisClient, ActionProposal
+
+client = AegisClient(base_url="http://127.0.0.1:8000")
+
+proposal = ActionProposal(
+    capability="database:query",
+    resource="production.users",
+    parameters={"query": "SELECT * FROM users LIMIT 10"},
+    trace_id="req-abc-123",
+)
+
+decision = await client.propose(proposal)
+```
+
+## ActionProposal
+
+A frozen dataclass representing an action to be evaluated by the governance engine.
+
+```python
+@dataclass(frozen=True)
+class ActionProposal:
+    capability: str
+    resource: str
+    parameters: dict[str, Any] = field(default_factory=dict)
+    trace_id: str | None = None
+```
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `capability` | `str` | Yes | The capability being invoked (e.g. `"file:write"`, `"network:request"`) |
+| `resource` | `str` | Yes | The target resource for the action |
+| `parameters` | `dict[str, Any]` | No | Action-specific parameters (defaults to `{}`) |
+| `trace_id` | `str \| None` | No | Optional trace ID for request correlation |
+
+### Examples
+
+```python
+from aegis_sdk import ActionProposal
+
+# File write
+proposal = ActionProposal(
+    capability="file:write",
+    resource="/etc/config",
+    parameters={"content": "server.port=8080"},
+)
+
+# Network request
+proposal = ActionProposal(
+    capability="network:request",
+    resource="https://api.example.com/data",
+    parameters={"method": "POST", "body": {"key": "value"}},
+    trace_id="trace-456",
+)
+
+# Minimal -- no parameters
+proposal = ActionProposal(
+    capability="file:read",
+    resource="/var/log/app.log",
 )
 ```
 
-## Handling Decisions
+## GovernanceDecision
+
+A frozen dataclass returned by `propose()`, containing the governance verdict.
 
 ```python
-match decision.outcome:
-    case "ALLOW":
-        # Safe to execute the action
-        result = execute_query(decision)
+@dataclass(frozen=True)
+class GovernanceDecision:
+    action_id: str
+    decision: Verdict
+    timestamp: str
+    reason: str | None = None
+    policy_ids: list[str] = field(default_factory=list)
+```
 
-    case "DENY":
-        print(f"Action denied: {decision.reason}")
+| Field | Type | Description |
+|---|---|---|
+| `action_id` | `str` | Unique ID of the evaluated action |
+| `decision` | `Verdict` | The governance verdict (`ALLOW`, `DENY`, `ESCALATE`, `REQUIRE_CONFIRMATION`) |
+| `timestamp` | `str` | ISO 8601 timestamp of the decision |
+| `reason` | `str \| None` | Human-readable explanation (may be `None`) |
+| `policy_ids` | `list[str]` | IDs of the policies that influenced this decision |
 
-    case "ESCALATE":
-        # Route to human reviewer
+### Handling Decisions
+
+```python
+from aegis_sdk import Verdict
+
+decision = await client.propose(proposal)
+
+match decision.decision:
+    case Verdict.ALLOW:
+        print("Approved -- proceeding")
+        execute_action()
+
+    case Verdict.DENY:
+        print(f"Denied: {decision.reason}")
+        print(f"Policies: {decision.policy_ids}")
+
+    case Verdict.ESCALATE:
+        print("Escalated -- routing to human reviewer")
         notify_reviewer(decision)
 
-    case "REQUIRE_CONFIRMATION":
-        # Present to user for approval
-        confirmed = prompt_user(decision)
-        if confirmed:
-            # Resubmit with confirmation token
-            pass
+    case Verdict.REQUIRE_CONFIRMATION:
+        print("Awaiting human confirmation")
+        request_confirmation(decision)
 ```
 
-## Decision Object
+## Verdict Enum
 
-The `propose()` method returns a `Decision` object with typed attributes:
+A `StrEnum` with four values:
 
 ```python
-@dataclass
-class Decision:
-    decision_id: str
-    outcome: Literal["ALLOW", "DENY", "ESCALATE", "REQUIRE_CONFIRMATION"]
-    reason: str
-    risk_score: float
-    constraints: dict
-    timestamp: str
-    audit_ref: str
+class Verdict(StrEnum):
+    ALLOW = "ALLOW"
+    DENY = "DENY"
+    ESCALATE = "ESCALATE"
+    REQUIRE_CONFIRMATION = "REQUIRE_CONFIRMATION"
 ```
 
-## Async Support
-
-The SDK provides an async client for use with `asyncio`:
+Because `Verdict` extends `StrEnum`, you can compare directly with strings:
 
 ```python
-from aegis_sdk import AsyncAegisClient
-
-aegis = AsyncAegisClient(
-    endpoint="https://api.aegissystems.live",
-    api_key=os.environ["AEGIS_API_KEY"],
-)
-
-decision = await aegis.propose(
-    actor={"id": "agent-001", "type": "ai-agent"},
-    action={"capability": "database.query", "parameters": {"query": "..."}},
-)
+decision.decision == "ALLOW"       # True
+decision.decision == Verdict.ALLOW # True
 ```
 
-## Error Handling
+## Error Classes
+
+All errors include a `help_url` attribute pointing to troubleshooting documentation. The base URL for help links is `https://aegis-docs.com/sdk/python/errors`.
+
+### AegisError
+
+Base exception for all AEGIS SDK errors.
 
 ```python
-from aegis_sdk import AegisClient, AegisError, GovernanceError
+from aegis_sdk.errors import AegisError
 
 try:
-    decision = aegis.propose(...)
-except GovernanceError as e:
-    # Governance system error (e.g., invalid capability)
-    print(f"Governance error: {e}")
+    decision = await client.propose(proposal)
 except AegisError as e:
-    # Transport error (network, timeout, auth failure)
-    print(f"Transport error: {e}")
+    print(e.message)   # Human-readable description
+    print(e.help_url)  # Link to troubleshooting docs
 ```
 
-## Integration Patterns
+**Constructor:** `AegisError(message: str, *, help_url: str | None = None)`
 
-### FastAPI Dependency
+The string representation includes both the message and the help URL:
+`"Something went wrong  (see https://aegis-docs.com/sdk/python/errors#aegis-error)"`
+
+### AegisConnectionError
+
+Raised when the SDK cannot reach the AEGIS API. Subclass of `AegisError`.
 
 ```python
-from fastapi import Depends, HTTPException
-from aegis_sdk import AsyncAegisClient
+from aegis_sdk.errors import AegisConnectionError
 
-aegis = AsyncAegisClient(...)
-
-async def require_governance(capability: str, parameters: dict, agent_id: str):
-    decision = await aegis.propose(
-        actor={"id": agent_id, "type": "ai-agent"},
-        action={"capability": capability, "parameters": parameters},
-    )
-    if decision.outcome != "ALLOW":
-        raise HTTPException(status_code=403, detail=decision.reason)
-    return decision
+try:
+    decision = await client.propose(proposal)
+except AegisConnectionError as e:
+    print(e.message)   # e.g. "Connection refused"
+    print(e.help_url)  # https://aegis-docs.com/sdk/python/errors#connection-error
 ```
 
-### LangChain Tool Wrapper
+Common causes: wrong `base_url`, network issues, platform service is down.
+
+### AegisAuthError
+
+Raised when authentication fails (HTTP 401/403). Subclass of `AegisError`.
 
 ```python
-from aegis_sdk import AegisClient
+from aegis_sdk.errors import AegisAuthError
 
-aegis = AegisClient(...)
+try:
+    decision = await client.propose(proposal)
+except AegisAuthError as e:
+    print(e.message)   # e.g. "Invalid API key"
+    print(e.help_url)  # https://aegis-docs.com/sdk/python/errors#auth-error
+```
 
-def governed_tool(capability: str):
-    def decorator(func):
-        def wrapper(*args, **kwargs):
-            decision = aegis.propose(
-                actor={"id": "langchain-agent", "type": "ai-agent"},
-                action={"capability": capability, "parameters": kwargs},
-            )
-            if decision.outcome == "ALLOW":
-                return func(*args, **kwargs)
-            raise PermissionError(f"Governance denied: {decision.reason}")
-        return wrapper
-    return decorator
+Common causes: missing API key, expired key, insufficient permissions.
+
+### AegisDeniedError
+
+Raised when a governance proposal is denied. Subclass of `AegisError`. Includes the denial reason and the policies that caused it.
+
+```python
+from aegis_sdk.errors import AegisDeniedError
+
+try:
+    decision = await client.propose(proposal)
+except AegisDeniedError as e:
+    print(e.reason)      # Why the action was denied
+    print(e.policy_ids)  # List of policy IDs that caused the denial
+    print(e.help_url)    # https://aegis-docs.com/sdk/python/errors#denied-error
+```
+
+**Constructor:** `AegisDeniedError(reason: str, policy_ids: list[str], *, help_url: str | None = None)`
+
+### Error Hierarchy
+
+```
+AegisError
+  +-- AegisConnectionError
+  +-- AegisAuthError
+  +-- AegisDeniedError
+```
+
+Catch `AegisError` to handle all SDK errors, or catch specific subclasses for targeted handling:
+
+```python
+from aegis_sdk.errors import (
+    AegisError,
+    AegisConnectionError,
+    AegisAuthError,
+    AegisDeniedError,
+)
+
+try:
+    decision = await client.propose(proposal)
+except AegisDeniedError as e:
+    log.warning(f"Denied by policies {e.policy_ids}: {e.reason}")
+except AegisAuthError as e:
+    log.error(f"Auth failed: {e.message}")
+except AegisConnectionError as e:
+    log.error(f"Cannot reach AEGIS: {e.message}")
+except AegisError as e:
+    log.error(f"Unexpected AEGIS error: {e.message}")
+```
+
+## Public API
+
+The following names are exported from `aegis_sdk`:
+
+```python
+from aegis_sdk import AegisClient, ActionProposal, GovernanceDecision, Verdict
+```
+
+Error classes must be imported from `aegis_sdk.errors`:
+
+```python
+from aegis_sdk.errors import AegisError, AegisConnectionError, AegisAuthError, AegisDeniedError
 ```
 
 ## Further Reading
 
-- [SDK Overview](/sdk/) -- All supported languages
+- [SDK Overview](/sdk/) -- Both SDKs at a glance
 - [TypeScript SDK](/sdk/javascript/) -- TypeScript equivalent
-- [SDK Configuration](/sdk/configuration/) -- Advanced configuration
-- [API Reference](/api/) -- Underlying API endpoints
-
-> **Note:** The Python SDK is under active development. The package will be published to PyPI as the platform reaches general availability. See the [aegis-sdk repository](https://github.com/aegis-initiative/aegis-sdk) for current status.
+- [SDK Configuration](/sdk/configuration/) -- Constructor options and planned features
+- [Source code](https://github.com/aegis-initiative/aegis-sdk/tree/main/packages/sdk-py)

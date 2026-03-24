@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import DocLayout from '../layouts/DocLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 
 export async function getStaticPaths() {
   const docs = await getCollection('docs');
@@ -12,8 +13,20 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
+
+// Build breadcrumb from slug
+const parts = entry.id.split('/');
+const breadcrumbItems = [
+  { label: 'AEGIS Docs', href: '/' },
+  ...parts.slice(0, -1).map((part: string, i: number) => ({
+    label: part.charAt(0).toUpperCase() + part.slice(1).replace(/-/g, ' '),
+    href: '/' + parts.slice(0, i + 1).join('/') + '/',
+  })),
+  { label: entry.data.title },
+];
 ---
 
 <DocLayout title={entry.data.title} description={entry.data.description}>
+  <Breadcrumb items={breadcrumbItems} slot="breadcrumb" />
   <Content />
 </DocLayout>

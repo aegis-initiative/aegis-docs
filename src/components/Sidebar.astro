@@ -109,7 +109,13 @@ function isGroupActive(items: { slug: string }[]): boolean {
     border-right: 1px solid var(--color-border-subtle);
     overflow-y: auto;
     position: fixed;
-    top: 4rem; 
+    top: 4rem;
+    bottom: 0;
+    left: 0;
+    height: calc(100vh - 4rem);
+    display: none;
+    flex-direction: column;
+  }
 
   .sidebar-overlay {
     display: none;

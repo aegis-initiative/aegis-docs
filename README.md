@@ -4,12 +4,12 @@
 
 <p align="center">
   <strong>aegis-docs</strong><br>
-  The public AEGIS™ documentation site — built with Astro, hosted at aegissystems.app
+  The public AEGIS™ documentation site — built with Astro, hosted at aegis-docs.com
 </p>
 
 <p align="center">
   <a href="https://github.com/aegis-initiative"><img src="https://img.shields.io/badge/org-aegis--initiative-0084e7?style=flat-square&logo=github" alt="Org"></a>
-  <a href="https://aegissystems.app"><img src="https://img.shields.io/badge/site-aegissystems.app-00BFA5?style=flat-square" alt="Site"></a>
+  <a href="https://aegis-docs.com"><img src="https://img.shields.io/badge/site-aegis--docs.com-00BFA5?style=flat-square" alt="Site"></a>
   <img src="https://img.shields.io/badge/deploy-passing-brightgreen?style=flat-square" alt="Deploy">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-green?style=flat-square" alt="License"></a>
   <img src="https://img.shields.io/badge/ip--owner-Finnoybu%20IP%20LLC-blueviolet?style=flat-square" alt="IP Owner">
@@ -19,7 +19,7 @@
 
 ## Overview
 
-`aegis-docs` is the public-facing documentation site for the AEGIS™ ecosystem, deployed at [aegissystems.app](https://aegissystems.app). It is the primary reference for developers, operators, researchers, and anyone building with or learning about AEGIS™.
+`aegis-docs` is the public-facing documentation site for the AEGIS™ ecosystem, deployed at [aegissystems.app](https://aegis-docs.com). It is the primary reference for developers, operators, researchers, and anyone building with or learning about AEGIS™.
 
 > **Capability without constraint is not intelligence™**
 
@@ -45,7 +45,7 @@
 
 - **[Astro](https://astro.build/)** with [Starlight](https://starlight.astro.build/) theme
 - Content authored in Markdown / MDX
-- Deployed to [aegissystems.app](https://aegissystems.app)
+- Deployed to [aegissystems.app](https://aegis-docs.com)
 
 ---
 

@@ -1,0 +1,211 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import AegisLogo from '../components/AegisLogo.astro';
+---
+
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="auto">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AEGIS™ Documentation</title>
+    <meta name="description" content="Public documentation for the AEGIS ecosystem — governance, architecture, APIs, and developer guides" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="AEGIS™ Documentation" />
+    <meta property="og:description" content="Public documentation for the AEGIS ecosystem — governance, architecture, APIs, and developer guides" />
+    <meta property="og:url" content="https://aegis-docs.com" />
+    <meta property="og:site_name" content="AEGIS™ Documentation" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://aegis-docs.com" />
+
+    <link rel="preload" href="/fonts/ibmplexsans-variablefont_wdthwght-webfont.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/poppins-light-webfont.woff2" as="font" type="font/woff2" crossorigin />
+
+    <script is:inline>
+      (function () {
+        const stored = localStorage.getItem('aegis-theme');
+        const preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = stored || preferred;
+      })();
+    </script>
+
+    <style>
+      @font-face {
+        font-family: "IBM Plex Sans";
+        src: url("/fonts/ibmplexsans-variablefont_wdthwght-webfont.woff2") format("woff2");
+        font-weight: 100 700;
+        font-style: normal;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "Poppins";
+        src: url("/fonts/poppins-light-webfont.woff2") format("woff2");
+        font-weight: 300;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      :root {
+        --color-bg: #ffffff;
+        --color-text: #1b1b1b;
+        --color-text-secondary: #454545;
+        --color-text-muted: #757575;
+        --color-accent: #005ea2;
+        --color-accent-high: #1a4480;
+        --color-border: #c9c9c9;
+        --color-bg-subtle: #f5f5f5;
+        --color-brand-gray: #9ca3af;
+        --header-bg: #fafafa;
+        --header-border: #777777;
+        --header-text: #707070;
+        --header-text-muted: #707070;
+      }
+
+      html[data-theme="dark"] {
+        --color-bg: #1b1b1b;
+        --color-text: #f0f0f0;
+        --color-text-secondary: #c9c9c9;
+        --color-text-muted: #8a8a8a;
+        --color-accent: #73b3e7;
+        --color-accent-high: #a3cef1;
+        --color-border: #5c5c5c;
+        --header-bg: #000000;
+        --header-border: #000000;
+        --header-text: #e8e8e8;
+        --header-text-muted: #999999;
+      }
+
+      body {
+        font-family: "Poppins", system-ui, sans-serif;
+        font-weight: 300;
+        background-color: var(--color-bg);
+        color: var(--color-text);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .hero {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 3rem 2rem;
+        text-align: center;
+      }
+
+      .hero-logo {
+        margin-bottom: 1.5rem;
+      }
+
+      .hero-title {
+        font-family: "IBM Plex Sans", system-ui, sans-serif;
+        font-weight: 400;
+        font-size: 3.5rem;
+        line-height: 1.15;
+        margin-bottom: 1rem;
+      }
+
+      .hero-tagline {
+        font-size: 1.25rem;
+        line-height: 1.6;
+        color: var(--color-text-secondary);
+        margin-bottom: 2.5rem;
+        max-width: 44rem;
+      }
+
+      .nav-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+        gap: 1rem;
+        margin-bottom: 2.5rem;
+        text-align: left;
+        max-width: 50rem;
+        width: 100%;
+      }
+
+      .nav-card {
+        display: block;
+        padding: 1.25rem 1.5rem;
+        border: 1px solid var(--color-border);
+        border-radius: 0.5rem;
+        text-decoration: none;
+        color: var(--color-text);
+        transition: border-color 0.15s, color 0.15s;
+      }
+
+      .nav-card:hover {
+        border-color: var(--color-accent);
+        color: var(--color-accent);
+      }
+
+      .nav-card h2 {
+        font-family: "IBM Plex Sans", system-ui, sans-serif;
+        font-weight: 500;
+        font-size: 1.1rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .nav-card p {
+        font-size: 0.9rem;
+        color: var(--color-text-secondary);
+        line-height: 1.4;
+      }
+
+      @media (max-width: 640px) {
+        .hero-title { font-size: 2.5rem; }
+        .hero-tagline { font-size: 1.1rem; }
+        .nav-grid { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
+
+    <main class="hero">
+      <div class="hero-logo">
+        <AegisLogo size={80} />
+      </div>
+      <h1 class="hero-title">AEGIS™ Documentation</h1>
+      <p class="hero-tagline">
+        Public documentation for the AEGIS ecosystem — governance, architecture, APIs, and developer guides.
+      </p>
+
+      <nav class="nav-grid">
+        <a href="/getting-started/" class="nav-card">
+          <h2>Getting Started</h2>
+          <p>Introduction to the AEGIS ecosystem and core concepts.</p>
+        </a>
+        <a href="/architecture/" class="nav-card">
+          <h2>Architecture</h2>
+          <p>System design, governance runtime, and protocol.</p>
+        </a>
+        <a href="/api/" class="nav-card">
+          <h2>Platform API</h2>
+          <p>REST API reference and integration guides.</p>
+        </a>
+        <a href="/sdk/" class="nav-card">
+          <h2>SDK</h2>
+          <p>Client SDK documentation and usage examples.</p>
+        </a>
+        <a href="/guides/" class="nav-card">
+          <h2>Guides</h2>
+          <p>Policy authoring, deployment, and monitoring.</p>
+        </a>
+        <a href="/contributing/" class="nav-card">
+          <h2>Contributing</h2>
+          <p>How to contribute to the AEGIS ecosystem.</p>
+        </a>
+      </nav>
+    </main>
+
+    <Footer />
+  </body>
+</html>

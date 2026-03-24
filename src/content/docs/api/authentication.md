@@ -20,7 +20,7 @@ curl -s -X POST http://127.0.0.1:8000/api/v1/governance/propose \
   -d '{"agent_id": "demo-agent", "action": "file.read", "target": "file.read"}'
 ```
 
-This is acceptable for local development and testing. Authentication will be required before the API is deployed to `aegissystems.live`.
+This is acceptable for local development and testing. Authentication will be required before the API is deployed to `aegis-platform.net`.
 
 ---
 
@@ -47,7 +47,7 @@ Authorization: Bearer aegis_sk_live_...
 | `policies:manage` | Create and update policies |
 | `admin` | Full administrative access |
 
-API keys will be provisioned through the operator dashboard at [aegissystems.live](https://aegissystems.live) once it is available.
+API keys will be provisioned through the operator dashboard at [aegis-platform.net](https://aegis-platform.net) once it is available.
 
 ### JWT Bearer Tokens
 

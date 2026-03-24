@@ -7,7 +7,7 @@ description: Overview of the AEGIS platform API -- working endpoints, base URL, 
 
 The AEGIS platform exposes a REST API for governance operations, capability inspection, health checking, and audit queries.
 
-> **Status:** The API is running locally at `http://127.0.0.1:8000` and is functional. It is not yet deployed to `aegissystems.live`. Authentication is not yet implemented -- all requests are currently accepted without credentials.
+> **Status:** The API is running locally at `http://127.0.0.1:8000` and is functional. It is not yet deployed to `aegis-platform.net`. Authentication is not yet implemented -- all requests are currently accepted without credentials.
 
 ## Base URL
 
@@ -15,7 +15,7 @@ The AEGIS platform exposes a REST API for governance operations, capability insp
 http://127.0.0.1:8000
 ```
 
-All API routes are under `/api/v1/`. When the platform is deployed, the base URL will change to `https://api.aegissystems.live`.
+All API routes are under `/api/v1/`. When the platform is deployed, the base URL will change to `https://api.aegis-platform.net`.
 
 ## Working Endpoints
 

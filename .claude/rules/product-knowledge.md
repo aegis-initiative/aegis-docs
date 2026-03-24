@@ -172,7 +172,7 @@ Same structure, different text. Site name: "AEGIS Docs". GitHub: aegis-docs.
 
 ## 15. Footer
 
-Same layout. External links (aegissystems.app/about/, aegissystems.app/legal/) instead of relative.
+Same layout. External links (aegis-initiative.com/about/, aegis-initiative.com/legal/) instead of relative.
 
 ---
 

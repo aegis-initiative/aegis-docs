@@ -60,6 +60,8 @@ const {
           ? "dark"
           : "light";
         document.documentElement.dataset.theme = stored || preferred;
+        // Set default nav height before shared nav script loads
+        document.documentElement.style.setProperty('--aegis-nav-height', '32px');
       })();
     </script>
   </head>

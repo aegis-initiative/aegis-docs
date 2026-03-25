@@ -64,6 +64,36 @@ const {
         document.documentElement.style.setProperty('--aegis-nav-height', '32px');
       })();
     </script>
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "name": "AEGIS Documentation",
+          "url": "https://aegis-docs.com",
+          "publisher": {
+            "@type": "Organization",
+            "name": "AEGIS Initiative",
+            "url": "https://aegis-initiative.com"
+          }
+        },
+        {
+          "@type": "TechArticle",
+          "name": "AEGIS Documentation",
+          "url": "https://aegis-docs.com",
+          "publisher": {
+            "@type": "Organization",
+            "name": "AEGIS Initiative",
+            "url": "https://aegis-initiative.com"
+          },
+          "description": "Official documentation for the AEGIS ecosystem — architecture, APIs, SDK, and guides"
+        }
+      ]
+    }
+    </script>
   </head>
   <body>
     

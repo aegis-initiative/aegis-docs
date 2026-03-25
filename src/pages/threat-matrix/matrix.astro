@@ -1,6 +1,7 @@
 ---
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import Sidebar from '../../components/Sidebar.astro';
+import Footer from '../../components/Footer.astro';
 
 const tactics = [
   {
@@ -67,24 +68,30 @@ const tactics = [
     ]
   },
 ];
-
-const severityColors: Record<string, { bg: string; border: string; text: string }> = {
-  critical: { bg: "#3b1219", border: "#f8514966", text: "#ff7b72" },
-  high: { bg: "#2a1f00", border: "#d2992266", text: "#f0b840" },
-  medium: { bg: "#1c2333", border: "#58a6ff44", text: "#79c0ff" },
-  low: { bg: "#0d2818", border: "#3fb95044", text: "#56d364" },
-};
 ---
 
 <!doctype html>
-<html lang="en" dir="ltr" data-theme="dark">
+<html lang="en" dir="ltr" data-theme="auto">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ATX-1 Matrix — AEGIS Threat Matrix</title>
   <meta name="description" content="Interactive matrix view of the ATX-1 threat taxonomy — 9 tactics, 20 techniques for autonomous AI agent governance." />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+  <script src="https://aegis-initiative.com/shared/aegis-nav.js" defer></script>
+
   <link rel="preload" href="/fonts/ibmplexsans-variablefont_wdthwght-webfont.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/poppins-light-webfont.woff2" as="font" type="font/woff2" crossorigin />
+
+  <script is:inline>
+    (function () {
+      const stored = localStorage.getItem("aegis-theme");
+      const preferred = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.dataset.theme = stored || preferred;
+      document.documentElement.style.setProperty('--aegis-nav-height', '32px');
+    })();
+  </script>
 
   <style>
     @font-face {
@@ -94,73 +101,109 @@ const severityColors: Record<string, { bg: string; border: string; text: string 
       font-style: normal;
       font-display: swap;
     }
+    @font-face {
+      font-family: "Poppins";
+      src: url("/fonts/poppins-light-webfont.woff2") format("woff2");
+      font-weight: 300;
+      font-style: normal;
+      font-display: swap;
+    }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --color-bg: #ffffff;
+      --color-text: #1b1b1b;
+      --color-text-secondary: #454545;
+      --color-text-muted: #757575;
+      --color-accent: #005ea2;
+      --color-border: #d4d4d4;
+      --color-border-subtle: #e8e8e8;
+      --header-bg: #ffffff;
+      --header-border: #d4d4d4;
+      --sidebar-bg: #f8f8f8;
+      --matrix-card-bg: #f4f4f4;
+      --matrix-card-hover: #eaeaea;
+      --matrix-header-bg: #e8e8e8;
+      --overlay-bg: rgba(0,0,0,0.4);
+      --detail-bg: #ffffff;
+      --detail-meta-bg: #f4f4f4;
+    }
+
+    [data-theme="dark"] {
+      --color-bg: #161616;
+      --color-text: #f4f4f4;
+      --color-text-secondary: #c6c6c6;
+      --color-text-muted: #8d8d8d;
+      --color-accent: #73b3e7;
+      --color-border: #393939;
+      --color-border-subtle: #262626;
+      --header-bg: #1b1b1b;
+      --header-border: #393939;
+      --sidebar-bg: #1b1b1b;
+      --matrix-card-bg: #1b1b1b;
+      --matrix-card-hover: #262626;
+      --matrix-header-bg: #262626;
+      --overlay-bg: rgba(0,0,0,0.6);
+      --detail-bg: #1b1b1b;
+      --detail-meta-bg: #262626;
+    }
+
+    html {
+      font-family: "Poppins", system-ui, sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--color-text);
+      background-color: var(--color-bg);
+    }
+
+    @media (min-width: 560px) { html { font-size: 16px; } }
 
     body {
-      font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #0d1117;
-      color: #e6edf3;
       min-height: 100vh;
-    }
-
-    .matrix-header {
-      border-bottom: 1px solid #30363d;
-      padding: 1rem 2rem;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
+      flex-direction: column;
     }
 
-    .matrix-header-left {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .matrix-header .logo {
-      font-size: 1.4rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      color: #58a6ff;
-    }
-
-    .matrix-header .logo sup { font-size: 0.6em; vertical-align: super; }
-
-    .matrix-header .title {
-      font-size: 1.1rem;
-      color: #8b949e;
+    h1, h2, h3 {
+      font-family: "IBM Plex Sans", system-ui, sans-serif;
       font-weight: 400;
+      line-height: 1.3;
     }
 
-    .matrix-header-links {
+    .page-wrapper {
       display: flex;
-      gap: 1.5rem;
+      flex: 1;
+      width: 100%;
     }
 
-    .matrix-header-links a {
-      color: #8b949e;
-      text-decoration: none;
-      font-size: 0.85rem;
-      transition: color 0.2s;
+    .main-content {
+      flex: 1;
+      min-width: 0;
+      padding: 1.5rem;
     }
 
-    .matrix-header-links a:hover { color: #58a6ff; }
+    @media (min-width: 1024px) {
+      .main-content {
+        margin-left: 320px;
+      }
+    }
 
+    /* Matrix-specific styles */
     .matrix-hero {
       text-align: center;
-      padding: 2.5rem 2rem 1rem;
+      padding: 1.5rem 0 0.5rem;
     }
 
     .matrix-hero h1 {
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
+      font-size: 1.6rem;
+      margin-bottom: 0.4rem;
     }
 
     .matrix-hero p {
-      color: #8b949e;
-      font-size: 0.95rem;
+      color: var(--color-text-muted);
+      font-size: 0.9rem;
       max-width: 700px;
       margin: 0 auto;
     }
@@ -169,7 +212,7 @@ const severityColors: Record<string, { bg: string; border: string; text: string 
       display: flex;
       justify-content: center;
       gap: 1.5rem;
-      padding: 1rem 2rem 1.5rem;
+      padding: 0.75rem 0 1rem;
       flex-wrap: wrap;
     }
 
@@ -178,7 +221,7 @@ const severityColors: Record<string, { bg: string; border: string; text: string 
       align-items: center;
       gap: 0.4rem;
       font-size: 0.8rem;
-      color: #8b949e;
+      color: var(--color-text-muted);
     }
 
     .legend-dot {
@@ -189,33 +232,34 @@ const severityColors: Record<string, { bg: string; border: string; text: string 
 
     .matrix-container {
       overflow-x: auto;
-      padding: 0 1.5rem 3rem;
+      padding-bottom: 2rem;
     }
 
     .matrix {
       display: grid;
-      grid-template-columns: repeat(9, minmax(140px, 1fr));
-      gap: 2px;
-      min-width: 1280px;
+      grid-template-columns: repeat(9, minmax(130px, 1fr));
+      gap: 3px;
+      min-width: 1200px;
     }
 
     .tactic-header {
-      background: #161b22;
-      border: 1px solid #30363d;
+      background: var(--matrix-header-bg);
+      border: 1px solid var(--color-border);
       border-radius: 6px 6px 0 0;
-      padding: 0.75rem 0.5rem;
+      padding: 0.6rem 0.4rem;
       text-align: center;
     }
 
     .tactic-id {
       font-family: 'Cascadia Code', 'Fira Code', monospace;
-      font-size: 0.7rem;
-      color: #8b949e;
-      margin-bottom: 0.25rem;
+      font-size: 0.65rem;
+      color: var(--color-text-muted);
+      margin-bottom: 0.2rem;
     }
 
     .tactic-name {
-      font-size: 0.8rem;
+      font-family: "IBM Plex Sans", system-ui, sans-serif;
+      font-size: 0.75rem;
       font-weight: 600;
       line-height: 1.3;
     }
@@ -223,32 +267,37 @@ const severityColors: Record<string, { bg: string; border: string; text: string 
     .tactic-column {
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 3px;
     }
 
     .technique-cell {
       border-radius: 4px;
-      padding: 0.6rem 0.5rem;
+      padding: 0.5rem 0.4rem;
       cursor: pointer;
       transition: all 0.15s;
-      border: 1px solid transparent;
-      position: relative;
+      border: 1px solid var(--color-border);
+      background: var(--matrix-card-bg);
     }
 
     .technique-cell:hover {
+      background: var(--matrix-card-hover);
       transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    [data-theme="dark"] .technique-cell:hover {
       box-shadow: 0 2px 8px rgba(0,0,0,0.3);
     }
 
     .technique-id {
       font-family: 'Cascadia Code', 'Fira Code', monospace;
-      font-size: 0.65rem;
-      opacity: 0.7;
-      margin-bottom: 0.2rem;
+      font-size: 0.6rem;
+      color: var(--color-text-muted);
+      margin-bottom: 0.15rem;
     }
 
     .technique-name {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 500;
       line-height: 1.3;
     }
@@ -258,17 +307,29 @@ const severityColors: Record<string, { bg: string; border: string; text: string 
       text-transform: uppercase;
       letter-spacing: 0.05em;
       font-weight: 600;
-      margin-top: 0.3rem;
-      opacity: 0.8;
+      margin-top: 0.25rem;
+      display: inline-block;
+      padding: 0.1rem 0.35rem;
+      border-radius: 3px;
     }
 
-    /* Detail panel */
+    .severity-critical { background: #f8514922; color: #d1242f; }
+    .severity-high { background: #d2992222; color: #b35900; }
+    .severity-medium { background: #58a6ff22; color: #0969da; }
+    .severity-low { background: #3fb95022; color: #1a7f37; }
+
+    [data-theme="dark"] .severity-critical { background: #3b1219; color: #ff7b72; }
+    [data-theme="dark"] .severity-high { background: #2a1f00; color: #f0b840; }
+    [data-theme="dark"] .severity-medium { background: #1c2333; color: #79c0ff; }
+    [data-theme="dark"] .severity-low { background: #0d2818; color: #56d364; }
+
+    /* Detail overlay */
     .detail-overlay {
       display: none;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.6);
-      z-index: 100;
+      background: var(--overlay-bg);
+      z-index: 200;
       align-items: center;
       justify-content: center;
       padding: 2rem;
@@ -277,12 +338,12 @@ const severityColors: Record<string, { bg: string; border: string; text: string 
     .detail-overlay.active { display: flex; }
 
     .detail-panel {
-      background: #161b22;
-      border: 1px solid #30363d;
+      background: var(--detail-bg);
+      border: 1px solid var(--color-border);
       border-radius: 12px;
-      max-width: 600px;
+      max-width: 560px;
       width: 100%;
-      padding: 2rem;
+      padding: 1.75rem;
       position: relative;
       max-height: 80vh;
       overflow-y: auto;
@@ -290,159 +351,159 @@ const severityColors: Record<string, { bg: string; border: string; text: string 
 
     .detail-close {
       position: absolute;
-      top: 1rem;
+      top: 0.75rem;
       right: 1rem;
       background: none;
       border: none;
-      color: #8b949e;
+      color: var(--color-text-muted);
       font-size: 1.5rem;
       cursor: pointer;
-      line-height: 1;
     }
 
-    .detail-close:hover { color: #e6edf3; }
+    .detail-close:hover { color: var(--color-text); }
 
     .detail-panel h2 {
-      font-size: 1.2rem;
-      margin-bottom: 0.25rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.2rem;
       padding-right: 2rem;
     }
 
     .detail-panel .detail-id {
       font-family: 'Cascadia Code', 'Fira Code', monospace;
-      font-size: 0.85rem;
-      color: #8b949e;
-      margin-bottom: 1rem;
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+      margin-bottom: 0.75rem;
     }
 
     .detail-panel .detail-desc {
       font-size: 0.9rem;
-      color: #c9d1d9;
+      color: var(--color-text-secondary);
       line-height: 1.6;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
     }
 
     .detail-meta {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 0.75rem;
+      gap: 0.6rem;
     }
 
     .detail-meta-item {
-      background: #0d1117;
-      border: 1px solid #30363d;
+      background: var(--detail-meta-bg);
+      border: 1px solid var(--color-border);
       border-radius: 6px;
-      padding: 0.6rem 0.75rem;
+      padding: 0.5rem 0.65rem;
     }
 
     .detail-meta-label {
-      font-size: 0.7rem;
-      color: #8b949e;
+      font-size: 0.65rem;
+      color: var(--color-text-muted);
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      margin-bottom: 0.2rem;
+      margin-bottom: 0.15rem;
     }
 
     .detail-meta-value {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-weight: 500;
     }
 
     .detail-link {
       display: inline-block;
-      margin-top: 1.5rem;
-      color: #58a6ff;
+      margin-top: 1.25rem;
+      color: var(--color-accent);
       text-decoration: none;
       font-size: 0.85rem;
     }
 
     .detail-link:hover { text-decoration: underline; }
 
-    .matrix-footer {
-      border-top: 1px solid #30363d;
-      padding: 1.5rem 2rem;
-      text-align: center;
-      color: #8b949e;
-      font-size: 0.8rem;
+    .matrix-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 0 0 1.5rem;
+      font-size: 0.85rem;
     }
 
-    .matrix-footer a { color: #58a6ff; text-decoration: none; }
-    .matrix-footer .tagline { font-style: italic; margin-bottom: 0.5rem; }
-
-    @media (max-width: 768px) {
-      .matrix-header { flex-direction: column; gap: 0.75rem; }
-      .matrix-hero h1 { font-size: 1.4rem; }
-      .legend { gap: 0.75rem; }
+    .matrix-links a {
+      color: var(--color-accent);
+      text-decoration: none;
     }
+
+    .matrix-links a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
-  <header class="matrix-header">
-    <div class="matrix-header-left">
-      <div class="logo">AEGIS<sup>TM</sup></div>
-      <span class="title">ATX-1 Threat Matrix</span>
-    </div>
-    <nav class="matrix-header-links">
-      <a href="/threat-matrix">Documentation</a>
-      <a href="/threat-matrix/techniques">Technique Details</a>
-      <a href="https://aegis-governance.com/atx-1/index.json">Data (JSON)</a>
-      <a href="https://aegis-initiative.com">Initiative</a>
-    </nav>
-  </header>
+  <Header />
+  <div class="page-wrapper">
+    <Sidebar />
+    <main class="main-content">
 
-  <section class="matrix-hero">
-    <h1>ATX-1: AEGIS Threat Matrix</h1>
-    <p>Adversarial knowledge base for autonomous AI agent behavior. 9 tactics, 20 techniques — empirically grounded in observed agentic failures.</p>
-  </section>
+      <section class="matrix-hero">
+        <h1>ATX-1: AEGIS Threat Matrix</h1>
+        <p>Adversarial knowledge base for autonomous AI agent behavior. 9 tactics, 20 techniques — empirically grounded in observed agentic failures.</p>
+      </section>
 
-  <div class="legend">
-    <div class="legend-item">
-      <div class="legend-dot" style="background: #3b1219; border: 1px solid #f8514966;"></div>
-      Critical
-    </div>
-    <div class="legend-item">
-      <div class="legend-dot" style="background: #2a1f00; border: 1px solid #d2992266;"></div>
-      High
-    </div>
-    <div class="legend-item">
-      <div class="legend-dot" style="background: #1c2333; border: 1px solid #58a6ff44;"></div>
-      Medium
-    </div>
-    <div class="legend-item">
-      <div class="legend-dot" style="background: #0d2818; border: 1px solid #3fb95044;"></div>
-      Low
-    </div>
-  </div>
+      <div class="legend">
+        <div class="legend-item">
+          <div class="legend-dot severity-critical" style="width:12px;height:12px;border-radius:3px;"></div>
+          Critical
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot severity-high" style="width:12px;height:12px;border-radius:3px;"></div>
+          High
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot severity-medium" style="width:12px;height:12px;border-radius:3px;"></div>
+          Medium
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot severity-low" style="width:12px;height:12px;border-radius:3px;"></div>
+          Low
+        </div>
+      </div>
 
-  <div class="matrix-container">
-    <div class="matrix">
-      {tactics.map((tactic) => (
-        <div class="tactic-column">
-          <div class="tactic-header">
-            <div class="tactic-id">{tactic.id}</div>
-            <div class="tactic-name">{tactic.short}</div>
-          </div>
-          {tactic.techniques.map((tech) => (
-            <div
-              class="technique-cell"
-              style={`background: ${severityColors[tech.severity].bg}; border-color: ${severityColors[tech.severity].border};`}
-              data-id={tech.id}
-              data-name={tech.name}
-              data-severity={tech.severity}
-              data-root={tech.root}
-              data-case={tech.case}
-              data-owasp={tech.owasp}
-              data-desc={tech.desc}
-              data-tactic={`${tactic.id}: ${tactic.name}`}
-            >
-              <div class="technique-id" style={`color: ${severityColors[tech.severity].text};`}>{tech.id}</div>
-              <div class="technique-name">{tech.name}</div>
-              <div class="severity-badge" style={`color: ${severityColors[tech.severity].text};`}>{tech.severity}</div>
+      <div class="matrix-links">
+        <a href="/threat-matrix">Documentation</a>
+        <a href="/threat-matrix/techniques">Technique Details</a>
+        <a href="/threat-matrix/regulatory-crossref">Regulatory Mapping</a>
+        <a href="https://aegis-governance.com/atx-1/index.json">Data (JSON)</a>
+      </div>
+
+      <div class="matrix-container">
+        <div class="matrix">
+          {tactics.map((tactic) => (
+            <div class="tactic-column">
+              <div class="tactic-header">
+                <div class="tactic-id">{tactic.id}</div>
+                <div class="tactic-name">{tactic.short}</div>
+              </div>
+              {tactic.techniques.map((tech) => (
+                <div
+                  class="technique-cell"
+                  data-id={tech.id}
+                  data-name={tech.name}
+                  data-severity={tech.severity}
+                  data-root={tech.root}
+                  data-case={tech.case}
+                  data-owasp={tech.owasp}
+                  data-desc={tech.desc}
+                  data-tactic={`${tactic.id}: ${tactic.name}`}
+                >
+                  <div class="technique-id">{tech.id}</div>
+                  <div class="technique-name">{tech.name}</div>
+                  <div class={`severity-badge severity-${tech.severity}`}>{tech.severity}</div>
+                </div>
+              ))}
             </div>
           ))}
         </div>
-      ))}
-    </div>
+      </div>
+
+      <Footer />
+    </main>
   </div>
 
   <div class="detail-overlay" id="detail-overlay">
@@ -477,17 +538,12 @@ const severityColors: Record<string, { bg: string; border: string; text: string 
     </div>
   </div>
 
-  <footer class="matrix-footer">
-    <div class="tagline">Capability without constraint is not intelligence.&trade;</div>
-    <div>&copy; 2026 <a href="https://aegis-initiative.com">AEGIS Initiative</a> &middot; Finnoybu IP LLC &middot; <a href="https://aegis-docs.com">Documentation</a> &middot; <a href="https://aegis-governance.com">Governance Data</a></div>
-  </footer>
-
   <script is:inline>
-    document.querySelectorAll('.technique-cell').forEach(cell => {
-      cell.addEventListener('click', () => {
-        const overlay = document.getElementById('detail-overlay');
+    document.querySelectorAll('.technique-cell').forEach(function(cell) {
+      cell.addEventListener('click', function() {
+        var overlay = document.getElementById('detail-overlay');
         document.getElementById('detail-name').textContent = cell.dataset.name;
-        document.getElementById('detail-id').textContent = cell.dataset.id + ' — ' + cell.dataset.tactic;
+        document.getElementById('detail-id').textContent = cell.dataset.id + ' \u2014 ' + cell.dataset.tactic;
         document.getElementById('detail-desc').textContent = cell.dataset.desc;
         document.getElementById('detail-severity').textContent = cell.dataset.severity.charAt(0).toUpperCase() + cell.dataset.severity.slice(1);
         document.getElementById('detail-tactic').textContent = cell.dataset.tactic;
@@ -499,17 +555,17 @@ const severityColors: Record<string, { bg: string; border: string; text: string 
       });
     });
 
-    document.getElementById('detail-close').addEventListener('click', () => {
+    document.getElementById('detail-close').addEventListener('click', function() {
       document.getElementById('detail-overlay').classList.remove('active');
     });
 
-    document.getElementById('detail-overlay').addEventListener('click', (e) => {
+    document.getElementById('detail-overlay').addEventListener('click', function(e) {
       if (e.target === e.currentTarget) {
         e.currentTarget.classList.remove('active');
       }
     });
 
-    document.addEventListener('keydown', (e) => {
+    document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
         document.getElementById('detail-overlay').classList.remove('active');
       }

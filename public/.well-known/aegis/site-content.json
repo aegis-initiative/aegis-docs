@@ -1,0 +1,208 @@
+{
+  "$schema": "https://aegis-platform.net/.well-known/aegis/schemas/site-content.schema.json",
+  "site": "AEGIS Documentation",
+  "url": "https://aegis-docs.com",
+  "content": {
+    "coreConcepts": {
+      "title": "Core Concepts",
+      "summary": "AEGIS is a governance runtime for AI agents. It intercepts actions that autonomous AI systems are about to take and evaluates them against governance policies and threat models in real time, before execution.",
+      "concepts": [
+        {
+          "name": "Governance Runtime",
+          "definition": "The central decision engine that receives action proposals from AI agents, evaluates them through a five-stage pipeline (intake, policy evaluation, threat assessment, decision synthesis, response), and returns governance decisions. Runs inline with agent execution — latency is a first-class design constraint."
+        },
+        {
+          "name": "Action Proposal",
+          "definition": "A structured request from an AI agent describing an action it intends to take. Includes the action type (API call, file write, network request, tool invocation), target resource, parameters, and agent identity context. Defined by AGP-1."
+        },
+        {
+          "name": "Governance Decision",
+          "definition": "The outcome of evaluating an action proposal. One of four values: ALLOW (proceed), DENY (blocked, with reason and triggering policy), ESCALATE (requires human review), or REQUIRE_CONFIRMATION (conditionally permitted, agent must acknowledge conditions)."
+        },
+        {
+          "name": "Policy",
+          "definition": "A declarative rule that defines governance behavior. Policies specify conditions under which actions are allowed, denied, escalated, or require confirmation. Policies are composable and evaluated in priority order."
+        },
+        {
+          "name": "Audit Trail",
+          "definition": "An immutable record of every action proposal and governance decision. Every proposal, every decision, every policy evaluation is logged. The audit trail is the foundation of accountability."
+        },
+        {
+          "name": "Agent Identity",
+          "definition": "A verified identity for an AI agent within the AEGIS ecosystem. Agents are registered, authenticated, and their actions are attributed. Identity enables per-agent policies and audit."
+        }
+      ]
+    },
+    "architecture": {
+      "title": "Architecture Overview",
+      "summary": "AEGIS is a distributed system with a central governance authority and edge enforcement. The core runtime evaluates governance decisions. Agents connect via SDKs, sidecars, or gateway proxies.",
+      "components": [
+        {
+          "name": "Governance Runtime",
+          "role": "Central decision engine — receives proposals, evaluates policies, checks threats, returns decisions",
+          "technology": "Python / FastAPI"
+        },
+        {
+          "name": "Policy Engine",
+          "role": "Evaluates action proposals against the active policy set — pattern matching, conditions, priority ordering"
+        },
+        {
+          "name": "Threat Assessor",
+          "role": "Checks proposals against ATM-1 threat patterns — prompt injection, privilege escalation, data exfiltration, resource abuse"
+        },
+        {
+          "name": "Audit Store",
+          "role": "Immutable append-only log of all proposals and decisions — the accountability backbone"
+        },
+        {
+          "name": "Operator Dashboard",
+          "role": "Web interface for human operators to monitor governance activity, review escalations, manage policies, and query audit logs"
+        },
+        {
+          "name": "Client SDKs",
+          "role": "TypeScript and Python libraries that wrap AGP-1 protocol for agent integration"
+        }
+      ],
+      "integrationPatterns": [
+        {
+          "name": "Sidecar",
+          "description": "Deploy AEGIS agent alongside your AI system in the same pod or host. The agent intercepts outbound actions at the network or process level. No code changes required. Best for containerized environments.",
+          "codeChanges": false
+        },
+        {
+          "name": "Gateway",
+          "description": "Route all agent traffic through an AEGIS gateway proxy. The gateway applies governance before forwarding requests to their targets. Best for API-centric architectures.",
+          "codeChanges": false
+        },
+        {
+          "name": "SDK (Embedded)",
+          "description": "Use the TypeScript or Python SDK directly in your agent code. The agent explicitly proposes actions and handles governance decisions. Provides the richest context and most granular control.",
+          "codeChanges": true
+        }
+      ]
+    },
+    "apiReference": {
+      "title": "API Reference",
+      "summary": "The AEGIS governance API is a RESTful JSON API. The demo instance is publicly accessible at demo.aegis-platform.net. Full Swagger/OpenAPI documentation is available at /docs.",
+      "baseUrls": {
+        "demo": "https://demo.aegis-platform.net",
+        "swagger": "https://demo.aegis-platform.net/docs"
+      },
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/health",
+          "description": "Returns service health status",
+          "authentication": "none",
+          "response": {
+            "status": "healthy",
+            "version": "string",
+            "uptime": "number"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/governance/propose",
+          "description": "Submit an action proposal for governance evaluation. This is the core AGP-1 endpoint. Send a structured action proposal and receive a governance decision.",
+          "authentication": "API key (demo: none)",
+          "requestBody": {
+            "action": {
+              "type": "string — action type (e.g., 'api_call', 'file_write', 'network_request')",
+              "target": "string — target resource URI or identifier",
+              "parameters": "object — action-specific parameters",
+              "context": {
+                "agentId": "string — the requesting agent's identity",
+                "sessionId": "string — optional session identifier",
+                "reason": "string — optional human-readable reason for the action"
+              }
+            }
+          },
+          "response": {
+            "decision": "string — ALLOW | DENY | ESCALATE | REQUIRE_CONFIRMATION",
+            "reason": "string — explanation of the decision",
+            "policyId": "string | null — the policy that determined the outcome",
+            "conditions": "array | null — conditions for REQUIRE_CONFIRMATION decisions",
+            "timestamp": "string — ISO 8601 timestamp",
+            "proposalId": "string — unique identifier for this proposal/decision pair"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/governance/policies",
+          "description": "List all active governance policies. Returns the full policy set with evaluation priority.",
+          "authentication": "API key (demo: none)",
+          "response": {
+            "policies": "array of policy objects with id, name, description, conditions, action, and priority"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/governance/audit",
+          "description": "Query the governance audit log. Returns a paginated list of proposals and their decisions.",
+          "authentication": "API key (demo: none)",
+          "queryParameters": {
+            "limit": "number — max results (default 50)",
+            "offset": "number — pagination offset",
+            "agentId": "string — filter by agent",
+            "decision": "string — filter by decision type",
+            "since": "string — ISO 8601 timestamp"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/governance/status",
+          "description": "Returns current governance runtime status, active policy count, and configuration.",
+          "authentication": "API key (demo: none)"
+        }
+      ]
+    },
+    "sdkUsage": {
+      "title": "SDK Usage",
+      "summary": "AEGIS provides client SDKs for TypeScript/JavaScript and Python. Both are in early stage but functional for core governance operations.",
+      "typescript": {
+        "package": "@aegis-initiative/sdk",
+        "install": "npm install @aegis-initiative/sdk",
+        "quickStart": "import { AegisClient } from '@aegis-initiative/sdk';\n\nconst client = new AegisClient({ baseUrl: 'https://demo.aegis-platform.net' });\n\nconst decision = await client.propose({\n  type: 'api_call',\n  target: 'https://api.example.com/data',\n  parameters: { method: 'GET' }\n});\n\nif (decision.decision === 'ALLOW') {\n  // Proceed with the action\n} else if (decision.decision === 'DENY') {\n  console.log('Action denied:', decision.reason);\n}",
+        "features": [
+          "Typed interfaces for all AGP-1 messages",
+          "Automatic retry with configurable backoff",
+          "Decision caching for repeated proposals",
+          "Event hooks for monitoring"
+        ]
+      },
+      "python": {
+        "package": "aegis-sdk",
+        "install": "pip install aegis-sdk",
+        "quickStart": "from aegis_sdk import AegisClient\n\nclient = AegisClient(base_url='https://demo.aegis-platform.net')\n\ndecision = client.propose(\n    action_type='api_call',\n    target='https://api.example.com/data',\n    parameters={'method': 'GET'}\n)\n\nif decision.decision == 'ALLOW':\n    # Proceed with the action\n    pass\nelif decision.decision == 'DENY':\n    print(f'Action denied: {decision.reason}')",
+        "features": [
+          "Sync and async client interfaces",
+          "Pydantic models for all AGP-1 messages",
+          "Configurable timeout and retry policies",
+          "Context manager support"
+        ]
+      }
+    },
+    "keyGuides": {
+      "title": "Key Guides",
+      "guides": [
+        {
+          "name": "Deployment",
+          "summary": "AEGIS supports three deployment patterns: sidecar (co-located agent), gateway (proxy-based), and embedded (SDK in agent code). The sidecar and gateway patterns require no code changes. Docker and Kubernetes examples are provided. For evaluation, the demo API at demo.aegis-platform.net requires no deployment at all."
+        },
+        {
+          "name": "Policy Authoring",
+          "summary": "Policies are declarative JSON rules evaluated in priority order. Each policy specifies conditions (action type, target pattern, agent identity, time constraints) and an outcome (ALLOW, DENY, ESCALATE, REQUIRE_CONFIRMATION). Policies can be scoped to specific agents, action types, or resource patterns. A default-deny policy ensures unmatched actions are not silently permitted."
+        },
+        {
+          "name": "Monitoring",
+          "summary": "The governance runtime exposes metrics for decision latency, throughput, policy hit rates, and error rates. The audit log provides full decision history. The operator dashboard visualizes governance activity in real time. Alerts can be configured for anomalous patterns — spikes in denials, unusual agents, or elevated escalation rates."
+        },
+        {
+          "name": "Contributing",
+          "summary": "AEGIS is developed on GitHub under the aegis-initiative organization. Contributions follow conventional commit format (feat:, fix:, docs:, chore:). All changes go through pull requests with one required review. Architecture-level changes need an ADR in the central aegis repository before implementation. Issues and discussions are open on all repositories."
+        }
+      ]
+    }
+  },
+  "generatedAt": "2026-03-25T00:00:00Z"
+}

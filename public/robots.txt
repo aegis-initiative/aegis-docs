@@ -1,0 +1,39 @@
+# AEGIS Documentation Site — aegis-docs.com
+# https://aegis-platform.net
+
+User-agent: *
+Allow: /
+
+User-agent: Amazonbot
+Disallow: /
+Allow: /.well-known/aegis/
+
+User-agent: Applebot-Extended
+Disallow: /
+Allow: /.well-known/aegis/
+
+User-agent: Bytespider
+Disallow: /
+Allow: /.well-known/aegis/
+
+User-agent: CCBot
+Disallow: /
+Allow: /.well-known/aegis/
+
+User-agent: ClaudeBot
+Disallow: /
+Allow: /.well-known/aegis/
+
+User-agent: Google-Extended
+Disallow: /
+Allow: /.well-known/aegis/
+
+User-agent: GPTBot
+Disallow: /
+Allow: /.well-known/aegis/
+
+User-agent: meta-externalagent
+Disallow: /
+Allow: /.well-known/aegis/
+
+Sitemap: https://aegis-docs.com/sitemap.xml

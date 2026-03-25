@@ -1,0 +1,140 @@
+{
+  "$schema": "https://aegis-platform.net/.well-known/aegis/schemas/metadata.schema.json",
+  "site": "AEGIS Documentation",
+  "url": "https://aegis-docs.com",
+  "type": "documentation",
+  "technology": {
+    "framework": "Astro 6",
+    "hosting": "Cloudflare Pages",
+    "language": "TypeScript"
+  },
+  "api": {
+    "production": {
+      "baseUrl": "https://api.aegis-platform.net",
+      "status": "in-development"
+    },
+    "demo": {
+      "baseUrl": "https://demo.aegis-platform.net",
+      "docsUrl": "https://demo.aegis-platform.net/docs",
+      "status": "live",
+      "authentication": "none (public demo)",
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/health",
+          "description": "Health check — returns service status"
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/governance/propose",
+          "description": "Submit an action proposal for governance evaluation"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/governance/policies",
+          "description": "List active governance policies"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/governance/audit",
+          "description": "Query the audit log of governance decisions"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/governance/status",
+          "description": "Current governance runtime status and configuration"
+        }
+      ]
+    }
+  },
+  "sdks": [
+    {
+      "language": "TypeScript",
+      "package": "@aegis-initiative/sdk",
+      "registry": "npm",
+      "repository": "https://github.com/aegis-initiative/aegis-sdk",
+      "status": "early-stage"
+    },
+    {
+      "language": "Python",
+      "package": "aegis-sdk",
+      "registry": "PyPI",
+      "repository": "https://github.com/aegis-initiative/aegis-sdk",
+      "status": "early-stage"
+    }
+  ],
+  "repositories": {
+    "organization": "https://github.com/aegis-initiative",
+    "components": [
+      {
+        "name": "aegis",
+        "url": "https://github.com/aegis-initiative/aegis",
+        "role": "Central authority — ADRs, governance doctrine, schemas, roadmap"
+      },
+      {
+        "name": "aegis-governance",
+        "url": "https://github.com/aegis-initiative/aegis-governance",
+        "role": "Governance specifications — AGP protocol, ATM threat model, federation"
+      },
+      {
+        "name": "aegis-core",
+        "url": "https://github.com/aegis-initiative/aegis-core",
+        "role": "Enforcement engine — governance runtime implementation"
+      },
+      {
+        "name": "aegis-platform",
+        "url": "https://github.com/aegis-initiative/aegis-platform",
+        "role": "Production platform — operator dashboard, API surface"
+      },
+      {
+        "name": "aegis-sdk",
+        "url": "https://github.com/aegis-initiative/aegis-sdk",
+        "role": "Client SDKs — TypeScript and Python"
+      },
+      {
+        "name": "aegis-docs",
+        "url": "https://github.com/aegis-initiative/aegis-docs",
+        "role": "Documentation site (this site)"
+      },
+      {
+        "name": "aegis-ops",
+        "url": "https://github.com/aegis-initiative/aegis-ops",
+        "role": "CI/CD workflows, infrastructure-as-code, deployment"
+      },
+      {
+        "name": "aegis-labs",
+        "url": "https://github.com/aegis-initiative/aegis-labs",
+        "role": "Research sandbox and reference deployments"
+      }
+    ]
+  },
+  "specifications": [
+    {
+      "name": "AGP-1",
+      "fullName": "Action Governance Protocol v1",
+      "description": "Wire protocol for AI action governance — ACTION_PROPOSE / DECISION_RESPONSE exchange",
+      "repository": "https://github.com/aegis-initiative/aegis-governance",
+      "status": "draft"
+    },
+    {
+      "name": "ATM-1",
+      "fullName": "AEGIS Threat Model v1",
+      "description": "Threat catalog for autonomous AI agents, structured as STIX 2.1 bundle",
+      "repository": "https://github.com/aegis-initiative/aegis-governance",
+      "status": "draft"
+    },
+    {
+      "name": "ATX-1",
+      "fullName": "AEGIS Trust Exchange v1",
+      "description": "Machine-readable trust and governance metadata exchange format",
+      "repository": "https://github.com/aegis-initiative/aegis-governance",
+      "status": "draft"
+    }
+  ],
+  "contacts": {
+    "issues": "https://github.com/aegis-initiative/aegis-docs/issues",
+    "discussions": "https://github.com/orgs/aegis-initiative/discussions",
+    "organization": "https://github.com/aegis-initiative"
+  },
+  "generatedAt": "2026-03-25T00:00:00Z"
+}

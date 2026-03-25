@@ -1,0 +1,174 @@
+{
+  "$schema": "https://aegis-platform.net/.well-known/aegis/schemas/navigation.schema.json",
+  "site": "AEGIS Documentation",
+  "url": "https://aegis-docs.com",
+  "sections": [
+    {
+      "title": "Getting Started",
+      "path": "/getting-started",
+      "pages": [
+        {
+          "title": "Introduction",
+          "path": "/getting-started/introduction",
+          "description": "What AEGIS is, why it exists, and what problems it solves for AI governance"
+        },
+        {
+          "title": "Core Concepts",
+          "path": "/getting-started/core-concepts",
+          "description": "Governance runtime, action proposals, decision pipeline, policies, and audit — the foundational ideas"
+        },
+        {
+          "title": "Installation",
+          "path": "/getting-started/installation",
+          "description": "Installing AEGIS SDKs, setting up a local governance runtime, and connecting to the demo API"
+        },
+        {
+          "title": "Quick Start",
+          "path": "/getting-started/quick-start",
+          "description": "Submit your first action proposal and receive a governance decision in under five minutes"
+        }
+      ]
+    },
+    {
+      "title": "Architecture",
+      "path": "/architecture",
+      "pages": [
+        {
+          "title": "Overview",
+          "path": "/architecture/overview",
+          "description": "High-level system architecture — components, boundaries, and how they interact"
+        },
+        {
+          "title": "System Design",
+          "path": "/architecture/system-design",
+          "description": "The governance runtime internals — five-stage pipeline, policy engine, threat assessment"
+        },
+        {
+          "title": "Data Flow",
+          "path": "/architecture/data-flow",
+          "description": "How an action proposal moves through the system from intake to decision response"
+        },
+        {
+          "title": "Security Model",
+          "path": "/architecture/security-model",
+          "description": "Authentication, authorization, transport security, and the trust hierarchy"
+        },
+        {
+          "title": "Architecture Decision Records",
+          "path": "/architecture/adrs",
+          "description": "ADRs documenting key architectural choices in MADR format"
+        }
+      ]
+    },
+    {
+      "title": "API Reference",
+      "path": "/api",
+      "pages": [
+        {
+          "title": "Overview",
+          "path": "/api/overview",
+          "description": "API design principles, base URLs, versioning, and common patterns"
+        },
+        {
+          "title": "Governance",
+          "path": "/api/governance",
+          "description": "Core governance endpoints — action proposals, decisions, and policy management"
+        },
+        {
+          "title": "Authentication",
+          "path": "/api/authentication",
+          "description": "API key management, token exchange, and authentication flows"
+        },
+        {
+          "title": "Enforcement",
+          "path": "/api/enforcement",
+          "description": "Enforcement status, agent registration, and compliance endpoints"
+        },
+        {
+          "title": "Audit",
+          "path": "/api/audit",
+          "description": "Audit log queries, decision history, and compliance reporting"
+        }
+      ]
+    },
+    {
+      "title": "SDK",
+      "path": "/sdk",
+      "pages": [
+        {
+          "title": "Overview",
+          "path": "/sdk/overview",
+          "description": "SDK design philosophy, supported languages, and common patterns"
+        },
+        {
+          "title": "TypeScript",
+          "path": "/sdk/typescript",
+          "description": "TypeScript/JavaScript SDK — installation, usage, typed interfaces, and examples"
+        },
+        {
+          "title": "Python",
+          "path": "/sdk/python",
+          "description": "Python SDK — installation, usage, async support, and examples"
+        },
+        {
+          "title": "Configuration",
+          "path": "/sdk/configuration",
+          "description": "SDK configuration options — endpoints, timeouts, retry policies, and environment variables"
+        }
+      ]
+    },
+    {
+      "title": "Guides",
+      "path": "/guides",
+      "pages": [
+        {
+          "title": "Deployment",
+          "path": "/guides/deployment",
+          "description": "Deploying AEGIS — sidecar, gateway, and embedded patterns with examples for Docker, Kubernetes, and cloud"
+        },
+        {
+          "title": "Policy Authoring",
+          "path": "/guides/policy-authoring",
+          "description": "Writing governance policies — syntax, evaluation order, conditions, and testing"
+        },
+        {
+          "title": "Monitoring",
+          "path": "/guides/monitoring",
+          "description": "Observability for the governance runtime — metrics, logging, alerting, and dashboards"
+        },
+        {
+          "title": "Troubleshooting",
+          "path": "/guides/troubleshooting",
+          "description": "Common issues, error codes, debugging strategies, and support channels"
+        }
+      ]
+    },
+    {
+      "title": "Contributing",
+      "path": "/contributing",
+      "pages": [
+        {
+          "title": "Overview",
+          "path": "/contributing/overview",
+          "description": "How to contribute to AEGIS — issue tracking, discussions, and the contribution process"
+        },
+        {
+          "title": "Code of Conduct",
+          "path": "/contributing/code-of-conduct",
+          "description": "Community standards and expectations for participants in the AEGIS project"
+        },
+        {
+          "title": "Development Setup",
+          "path": "/contributing/dev-setup",
+          "description": "Setting up a local development environment for AEGIS components"
+        },
+        {
+          "title": "Pull Request Guide",
+          "path": "/contributing/pr-guide",
+          "description": "PR process — branching, conventional commits, review requirements, and merge criteria"
+        }
+      ]
+    }
+  ],
+  "generatedAt": "2026-03-25T00:00:00Z"
+}

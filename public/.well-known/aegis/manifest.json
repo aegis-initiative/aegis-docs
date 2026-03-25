@@ -1,0 +1,69 @@
+{
+  "$schema": "https://aegis-platform.net/.well-known/aegis/schemas/manifest.schema.json",
+  "name": "AEGIS Documentation",
+  "description": "Technical documentation for the AEGIS ecosystem — architecture, API reference, SDKs, integration guides, and contributor resources for the AI governance platform.",
+  "url": "https://aegis-docs.com",
+  "type": "documentation",
+  "owner": {
+    "name": "Finnoybu IP LLC",
+    "url": "https://finnoybu.com",
+    "org": "AEGIS Initiative",
+    "orgUrl": "https://github.com/aegis-initiative"
+  },
+  "resources": [
+    {
+      "type": "readme",
+      "path": "/.well-known/aegis/README.md",
+      "description": "AI-readable overview of AEGIS documentation — architecture, protocols, APIs, SDKs, and integration patterns"
+    },
+    {
+      "type": "navigation",
+      "path": "/.well-known/aegis/navigation.json",
+      "description": "Full site structure and page hierarchy for the documentation site"
+    },
+    {
+      "type": "metadata",
+      "path": "/.well-known/aegis/metadata.json",
+      "description": "Technical metadata — API endpoints, SDK packages, repository URLs, and specification references"
+    },
+    {
+      "type": "content",
+      "path": "/.well-known/aegis/site-content.json",
+      "description": "Structured documentation content — core concepts, architecture, API reference, SDK usage, and guides"
+    }
+  ],
+  "relatedSites": [
+    {
+      "name": "AEGIS Platform",
+      "url": "https://aegis-platform.net",
+      "relationship": "parent",
+      "description": "Primary project site — governance doctrine, architecture, and the AEGIS authority"
+    },
+    {
+      "name": "AEGIS Governance",
+      "url": "https://aegis-governance.net",
+      "relationship": "sibling",
+      "description": "Governance specifications — AGP protocol, threat model, federation rules"
+    },
+    {
+      "name": "AEGIS Constitution",
+      "url": "https://aegis-constitution.org",
+      "relationship": "sibling",
+      "description": "Public governance charter — foundational principles and rights"
+    },
+    {
+      "name": "AEGIS Demo API",
+      "url": "https://demo.aegis-platform.net",
+      "relationship": "service",
+      "description": "Live demonstration API with Swagger documentation at /docs"
+    },
+    {
+      "name": "AEGIS GitHub",
+      "url": "https://github.com/aegis-initiative",
+      "relationship": "source",
+      "description": "Source code, issues, and contribution for all AEGIS components"
+    }
+  ],
+  "generatedAt": "2026-03-25T00:00:00Z",
+  "generatedBy": "Claude, at Ken Tannenbaum's direction"
+}

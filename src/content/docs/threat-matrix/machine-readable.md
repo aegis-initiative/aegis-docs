@@ -194,7 +194,7 @@ ATX-1 machine-readable files are maintained in the [aegis-governance](https://gi
 | Technique Schema | `threat-model/atx-1/schemas/atx1-technique-schema.json` | JSON Schema for technique validation |
 | Cross-Ref Schema | `threat-model/atx-1/schemas/atx1-regulatory-crossref-schema.json` | JSON Schema for cross-reference validation |
 
-These files will also be available at [aegis-governance.com](https://aegis-governance.com) once the governance data API is deployed.
+These files are also available for direct programmatic consumption at [aegis-governance.com](https://aegis-governance.com) — the machine-readable governance data portal. Fetch the [ATX-1 dataset index](https://aegis-governance.com/atx-1/index.json) for a complete listing of available artifacts and URLs.
 
 ---
 

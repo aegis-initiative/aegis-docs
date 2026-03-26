@@ -6,4 +6,4 @@ on:
     paths: ['**/*.md']
 jobs:
   spell:
-    uses: aegis-initiative/aegis-ops/.github/workflows/spellcheck.yml@main
+    uses: aegis-initiative/.github/.github/workflows/spellcheck.yml@main

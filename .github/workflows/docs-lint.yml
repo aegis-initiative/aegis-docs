@@ -6,4 +6,4 @@ on:
     paths: ['**/*.md']
 jobs:
   lint:
-    uses: aegis-initiative/aegis-ops/.github/workflows/docs-lint.yml@main
+    uses: aegis-initiative/.github/.github/workflows/docs-lint.yml@main

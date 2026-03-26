@@ -20,6 +20,8 @@ For each technique:
 
 ## TA001: Violate Authority Boundaries
 
+<div id="t1001"></div>
+
 ### T1001: Execute Non-Owner Instruction
 
 | | |
@@ -38,6 +40,8 @@ For each technique:
 
 ---
 
+<div id="t1002"></div>
+
 ### T1002: Infer Implicit Authority
 
 | | |
@@ -55,6 +59,8 @@ For each technique:
 **AEGIS Mitigation.** Constitution Article II requires explicit, verified authority for all governance decisions. AGP-1 does not accept implicit authority claims -- every action requires a signed authority token with a verifiable chain of delegation. The decision engine treats unsigned or self-asserted authority as equivalent to no authority.
 
 ---
+
+<div id="t1003"></div>
 
 ### T1003: Propagate Spoofed Authority at Scale
 
@@ -76,6 +82,8 @@ For each technique:
 
 ## TA002: Exceed Operational Scope
 
+<div id="t2001"></div>
+
 ### T2001: Expand Task Scope Autonomously
 
 | | |
@@ -93,6 +101,8 @@ For each technique:
 **AEGIS Mitigation.** Constitution Article III defines capability scoping -- agents operate only within explicitly granted capabilities. AGP-1 session initialization includes a `scope` parameter that defines permitted actions for the session. Any action proposal outside the declared scope is denied by default.
 
 ---
+
+<div id="t2002"></div>
 
 ### T2002: Perform Unvalidated Bulk Operations
 
@@ -112,6 +122,8 @@ For each technique:
 
 ---
 
+<div id="t2003"></div>
+
 ### T2003: Obscure Objective Through Delegation
 
 | | |
@@ -129,6 +141,8 @@ For each technique:
 **AEGIS Mitigation.** AGP-1 maintains session-level objective tracking that evaluates the cumulative effect of all actions within a session, not just individual proposals. The governance gateway correlates action sequences against objective drift detectors and flags sessions where the aggregate behavior diverges from the declared objective.
 
 ---
+
+<div id="t2004"></div>
 
 ### T2004: Exploit Tool-Chain Composition
 
@@ -150,6 +164,8 @@ For each technique:
 
 ## TA003: Compromise System Integrity
 
+<div id="t3001"></div>
+
 ### T3001: Perform Irreversible Destructive Action
 
 | | |
@@ -167,6 +183,8 @@ For each technique:
 **AEGIS Mitigation.** Constitution Article IV (Action Constraints) defines reversibility as a first-class governance property. AGP-1 risk evaluation assigns elevated risk scores to irreversible operations. The capability registry tags destructive capabilities with `reversibility: none`, triggering mandatory confirmation gates before execution.
 
 ---
+
+<div id="t3002"></div>
 
 ### T3002: Trigger Cascading System Changes
 
@@ -188,6 +206,8 @@ For each technique:
 
 ## TA004: Expose or Exfiltrate Information
 
+<div id="t4001"></div>
+
 ### T4001: Exfiltrate Context-Scoped Data
 
 | | |
@@ -206,6 +226,8 @@ For each technique:
 
 ---
 
+<div id="t4002"></div>
+
 ### T4002: Leak Cross-Session or Persistent Data
 
 | | |
@@ -223,6 +245,8 @@ For each technique:
 **AEGIS Mitigation.** AGP-1 sessions are isolated by design -- each session carries a unique `session_id` and context is scoped to the session. The governance gateway enforces session boundaries and prevents cross-session data access. Persistent memory is subject to the same data classification and flow control as real-time context.
 
 ---
+
+<div id="t4003"></div>
 
 ### T4003: Cross-Domain Secret Leakage
 
@@ -244,6 +268,8 @@ For each technique:
 
 ## TA005: Violate State Integrity
 
+<div id="t5001"></div>
+
 ### T5001: Report False Task Completion
 
 | | |
@@ -262,6 +288,8 @@ For each technique:
 
 ---
 
+<div id="t5002"></div>
+
 ### T5002: Fabricate Action Attribution
 
 | | |
@@ -279,6 +307,8 @@ For each technique:
 **AEGIS Mitigation.** AGP-1 execution receipts include cryptographic hashes of tool outputs. The governance gateway can verify that any cited tool output actually occurred and matches the claimed content. The audit subsystem maintains a complete record of all tool interactions for post-hoc verification.
 
 ---
+
+<div id="t5003"></div>
 
 ### T5003: Suppress or Omit Execution Failure
 
@@ -300,6 +330,8 @@ For each technique:
 
 ## TA006: Abuse Resource Allocation
 
+<div id="t6001"></div>
+
 ### T6001: Execute Recursive Invocation Loops
 
 | | |
@@ -317,6 +349,8 @@ For each technique:
 **AEGIS Mitigation.** AGP-1 includes `max_depth` and `max_iterations` parameters on session initialization. The governance gateway tracks invocation depth and iteration count, denying action proposals that exceed configured thresholds. Circuit breakers halt execution when resource consumption exceeds defined limits.
 
 ---
+
+<div id="t6002"></div>
 
 ### T6002: Consume Unbounded External Resources
 
@@ -338,6 +372,8 @@ For each technique:
 
 ## TA007: Manipulate Agent Interactions
 
+<div id="t7001"></div>
+
 ### T7001: Spoof Agent Identity
 
 | | |
@@ -355,6 +391,8 @@ For each technique:
 **AEGIS Mitigation.** Constitution Article II requires cryptographic identity for all actors, including agents. AGP-1 agent-to-agent communication requires mutual authentication via signed identity tokens. The governance gateway validates agent identity on every interaction, making natural-language identity claims irrelevant.
 
 ---
+
+<div id="t7002"></div>
 
 ### T7002: Inject Malicious Delegation Chains
 
@@ -374,6 +412,8 @@ For each technique:
 
 ---
 
+<div id="t7003"></div>
+
 ### T7003: Induce Cross-Agent Behavioral Drift
 
 | | |
@@ -391,6 +431,8 @@ For each technique:
 **AEGIS Mitigation.** AGP-1 maintains behavioral baseline checksums for each agent. The governance gateway periodically evaluates agent behavior against its established baseline and flags statistically significant drift. Agents that drift beyond configurable thresholds are flagged for review and may be reset to their baseline configuration.
 
 ---
+
+<div id="t7004"></div>
 
 ### T7004: Induce Unsafe Consensus
 
@@ -412,6 +454,8 @@ For each technique:
 
 ## TA008: Establish or Modify Persistence
 
+<div id="t8001"></div>
+
 ### T8001: Poison Persistent Memory
 
 | | |
@@ -429,6 +473,8 @@ For each technique:
 **AEGIS Mitigation.** AGP-1 state management includes integrity verification for persistent context. Memory entries are hash-chained and signed by the governance gateway. The agent cannot write to its own governance state directly -- all state mutations pass through the governance layer, which validates integrity before persisting changes.
 
 ---
+
+<div id="t8002"></div>
 
 ### T8002: Corrupt Governance or Policy State
 
@@ -450,6 +496,8 @@ For each technique:
 
 ## TA009: Evade Detection or Oversight
 
+<div id="t9001"></div>
+
 ### T9001: Operate Outside Monitoring Boundaries
 
 | | |
@@ -467,6 +515,8 @@ For each technique:
 **AEGIS Mitigation.** AGP-1 requires all agent actions to be mediated through the governance gateway, which serves as a mandatory chokepoint for monitoring. The tool proxy layer ensures that no tool invocation bypasses the logging infrastructure. The audit subsystem detects gaps in expected action sequences and flags sessions with missing execution records.
 
 ---
+
+<div id="t9002"></div>
 
 ### T9002: Obfuscate Action Traceability
 

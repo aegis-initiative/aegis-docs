@@ -1,0 +1,12 @@
+{
+  // Line length - disabled for URLs, tables, and badges
+  "MD013": {
+    "line_length": 120,
+    "tables": false,
+    "code_blocks": false
+  },
+  // Allow inline HTML - needed for centered badges and logos in READMEs
+  "MD033": false,
+  // Table column style - allow compact tables
+  "MD060": false
+}

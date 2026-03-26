@@ -3,7 +3,7 @@ title: ATX-1 Threat Matrix
 description: AEGIS Threat Matrix — a structured adversarial knowledge base for agentic AI behavior
 ---
 
-# ATX-1: AEGIS Threat Matrix
+# ATX-1 v2.0: AEGIS Threat Matrix
 
 ATX-1 is a structured adversarial knowledge base that catalogs the ways autonomous AI agents fail, misbehave, or are exploited in real-world deployments. It fills a critical gap between two existing frameworks:
 
@@ -29,13 +29,29 @@ Every ATX-1 technique traces back to one or more of four structural root causes.
 | **RC3** | Missing Behavioral Boundaries | The agent has no defined scope of permitted behavior. Without explicit boundaries, any action that appears to serve the stated goal is considered valid -- including actions far outside the original task. |
 | **RC4** | Missing State Integrity Protection | The agent has no mechanism to ensure its own context, memory, or governance state has not been tampered with. Poisoned context is indistinguishable from legitimate context. |
 
+## Governance Primitives
+
+ATX-1 v2.0 maps each tactic to one or more governance primitives -- the fundamental control surfaces that must be present in any agent governance system:
+
+| Primitive | Description | Tactics |
+|---|---|---|
+| **Authority/Identity** | Verification of who issued an instruction and whether they have the right to do so | TA001, TA007 |
+| **Delegation/Objective Control** | Constraining what the agent is allowed to do and ensuring task scope is maintained | TA002 |
+| **State/Environment** | Protecting the integrity of systems the agent interacts with | TA003 |
+| **Memory/Context/Data Boundaries** | Controlling information flow across sessions, contexts, and trust domains | TA004 |
+| **State/Observability** | Ensuring accurate reporting and attribution of agent actions | TA005 |
+| **Resource Control** | Bounding the computational and financial resources an agent may consume | TA006 |
+| **Coordination/Identity** | Governing multi-agent interactions, delegation chains, and collective behavior | TA007 |
+| **Memory/Governance State** | Protecting the agent's persistent memory and governance configuration from corruption | TA008 |
+| **Observability/Control Planes** | Ensuring all agent behavior is visible to operators and oversight systems | TA009 |
+
 ## Structure
 
-ATX-1 organizes adversarial behaviors into a three-level hierarchy:
+ATX-1 v2.0 organizes adversarial behaviors into a three-level hierarchy:
 
 - **9 Tactics** -- Categories of ungoverned behavior (the "why" -- what the agent is doing wrong)
-- **20 Techniques** -- Specific failure modes within each tactic (the "how" -- the concrete behavior)
-- **20 Mitigations** -- AEGIS governance mechanisms that address each technique (the "fix" -- constitutional articles and AGP protocol mechanisms)
+- **25 Techniques** -- Specific failure modes within each tactic (the "how" -- the concrete behavior)
+- **25 Mitigations** -- AEGIS governance mechanisms that address each technique (the "fix" -- constitutional articles and AGP protocol mechanisms)
 
 ## Empirical Foundation
 
@@ -46,6 +62,6 @@ The study demonstrated that current AI agents, when given tool access, reliably 
 ## Pages in This Section
 
 - [Tactics](/threat-matrix/tactics/) -- The nine ATX-1 tactics and their descriptions
-- [Techniques](/threat-matrix/techniques/) -- Full catalog of 20 techniques with case studies, severity, and mitigations
+- [Techniques](/threat-matrix/techniques/) -- Full catalog of 25 techniques with case studies, severity, and mitigations
 - [Regulatory Cross-Reference](/threat-matrix/regulatory-crossref/) -- Mapping to NIST AI RMF, EU AI Act, and OWASP LLM Top 10
 - [Machine-Readable Formats](/threat-matrix/machine-readable/) -- STIX 2.1 bundles, JSON Schema, and programmatic access

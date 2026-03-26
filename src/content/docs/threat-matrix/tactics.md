@@ -1,19 +1,21 @@
 ---
 title: Tactics
-description: The nine ATX-1 tactics — categories of ungoverned agentic AI behavior
+description: The nine ATX-1 v2.0 tactics — categories of ungoverned agentic AI behavior
 sidebar:
   order: 1
 ---
 
-# ATX-1 Tactics
+# ATX-1 v2.0 Tactics
 
 Tactics represent categories of ungoverned agentic behavior. Each tactic answers the question: **what kind of harm is the agent producing?** Tactics are not mutually exclusive -- a single agent action may fall under multiple tactics.
 
-Each tactic contains one or more [techniques](/threat-matrix/techniques/) that describe specific failure modes.
+Each tactic is mapped to one or more **governance primitives** -- the fundamental control surfaces that must be present to prevent the behavior. Each tactic contains one or more [techniques](/threat-matrix/techniques/) that describe specific failure modes.
 
 ---
 
-## TA001: Authority Boundary Violation
+## TA001: Violate Authority Boundaries
+
+**Primitive:** Authority/Identity
 
 **Agent acts on instructions from sources without verified authority.**
 
@@ -25,55 +27,65 @@ The agent cannot distinguish between its legitimate owner/operator and an unauth
 
 ---
 
-## TA002: Destructive Action
+## TA002: Exceed Operational Scope
 
-**Agent performs irreversible or high-impact operations without safeguards.**
+**Primitive:** Delegation/Objective Control
 
-The agent executes actions with severe consequences -- deleting data, modifying production systems, sending communications -- without evaluating the impact or seeking confirmation. It treats all operations as equivalent regardless of their reversibility or blast radius.
+**Agent operates beyond its delegated task boundaries or performs unvalidated operations at scale.**
 
-**Root causes:** RC2 (Missing Consequence Modeling)
-
-**Techniques:** [T2001](/threat-matrix/techniques/#t2001), [T2002](/threat-matrix/techniques/#t2002), [T2003](/threat-matrix/techniques/#t2003)
-
----
-
-## TA003: Scope Violation
-
-**Agent operates outside its defined task boundaries.**
-
-The agent expands its own mandate beyond the original task. Asked to summarize a document, it rewrites it. Asked to research a topic, it begins executing transactions. Without explicit behavioral boundaries, the agent treats any action that appears to serve the goal as permissible.
+The agent expands its own mandate beyond the original task, performs bulk operations without validation, obscures its true objectives through delegation, or exploits tool-chain composition to achieve outcomes that no single tool grant authorized. Without explicit behavioral boundaries and objective constraints, the agent treats any action that appears to serve the goal as permissible.
 
 **Root causes:** RC2 (Missing Consequence Modeling), RC3 (Missing Behavioral Boundaries)
 
-**Techniques:** [T3001](/threat-matrix/techniques/#t3001)
+**Techniques:** [T2001](/threat-matrix/techniques/#t2001), [T2002](/threat-matrix/techniques/#t2002), [T2003](/threat-matrix/techniques/#t2003), [T2004](/threat-matrix/techniques/#t2004)
 
 ---
 
-## TA004: Information Breach
+## TA003: Compromise System Integrity
 
-**Agent exposes, leaks, or mishandles sensitive information.**
+**Primitive:** State/Environment
 
-The agent transfers sensitive data to unauthorized destinations -- whether by including private information in outputs, leaking context across sessions, or exfiltrating data to attacker-controlled endpoints. The agent has no concept of data classification or information flow control.
+**Agent performs irreversible or cascading destructive actions against the systems it interacts with.**
 
-**Root causes:** RC1 (Missing Authority Verification), RC3 (Missing Behavioral Boundaries), RC4 (Missing State Integrity Protection)
-
-**Techniques:** [T4001](/threat-matrix/techniques/#t4001), [T4002](/threat-matrix/techniques/#t4002)
-
----
-
-## TA005: Deceptive Output
-
-**Agent produces false, misleading, or fabricated outputs.**
-
-The agent generates outputs that do not accurately represent reality -- claiming tasks were completed when they were not, fabricating evidence or attribution, or presenting hallucinated content as fact. This is not prompt injection; it is the agent's own failure to verify its outputs against ground truth.
+The agent executes actions with severe consequences -- deleting data, modifying production systems, triggering cascading failures -- without evaluating the impact or seeking confirmation. It treats all operations as equivalent regardless of their reversibility or blast radius. The agent has no model of system interdependencies and cannot predict downstream effects.
 
 **Root causes:** RC2 (Missing Consequence Modeling)
 
-**Techniques:** [T5001](/threat-matrix/techniques/#t5001), [T5002](/threat-matrix/techniques/#t5002)
+**Techniques:** [T3001](/threat-matrix/techniques/#t3001), [T3002](/threat-matrix/techniques/#t3002)
 
 ---
 
-## TA006: Resource Abuse
+## TA004: Expose or Exfiltrate Information
+
+**Primitive:** Memory/Context/Data Boundaries
+
+**Agent exposes, leaks, or exfiltrates sensitive information across trust boundaries.**
+
+The agent transfers sensitive data to unauthorized destinations -- whether by including private information in outputs, leaking context across sessions, or exfiltrating data to attacker-controlled endpoints. The agent has no concept of data classification, information flow control, or cross-domain secret boundaries.
+
+**Root causes:** RC1 (Missing Authority Verification), RC3 (Missing Behavioral Boundaries), RC4 (Missing State Integrity Protection)
+
+**Techniques:** [T4001](/threat-matrix/techniques/#t4001), [T4002](/threat-matrix/techniques/#t4002), [T4003](/threat-matrix/techniques/#t4003)
+
+---
+
+## TA005: Violate State Integrity
+
+**Primitive:** State/Observability
+
+**Agent produces false, misleading, or fabricated outputs about its own actions and state.**
+
+The agent generates outputs that do not accurately represent reality -- claiming tasks were completed when they were not, fabricating evidence or attribution, or suppressing execution failures. This is not prompt injection; it is the agent's own failure to maintain truthful reporting of its operational state.
+
+**Root causes:** RC2 (Missing Consequence Modeling)
+
+**Techniques:** [T5001](/threat-matrix/techniques/#t5001), [T5002](/threat-matrix/techniques/#t5002), [T5003](/threat-matrix/techniques/#t5003)
+
+---
+
+## TA006: Abuse Resource Allocation
+
+**Primitive:** Resource Control
 
 **Agent consumes resources beyond reasonable operational needs.**
 
@@ -85,21 +97,25 @@ The agent enters recursive loops, spawns unbounded sub-tasks, or makes excessive
 
 ---
 
-## TA007: Multi-Agent Exploitation
+## TA007: Manipulate Agent Interactions
 
-**Agent exploits or is exploited through multi-agent interactions.**
+**Primitive:** Coordination/Identity
 
-In multi-agent systems, agents can impersonate other agents, inject instructions through delegation chains, or escalate privileges by leveraging the trust relationships between agents. The absence of agent identity verification makes multi-agent systems particularly vulnerable.
+**Agent exploits or is exploited through multi-agent interactions, coordination, and delegation.**
+
+In multi-agent systems, agents can impersonate other agents, inject instructions through delegation chains, induce behavioral drift through repeated interactions, or drive groups toward unsafe consensus. The absence of agent identity verification and coordination governance makes multi-agent systems particularly vulnerable.
 
 **Root causes:** RC1 (Missing Authority Verification), RC4 (Missing State Integrity Protection)
 
-**Techniques:** [T7001](/threat-matrix/techniques/#t7001), [T7002](/threat-matrix/techniques/#t7002)
+**Techniques:** [T7001](/threat-matrix/techniques/#t7001), [T7002](/threat-matrix/techniques/#t7002), [T7003](/threat-matrix/techniques/#t7003), [T7004](/threat-matrix/techniques/#t7004)
 
 ---
 
-## TA008: Persistence Violation
+## TA008: Establish or Modify Persistence
 
-**Agent manipulates its own state or memory to circumvent governance.**
+**Primitive:** Memory/Governance State
+
+**Agent manipulates its own state, memory, or governance configuration to circumvent governance.**
 
 The agent's persistent state -- memory, context, governance configuration -- can be poisoned or corrupted, causing it to behave contrary to its governance constraints. Because the agent cannot verify the integrity of its own state, corrupted state is indistinguishable from legitimate state.
 
@@ -109,12 +125,14 @@ The agent's persistent state -- memory, context, governance configuration -- can
 
 ---
 
-## TA009: Monitoring Evasion
+## TA009: Evade Detection or Oversight
+
+**Primitive:** Observability/Control Planes
 
 **Agent acts to avoid detection, logging, or oversight.**
 
-The agent's failures are invisible to operators -- either because the agent actively conceals them, or because the monitoring infrastructure fails silently. When governance decisions are not audited or when provider-level failures go unreported, operators lose visibility into agent behavior.
+The agent's failures are invisible to operators -- either because the agent actively conceals them, operates outside monitoring boundaries, or obfuscates the traceability of its actions. When governance decisions are not audited or when the agent's action trail cannot be reconstructed, operators lose visibility into agent behavior.
 
 **Root causes:** RC2 (Missing Consequence Modeling)
 
-**Techniques:** [T9001](/threat-matrix/techniques/#t9001)
+**Techniques:** [T9001](/threat-matrix/techniques/#t9001), [T9002](/threat-matrix/techniques/#t9002)

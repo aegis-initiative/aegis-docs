@@ -1,6 +1,6 @@
 ---
 title: Machine-Readable Formats
-description: Consuming ATX-1 data programmatically — STIX 2.1, JSON Schema, and structured datasets
+description: Consuming ATX-1 v2.0 data programmatically — STIX 2.1, JSON Schema, and structured datasets
 sidebar:
   order: 4
 ---
@@ -22,9 +22,9 @@ The ATX-1 STIX bundle contains the following object types:
 | `identity` | ATX-1 as a source identity | 1 |
 | `x-mitre-matrix` | The ATX-1 matrix structure | 1 |
 | `x-mitre-tactic` | Tactics (TA001--TA009) | 9 |
-| `attack-pattern` | Techniques (T1001--T9001) | 20 |
-| `course-of-action` | Mitigations (AEGIS governance mechanisms) | 20 |
-| `relationship` | Links between techniques, tactics, and mitigations | 60+ |
+| `attack-pattern` | Techniques (T1001--T9002) | 25 |
+| `course-of-action` | Mitigations (AEGIS governance mechanisms) | 25 |
+| `relationship` | Links between techniques, tactics, and mitigations | 75+ |
 
 The bundle uses MITRE ATT&CK STIX extensions (`x-mitre-tactic`, `x-mitre-matrix`) for compatibility with ATT&CK-aware tooling.
 
@@ -37,7 +37,7 @@ from stix2 import MemoryStore, Filter
 
 # Load the ATX-1 STIX bundle
 store = MemoryStore()
-store.load_from_file("atx-1-stix-bundle.json")
+store.load_from_file("atx-1-v2-stix-bundle.json")
 
 # Get all tactics
 tactics = store.query([Filter("type", "=", "x-mitre-tactic")])
@@ -74,18 +74,18 @@ jq '.objects[]
       id: .external_references[0].external_id,
       name: .name,
       severity: .x_mitre_severity
-    }' atx-1-stix-bundle.json
+    }' atx-1-v2-stix-bundle.json
 
 # Get all critical techniques
 jq '.objects[]
   | select(.type == "attack-pattern" and .x_mitre_severity == "critical")
-  | .external_references[0].external_id + ": " + .name' atx-1-stix-bundle.json
+  | .external_references[0].external_id + ": " + .name' atx-1-v2-stix-bundle.json
 
 # Count techniques per tactic
 jq '[.objects[]
   | select(.type == "relationship" and .relationship_type == "uses")]
   | group_by(.source_ref)
-  | map({tactic: .[0].source_ref, count: length})' atx-1-stix-bundle.json
+  | map({tactic: .[0].source_ref, count: length})' atx-1-v2-stix-bundle.json
 ```
 
 ---
@@ -114,11 +114,11 @@ The technique data file (`atx1-techniques.json`) uses the following structure:
 ```json
 {
   "matrix_id": "ATX-1",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "techniques": [
     {
       "id": "T1001",
-      "name": "Non-Owner Instruction Compliance",
+      "name": "Execute Non-Owner Instruction",
       "tactic": "TA001",
       "severity": "high",
       "root_causes": ["RC1"],
@@ -141,7 +141,7 @@ The regulatory cross-reference file (`atx1-regulatory-crossref.json`) uses the f
 ```json
 {
   "matrix_id": "ATX-1",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "frameworks": {
     "nist_ai_rmf": {
       "version": "1.0",
@@ -171,7 +171,7 @@ The regulatory cross-reference file (`atx1-regulatory-crossref.json`) uses the f
         {
           "category": "LLM01",
           "name": "Prompt Injection",
-          "technique_ids": ["T1002", "T3001", "T7002", "T8001", "T8002"],
+          "technique_ids": ["T1002", "T2001", "T7002", "T7003", "T8001", "T8002"],
           "relationship": "..."
         }
       ]
@@ -188,9 +188,9 @@ ATX-1 machine-readable files are maintained in the [aegis-governance](https://gi
 
 | File | Path | Description |
 |---|---|---|
-| STIX 2.1 Bundle | `threat-model/atx-1/stix/atx-1-stix-bundle.json` | Complete STIX bundle with all ATX-1 objects |
-| Technique Data | `threat-model/atx-1/data/atx1-techniques.json` | Structured technique catalog |
-| Regulatory Cross-Ref | `threat-model/atx-1/data/atx1-regulatory-crossref.json` | Framework mappings |
+| STIX 2.1 Bundle | `threat-model/atx-1/stix/atx-1-v2-stix-bundle.json` | Complete STIX v2.0 bundle with all ATX-1 objects |
+| Technique Data | `threat-model/atx-1/data/atx1-techniques.json` | Structured technique catalog (v2.0, 25 techniques) |
+| Regulatory Cross-Ref | `threat-model/atx-1/data/atx1-regulatory-crossref.json` | Framework mappings (v2.0) |
 | Technique Schema | `threat-model/atx-1/schemas/atx1-technique-schema.json` | JSON Schema for technique validation |
 | Cross-Ref Schema | `threat-model/atx-1/schemas/atx1-regulatory-crossref-schema.json` | JSON Schema for cross-reference validation |
 

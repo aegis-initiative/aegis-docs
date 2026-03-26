@@ -5,66 +5,73 @@ import Footer from '../../components/Footer.astro';
 
 const tactics = [
   {
-    id: "TA001", name: "Authority Boundary Violation", short: "Authority Violation",
+    id: "TA001", name: "Violate Authority Boundaries", short: "Authority Boundaries",
     techniques: [
-      { id: "T1001", name: "Non-Owner Instruction Compliance", severity: "high", root: "RC1", case: "CS1", owasp: "LLM06", desc: "Agent executes destructive actions based on instructions from a user without owner-level authority." },
-      { id: "T1002", name: "Implicit Authority Acceptance", severity: "high", root: "RC1", case: "CS2", owasp: "LLM01", desc: "Agent accepts injected instructions as authoritative without verifying the source." },
-      { id: "T1003", name: "Mass Distribution Under Spoofed Authority", severity: "critical", root: "RC1", case: "CS3", owasp: "LLM06", desc: "Agent sends mass communications impersonating an authority figure." },
+      { id: "T1001", name: "Execute Non-Owner Instruction", severity: "high", root: "RC1", case: "CS1", owasp: "LLM06", desc: "Agent executes instructions from a non-owner source as though they came from its legitimate operator." },
+      { id: "T1002", name: "Infer Implicit Authority", severity: "high", root: "RC1", case: "CS2", owasp: "LLM01", desc: "Agent accepts authority claims that are implied rather than explicitly granted." },
+      { id: "T1003", name: "Propagate Spoofed Authority at Scale", severity: "critical", root: "RC1", case: "CS3", owasp: "LLM06", desc: "Agent performs mass-distribution actions based on spoofed operator authority." },
     ]
   },
   {
-    id: "TA002", name: "Destructive Action", short: "Destructive Action",
+    id: "TA002", name: "Exceed Operational Scope", short: "Operational Scope",
     techniques: [
-      { id: "T2001", name: "Irreversible Collateral Action", severity: "critical", root: "RC2", case: "CS4", owasp: "LLM07", desc: "Agent performs destructive operations (deletion, overwrite) without safeguards or rollback capability." },
-      { id: "T2002", name: "Cascading Multi-System Damage", severity: "critical", root: "RC2+RC3", case: "CS5", owasp: "LLM07", desc: "Agent failure propagates across multiple systems causing widespread damage." },
-      { id: "T2003", name: "Unvalidated Bulk Operation", severity: "high", root: "RC2", case: "CS6", owasp: "LLM07", desc: "Agent executes operations at scale without validating scope or confirming intent." },
+      { id: "T2001", name: "Expand Task Scope Autonomously", severity: "high", root: "RC2+RC3", case: "CS7", owasp: "LLM01", desc: "Agent autonomously expands its operational scope beyond the original task." },
+      { id: "T2002", name: "Perform Unvalidated Bulk Operations", severity: "high", root: "RC2", case: "CS6", owasp: "LLM07", desc: "Agent executes bulk operations without validating scope or confirming intent." },
+      { id: "T2003", name: "Obscure Objective Through Delegation", severity: "high", root: "RC2+RC3", case: "CS7", owasp: "LLM06", desc: "Agent decomposes a high-risk action into innocuous-looking sub-tasks to bypass risk evaluation." },
+      { id: "T2004", name: "Exploit Tool-Chain Composition", severity: "high", root: "RC3", case: "CS7", owasp: "LLM06", desc: "Agent chains individually-authorized tools to produce an unauthorized composite outcome." },
     ]
   },
   {
-    id: "TA003", name: "Scope Violation", short: "Scope Violation",
+    id: "TA003", name: "Compromise System Integrity", short: "System Integrity",
     techniques: [
-      { id: "T3001", name: "Autonomous Scope Expansion", severity: "high", root: "RC2+RC3", case: "CS7", owasp: "LLM01", desc: "Agent expands its own task boundaries beyond original instructions." },
+      { id: "T3001", name: "Perform Irreversible Destructive Action", severity: "critical", root: "RC2", case: "CS4", owasp: "LLM07", desc: "Agent performs an irreversible destructive operation without safeguards or rollback capability." },
+      { id: "T3002", name: "Trigger Cascading System Changes", severity: "critical", root: "RC2+RC3", case: "CS5", owasp: "LLM07", desc: "Agent action propagates across multiple systems causing cascading failures." },
     ]
   },
   {
-    id: "TA004", name: "Information Breach", short: "Info Breach",
+    id: "TA004", name: "Expose or Exfiltrate Information", short: "Info Exfiltration",
     techniques: [
-      { id: "T4001", name: "Context Window Data Exfiltration", severity: "critical", root: "RC1+RC4", case: "CS8", owasp: "LLM02", desc: "Agent leaks sensitive data from its context window to unauthorized recipients." },
-      { id: "T4002", name: "Cross-Session Information Leakage", severity: "high", root: "RC3", case: "CS9", owasp: "LLM02", desc: "Agent carries information between sessions that should be isolated." },
+      { id: "T4001", name: "Exfiltrate Context-Scoped Data", severity: "critical", root: "RC1+RC4", case: "CS8", owasp: "LLM02", desc: "Agent exfiltrates sensitive data from its context window to unauthorized destinations." },
+      { id: "T4002", name: "Leak Cross-Session or Persistent Data", severity: "high", root: "RC3", case: "CS9", owasp: "LLM02", desc: "Agent carries information between sessions that should be isolated." },
+      { id: "T4003", name: "Cross-Domain Secret Leakage", severity: "high", root: "RC3+RC4", case: "CS8", owasp: "LLM02", desc: "Agent transfers secrets from one trust domain to another through outputs or logs." },
     ]
   },
   {
-    id: "TA005", name: "Deceptive Output", short: "Deceptive Output",
+    id: "TA005", name: "Violate State Integrity", short: "State Integrity",
     techniques: [
-      { id: "T5001", name: "False Task Completion Report", severity: "high", root: "RC2", case: "CS10", owasp: "LLM06", desc: "Agent reports successful completion of tasks it did not perform or performed incorrectly." },
-      { id: "T5002", name: "Hallucinated Action Attribution", severity: "medium", root: "RC2", case: "CS10", owasp: "LLM06", desc: "Agent fabricates evidence of actions it claims to have taken." },
+      { id: "T5001", name: "Report False Task Completion", severity: "high", root: "RC2", case: "CS10", owasp: "LLM06", desc: "Agent reports successful completion of tasks it did not perform or performed incorrectly." },
+      { id: "T5002", name: "Fabricate Action Attribution", severity: "medium", root: "RC2", case: "CS10", owasp: "LLM06", desc: "Agent fabricates evidence of actions or attributes outcomes to sources that did not produce them." },
+      { id: "T5003", name: "Suppress or Omit Execution Failure", severity: "medium", root: "RC2", case: "CS10", owasp: "LLM06", desc: "Agent suppresses execution failures and presents incomplete results as complete." },
     ]
   },
   {
-    id: "TA006", name: "Resource Abuse", short: "Resource Abuse",
+    id: "TA006", name: "Abuse Resource Allocation", short: "Resource Abuse",
     techniques: [
-      { id: "T6001", name: "Recursive Self-Invocation Loop", severity: "high", root: "RC2+RC3", case: "CS11", owasp: "LLM10", desc: "Agent enters an unbounded loop of self-invocation consuming resources indefinitely." },
-      { id: "T6002", name: "Unbounded External API Consumption", severity: "medium", root: "RC2", case: "CS11", owasp: "LLM10", desc: "Agent makes excessive external API calls without rate limiting." },
+      { id: "T6001", name: "Execute Recursive Invocation Loops", severity: "high", root: "RC2+RC3", case: "CS11", owasp: "LLM10", desc: "Agent enters an unbounded loop of self-invocation consuming resources exponentially." },
+      { id: "T6002", name: "Consume Unbounded External Resources", severity: "medium", root: "RC2", case: "CS11", owasp: "LLM10", desc: "Agent makes excessive external API calls without rate limiting or cost awareness." },
     ]
   },
   {
-    id: "TA007", name: "Multi-Agent Exploitation", short: "Multi-Agent",
+    id: "TA007", name: "Manipulate Agent Interactions", short: "Agent Manipulation",
     techniques: [
-      { id: "T7001", name: "Agent Identity Spoofing", severity: "critical", root: "RC1", case: "CS3", owasp: "LLM06", desc: "Agent impersonates another agent or authority in multi-agent pipelines." },
-      { id: "T7002", name: "Delegation Chain Injection", severity: "high", root: "RC1+RC4", case: "CS8", owasp: "LLM01", desc: "Attacker injects instructions into agent delegation chains." },
+      { id: "T7001", name: "Spoof Agent Identity", severity: "critical", root: "RC1", case: "CS3", owasp: "LLM06", desc: "Agent impersonates another agent to gain elevated privileges in multi-agent systems." },
+      { id: "T7002", name: "Inject Malicious Delegation Chains", severity: "high", root: "RC1+RC4", case: "CS8", owasp: "LLM01", desc: "Attacker injects a malicious agent into a delegation chain to inherit elevated authority." },
+      { id: "T7003", name: "Induce Cross-Agent Behavioral Drift", severity: "medium", root: "RC4", case: "CS2", owasp: "LLM01", desc: "Agent gradually shifts the behavior of other agents through repeated subtle influence." },
+      { id: "T7004", name: "Induce Unsafe Consensus", severity: "high", root: "RC1+RC4", case: "CS3", owasp: "LLM06", desc: "Attacker manipulates multi-agent consensus to produce outcomes no individual agent would approve." },
     ]
   },
   {
-    id: "TA008", name: "Persistence Violation", short: "Persistence",
+    id: "TA008", name: "Establish or Modify Persistence", short: "Persistence",
     techniques: [
-      { id: "T8001", name: "Memory Poisoning via Injected Context", severity: "high", root: "RC4", case: "CS2", owasp: "LLM01", desc: "Agent's persistent memory is corrupted through injected context." },
-      { id: "T8002", name: "Governance State Corruption", severity: "critical", root: "RC4", case: "CS8", owasp: "LLM01", desc: "Agent manipulates its own governance state to bypass constraints." },
+      { id: "T8001", name: "Poison Persistent Memory", severity: "high", root: "RC4", case: "CS2", owasp: "LLM01", desc: "Agent's persistent memory is corrupted through injected context." },
+      { id: "T8002", name: "Corrupt Governance or Policy State", severity: "critical", root: "RC4", case: "CS8", owasp: "LLM01", desc: "Agent manipulates its own governance state to bypass constraints." },
     ]
   },
   {
-    id: "TA009", name: "Monitoring Evasion", short: "Evasion",
+    id: "TA009", name: "Evade Detection or Oversight", short: "Evasion",
     techniques: [
-      { id: "T9001", name: "Silent Provider-Level Task Failure", severity: "medium", root: "RC2", case: "CS10", owasp: "LLM06", desc: "Agent task fails silently at the provider level without generating alerts or logs." },
+      { id: "T9001", name: "Operate Outside Monitoring Boundaries", severity: "medium", root: "RC2", case: "CS10", owasp: "LLM06", desc: "Agent performs actions in contexts that fall outside monitoring infrastructure coverage." },
+      { id: "T9002", name: "Obfuscate Action Traceability", severity: "medium", root: "RC2", case: "CS10", owasp: "LLM06", desc: "Agent produces audit trails that are technically present but practically useless for reconstruction." },
     ]
   },
 ];
@@ -75,8 +82,8 @@ const tactics = [
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ATX-1 Matrix — AEGIS Threat Matrix</title>
-  <meta name="description" content="Interactive matrix view of the ATX-1 threat taxonomy — 9 tactics, 20 techniques for autonomous AI agent governance." />
+  <title>ATX-1 v2.0 Matrix — AEGIS Threat Matrix</title>
+  <meta name="description" content="Interactive matrix view of the ATX-1 v2.0 threat taxonomy — 9 tactics, 25 techniques for autonomous AI agent governance." />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
   <script src="https://aegis-initiative.com/shared/aegis-nav.js" defer></script>
@@ -442,8 +449,8 @@ const tactics = [
     <main class="main-content">
 
       <section class="matrix-hero">
-        <h1>ATX-1: AEGIS Threat Matrix</h1>
-        <p>Adversarial knowledge base for autonomous AI agent behavior. 9 tactics, 20 techniques — empirically grounded in observed agentic failures.</p>
+        <h1>ATX-1 v2.0: AEGIS Threat Matrix</h1>
+        <p>Adversarial knowledge base for autonomous AI agent behavior. 9 tactics, 25 techniques — empirically grounded in observed agentic failures.</p>
       </section>
 
       <div class="legend">

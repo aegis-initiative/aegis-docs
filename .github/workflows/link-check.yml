@@ -6,4 +6,4 @@ on:
     paths: ['**/*.md']
 jobs:
   links:
-    uses: aegis-initiative/aegis-ops/.github/workflows/reusable/markdown-link-check.yml@main
+    uses: aegis-initiative/aegis-ops/.github/workflows/markdown-link-check.yml@main

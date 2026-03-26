@@ -200,7 +200,7 @@ These files are also available for direct programmatic consumption at [aegis-gov
 
 ## Integration Notes
 
-- **ATT&CK Navigator** -- The STIX bundle uses ATT&CK-compatible extensions, making it loadable in the [ATT&CK Navigator](https://mitre-attack.github.io/attack-navigator/) for visualization.
+- **ATT&CK Navigator** -- A Navigator-compatible layer file is available at [aegis-governance.com/atx-1/navigator-layer.json](https://aegis-governance.com/atx-1/navigator-layer.json) for visualization in the [ATT&CK Navigator](https://mitre-attack.github.io/attack-navigator/). Load it via "Open Existing Layer" → "Upload from URL." Note: ATX-1 uses a custom domain; techniques will display in the Navigator but are not part of the ATT&CK or ATLAS matrices.
 - **Threat intelligence platforms** -- Any STIX 2.1-compatible platform (TAXII servers, OpenCTI, MISP) can ingest the ATX-1 bundle.
 - **CI/CD integration** -- Use the JSON Schema files to validate ATX-1 data as part of your CI pipeline, ensuring data integrity across updates.
 - **Custom tooling** -- The structured JSON data files are designed for easy consumption by custom scripts and dashboards without requiring STIX libraries.

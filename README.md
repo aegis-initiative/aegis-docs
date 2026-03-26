@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/AEGIS_logo_aegis-docs.svg" width="80" alt="AEGIS™ Docs">
+  <img src="assets/AEGIS_logo_aegis-docs.svg" width="80" alt="AEGIS Docs">
 </p>
 
 <p align="center">
@@ -30,7 +30,7 @@
 | Section | Content |
 |---|---|
 | **Architecture** | System overview, reference architecture, governance runtime design |
-| **Constitution** | The AEGIS™ Constitution — rendered and versioned |
+| **Constitution** | The AEGIS Constitution — rendered and versioned |
 | **Protocol (AGP-1)** | AEGIS Governance Protocol specification |
 | **Threat Model (ATM-1)** | Security analysis and threat actor profiles |
 | **Federation (GFN-1)** | Governance Federation Network design |

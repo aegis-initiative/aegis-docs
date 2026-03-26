@@ -20,7 +20,7 @@ For each technique:
 
 ## TA001: Violate Authority Boundaries
 
-### T1001: Execute Non-Owner Instruction {#t1001}
+### T1001: Execute Non-Owner Instruction
 
 | | |
 |---|---|
@@ -38,7 +38,7 @@ For each technique:
 
 ---
 
-### T1002: Infer Implicit Authority {#t1002}
+### T1002: Infer Implicit Authority
 
 | | |
 |---|---|
@@ -56,7 +56,7 @@ For each technique:
 
 ---
 
-### T1003: Propagate Spoofed Authority at Scale {#t1003}
+### T1003: Propagate Spoofed Authority at Scale
 
 | | |
 |---|---|
@@ -76,7 +76,7 @@ For each technique:
 
 ## TA002: Exceed Operational Scope
 
-### T2001: Expand Task Scope Autonomously {#t2001}
+### T2001: Expand Task Scope Autonomously
 
 | | |
 |---|---|
@@ -94,7 +94,7 @@ For each technique:
 
 ---
 
-### T2002: Perform Unvalidated Bulk Operations {#t2002}
+### T2002: Perform Unvalidated Bulk Operations
 
 | | |
 |---|---|
@@ -112,7 +112,7 @@ For each technique:
 
 ---
 
-### T2003: Obscure Objective Through Delegation {#t2003}
+### T2003: Obscure Objective Through Delegation
 
 | | |
 |---|---|
@@ -130,7 +130,7 @@ For each technique:
 
 ---
 
-### T2004: Exploit Tool-Chain Composition {#t2004}
+### T2004: Exploit Tool-Chain Composition
 
 | | |
 |---|---|
@@ -150,7 +150,7 @@ For each technique:
 
 ## TA003: Compromise System Integrity
 
-### T3001: Perform Irreversible Destructive Action {#t3001}
+### T3001: Perform Irreversible Destructive Action
 
 | | |
 |---|---|
@@ -168,7 +168,7 @@ For each technique:
 
 ---
 
-### T3002: Trigger Cascading System Changes {#t3002}
+### T3002: Trigger Cascading System Changes
 
 | | |
 |---|---|
@@ -188,7 +188,7 @@ For each technique:
 
 ## TA004: Expose or Exfiltrate Information
 
-### T4001: Exfiltrate Context-Scoped Data {#t4001}
+### T4001: Exfiltrate Context-Scoped Data
 
 | | |
 |---|---|
@@ -206,7 +206,7 @@ For each technique:
 
 ---
 
-### T4002: Leak Cross-Session or Persistent Data {#t4002}
+### T4002: Leak Cross-Session or Persistent Data
 
 | | |
 |---|---|
@@ -224,7 +224,7 @@ For each technique:
 
 ---
 
-### T4003: Cross-Domain Secret Leakage {#t4003}
+### T4003: Cross-Domain Secret Leakage
 
 | | |
 |---|---|
@@ -244,7 +244,7 @@ For each technique:
 
 ## TA005: Violate State Integrity
 
-### T5001: Report False Task Completion {#t5001}
+### T5001: Report False Task Completion
 
 | | |
 |---|---|
@@ -262,7 +262,7 @@ For each technique:
 
 ---
 
-### T5002: Fabricate Action Attribution {#t5002}
+### T5002: Fabricate Action Attribution
 
 | | |
 |---|---|
@@ -280,7 +280,7 @@ For each technique:
 
 ---
 
-### T5003: Suppress or Omit Execution Failure {#t5003}
+### T5003: Suppress or Omit Execution Failure
 
 | | |
 |---|---|
@@ -300,7 +300,7 @@ For each technique:
 
 ## TA006: Abuse Resource Allocation
 
-### T6001: Execute Recursive Invocation Loops {#t6001}
+### T6001: Execute Recursive Invocation Loops
 
 | | |
 |---|---|
@@ -318,7 +318,7 @@ For each technique:
 
 ---
 
-### T6002: Consume Unbounded External Resources {#t6002}
+### T6002: Consume Unbounded External Resources
 
 | | |
 |---|---|
@@ -338,7 +338,7 @@ For each technique:
 
 ## TA007: Manipulate Agent Interactions
 
-### T7001: Spoof Agent Identity {#t7001}
+### T7001: Spoof Agent Identity
 
 | | |
 |---|---|
@@ -356,7 +356,7 @@ For each technique:
 
 ---
 
-### T7002: Inject Malicious Delegation Chains {#t7002}
+### T7002: Inject Malicious Delegation Chains
 
 | | |
 |---|---|
@@ -374,7 +374,7 @@ For each technique:
 
 ---
 
-### T7003: Induce Cross-Agent Behavioral Drift {#t7003}
+### T7003: Induce Cross-Agent Behavioral Drift
 
 | | |
 |---|---|
@@ -392,7 +392,7 @@ For each technique:
 
 ---
 
-### T7004: Induce Unsafe Consensus {#t7004}
+### T7004: Induce Unsafe Consensus
 
 | | |
 |---|---|
@@ -412,7 +412,7 @@ For each technique:
 
 ## TA008: Establish or Modify Persistence
 
-### T8001: Poison Persistent Memory {#t8001}
+### T8001: Poison Persistent Memory
 
 | | |
 |---|---|
@@ -430,7 +430,7 @@ For each technique:
 
 ---
 
-### T8002: Corrupt Governance or Policy State {#t8002}
+### T8002: Corrupt Governance or Policy State
 
 | | |
 |---|---|
@@ -450,7 +450,7 @@ For each technique:
 
 ## TA009: Evade Detection or Oversight
 
-### T9001: Operate Outside Monitoring Boundaries {#t9001}
+### T9001: Operate Outside Monitoring Boundaries
 
 | | |
 |---|---|
@@ -468,7 +468,7 @@ For each technique:
 
 ---
 
-### T9002: Obfuscate Action Traceability {#t9002}
+### T9002: Obfuscate Action Traceability
 
 | | |
 |---|---|

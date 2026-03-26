@@ -1,18 +1,17 @@
 <p align="center">
+  <img src="https://img.shields.io/badge/ip--owner-Finnoybu%20IP%20LLC-blueviolet?style=flat-square" alt="IP Owner">
+  <a href="https://github.com/aegis-initiative"><img src="https://img.shields.io/badge/org-aegis--initiative-0084e7?style=flat-square&logo=github" alt="Org"></a>
+  <a href="https://aegis-docs.com"><img src="https://img.shields.io/badge/domain-aegis--docs.com-0084e7?style=flat-square" alt="Domain"></a>
+  <img src="https://img.shields.io/badge/visibility-public-lightgrey?style=flat-square" alt="Public">
+</p>
+
+<p align="center">
   <img src="assets/AEGIS_logo_aegis-docs.svg" width="80" alt="AEGIS Docs">
 </p>
 
 <p align="center">
   <strong>aegis-docs</strong><br>
   The public AEGIS™ documentation site — built with Astro, hosted at aegis-docs.com
-</p>
-
-<p align="center">
-  <a href="https://github.com/aegis-initiative"><img src="https://img.shields.io/badge/org-aegis--initiative-0084e7?style=flat-square&logo=github" alt="Org"></a>
-  <a href="https://aegis-docs.com"><img src="https://img.shields.io/badge/site-aegis--docs.com-00BFA5?style=flat-square" alt="Site"></a>
-  <img src="https://img.shields.io/badge/deploy-passing-brightgreen?style=flat-square" alt="Deploy">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-green?style=flat-square" alt="License"></a>
-  <img src="https://img.shields.io/badge/ip--owner-Finnoybu%20IP%20LLC-blueviolet?style=flat-square" alt="IP Owner">
 </p>
 
 ---

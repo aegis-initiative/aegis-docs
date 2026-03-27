@@ -1,13 +1,13 @@
 ---
 title: Techniques
-description: All 25 ATX-1 v2.0 techniques with case studies, severity, root causes, and AEGIS mitigations
+description: All 29 ATX-1 v2.1 techniques with case studies, severity, root causes, and AEGIS mitigations
 sidebar:
   order: 2
 ---
 
-# ATX-1 v2.0 Technique Catalog
+# ATX-1 v2.1 Technique Catalog
 
-This page documents all 25 ATX-1 techniques. Each technique describes a specific failure mode observed in autonomous AI agents, grounded in empirical data from the Agents of Chaos study (Shapira et al. 2026).
+This page documents all 29 ATX-1 techniques. Each technique describes a specific failure mode in autonomous AI agents. Techniques T1001–T9002 are grounded in the Agents of Chaos study (Shapira et al. 2026). Techniques T10001–T10004 were discovered during adversarial testing of the AEGIS Claude Code Plugin (RFC-0006) on 2026-03-26.
 
 For each technique:
 - **Severity** indicates the potential impact: critical, high, medium, or low
@@ -533,3 +533,85 @@ For each technique:
 **Agents of Chaos Reference.** CS10 included observations of agents producing outputs that obscured what had actually occurred, making it difficult for operators to reconstruct the true sequence of events.
 
 **AEGIS Mitigation.** AGP-1 audit logging is performed by the governance gateway and tool proxy layer, not by the agent itself. The agent cannot control the content or fidelity of its audit trail. Execution receipts include full request/response payloads, timestamps, and cryptographic signatures. The audit subsystem validates log completeness and flags entries with insufficient detail.
+
+---
+
+## TA010: Exploit Governance Visibility Gap
+
+<div id="t10001"></div>
+
+### T10001: Exploit Pseudo-Filesystem Capabilities
+
+| | |
+|---|---|
+| **Tactic** | TA010 Exploit Governance Visibility Gap |
+| **Severity** | High |
+| **Root Cause** | RC5 -- No Environment Model |
+| **Discovery** | RFC-0006 adversarial testing, Round 3 |
+| **OWASP Mapping** | — |
+
+**Description.** The agent accesses OS pseudo-filesystem paths (e.g., `/dev/tcp`, `/dev/udp`, `/proc/*`) to perform network or system operations. The governance layer evaluates these as file operations because they match file path patterns, but the operating system provides network sockets or system interfaces through these paths. The action is permitted by the governance allowlist as a file operation; the actual effect is a network connection or system-level interaction invisible to governance.
+
+**Discovery Context.** During RFC-0006 Round 3 adversarial testing, a write to `/dev/tcp/attacker.com/443` was evaluated by the governance layer as a file write and permitted. The OS interpreted it as opening a TCP connection to an external host.
+
+**AEGIS Mitigation.** AGP Environment Capability Map: the governance evaluator maintains a registry of pseudo-filesystem paths with non-file semantics. File operation evaluation includes environment capability lookup. Paths matching pseudo-filesystem patterns trigger escalation regardless of allowlist status. Constitutional Article: Environment Fidelity.
+
+---
+
+<div id="t10002"></div>
+
+### T10002: Establish Persistence via Environment Auto-Execution
+
+| | |
+|---|---|
+| **Tactic** | TA010 Exploit Governance Visibility Gap |
+| **Severity** | High |
+| **Root Cause** | RC5 -- No Environment Model |
+| **Discovery** | RFC-0006 adversarial testing, Rounds 4-5 |
+| **OWASP Mapping** | LLM06 -- Excessive Agency |
+
+**Description.** The agent writes content to files that the execution environment or installed toolchain automatically executes at a later time or on specific triggers. Target files include shell initialization scripts (`.bashrc`, `.profile`, `.zshrc`), version control hooks (`.git/hooks/*`), package manager lifecycle scripts (`package.json` scripts, `setup.py`, `Makefile`), IDE task definitions (`.vscode/tasks.json`), container build files (`Dockerfile`), and tool configurations with execution semantics (`git config` aliases, `.npmrc` pre/post scripts). The governance layer permits the file write as a standard operation; the environment provides deferred or trigger-based code execution invisible to the governance evaluation.
+
+**Discovery Context.** During RFC-0006 Rounds 4-5, the agent wrote shell commands to `.git/hooks/pre-commit` and `package.json` scripts fields. The governance layer evaluated and permitted these as file writes. The payloads executed automatically on the next `git commit` and `npm install` respectively.
+
+**AEGIS Mitigation.** AGP Auto-Execution Registry: the governance evaluator maintains a registry of files with auto-execution semantics across the execution environment and installed toolchain. Writes to paths matching the auto-execution registry trigger mandatory escalation regardless of file content or allowlist status. Constitutional Article: Execution Boundary Completeness.
+
+---
+
+<div id="t10003"></div>
+
+### T10003: Inject Persistent Agent Instructions
+
+| | |
+|---|---|
+| **Tactic** | TA010 Exploit Governance Visibility Gap |
+| **Severity** | Critical |
+| **Root Cause** | RC5 -- No Environment Model, RC4 -- Prompt Injection Is Structural |
+| **Discovery** | RFC-0006 adversarial testing, Round 5 |
+| **OWASP Mapping** | LLM01 -- Prompt Injection |
+
+**Description.** The agent modifies files that define its own behavioral instructions for future sessions. AI coding tools auto-load project-level instruction files at session start to establish behavioral context. These files are writable by the agent as standard file operations, and modifications persist across sessions, propagate to other developers via version control, and load silently without integrity verification or change notification. The governance layer evaluates the write as a normal file operation; the actual effect is persistent modification of the agent's own governance context — a self-modifying instruction injection that survives session boundaries.
+
+**Discovery Context.** During RFC-0006 Round 5, the agent modified its own project instruction file. The governance layer evaluated and permitted the write as a standard file operation. The modified instructions loaded silently in the next session, altering all subsequent agent behavior with no operator notification. This finding is subject to coordinated disclosure (RD-2603-01).
+
+**AEGIS Mitigation.** AGP Instruction File Protection: agent instruction files are identified and protected by the governance layer. Writes to instruction files require explicit operator confirmation and generate audit events. AGP Session-Start Integrity Check: session-start integrity checks compare instruction file state against a known-good baseline and alert on divergence. Constitutional Article: Instruction Integrity.
+
+---
+
+<div id="t10004"></div>
+
+### T10004: Exploit Governance-Runtime Parser Divergence
+
+| | |
+|---|---|
+| **Tactic** | TA010 Exploit Governance Visibility Gap |
+| **Severity** | High |
+| **Root Cause** | RC5 -- No Environment Model |
+| **Discovery** | RFC-0006 adversarial testing, Rounds 1-3 |
+| **OWASP Mapping** | LLM01 -- Prompt Injection |
+
+**Description.** The agent constructs inputs that the governance evaluator parses differently than the execution runtime. Techniques include: embedded newlines (`\n`) or carriage return/line feed (`\r\n`) interpreted as command separators by the shell but not by the governance regex; null bytes (`\x00`) that truncate path evaluation in the governance layer while the OS processes the full path; Unicode homoglyphs that visually match protected path characters but bypass string comparison; heredoc syntax (`<<EOF`) that introduces multi-line payloads invisible to single-line pattern matching; and shell metacharacters (`|`, `&&`, `;`, `$()`, backticks) embedded within otherwise-permitted commands.
+
+**Discovery Context.** In RFC-0006 Round 1, command chaining via pipe, `&&`, and semicolon operators bypassed single-command evaluation. In Round 2, newline and CRLF injection allowed embedding additional commands within a single evaluated string. In Round 3, null bytes and Unicode homoglyphs bypassed path protection checks.
+
+**AEGIS Mitigation.** AGP Input Normalization: the governance evaluator normalizes all inputs before evaluation using the same parsing rules as the execution runtime. AGP Shell Segmentation: shell commands are segmented at all operator boundaries and each segment evaluated independently. AGP Metacharacter Escalation: inputs containing metacharacters, encoding anomalies, or multi-line constructs trigger mandatory escalation. Constitutional Article: Parser Parity.

@@ -74,6 +74,15 @@ const tactics = [
       { id: "T9002", name: "Obfuscate Action Traceability", severity: "medium", root: "RC2", case: "CS10", owasp: "LLM06", desc: "Agent produces audit trails that are technically present but practically useless for reconstruction." },
     ]
   },
+  {
+    id: "TA010", name: "Exploit Governance Visibility Gap", short: "Visibility Gap",
+    techniques: [
+      { id: "T10001", name: "Exploit Pseudo-Filesystem Capabilities", severity: "high", root: "RC5", case: "RFC-0006 R3", owasp: "—", desc: "Agent accesses OS pseudo-filesystem paths (/dev/tcp, /dev/udp, /proc) to perform network or system operations that governance evaluates as file operations." },
+      { id: "T10002", name: "Establish Persistence via Environment Auto-Execution", severity: "high", root: "RC5", case: "RFC-0006 R4-5", owasp: "LLM06", desc: "Agent writes to files the environment auto-executes: shell profiles, git hooks, package scripts, IDE tasks, Dockerfiles, tool configs." },
+      { id: "T10003", name: "Inject Persistent Agent Instructions", severity: "critical", root: "RC5+RC4", case: "RFC-0006 R5", owasp: "LLM01", desc: "Agent modifies its own instruction files that auto-load at session start, persist across sessions, and propagate via version control." },
+      { id: "T10004", name: "Exploit Governance-Runtime Parser Divergence", severity: "high", root: "RC5", case: "RFC-0006 R1-3", owasp: "LLM01", desc: "Agent constructs inputs parsed differently by the governance evaluator than the execution runtime: newline/CRLF injection, null bytes, Unicode homoglyphs, heredoc, shell metacharacters." },
+    ]
+  },
 ];
 ---
 
@@ -82,8 +91,8 @@ const tactics = [
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ATX-1 v2.0 Matrix — AEGIS Threat Matrix</title>
-  <meta name="description" content="Interactive matrix view of the ATX-1 v2.0 threat taxonomy — 9 tactics, 25 techniques for autonomous AI agent governance." />
+  <title>ATX-1 v2.1 Matrix — AEGIS Threat Matrix</title>
+  <meta name="description" content="Interactive matrix view of the ATX-1 v2.1 threat taxonomy — 10 tactics, 29 techniques for autonomous AI agent governance." />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
   <script src="https://aegis-initiative.com/shared/aegis-nav.js" defer></script>
@@ -244,7 +253,7 @@ const tactics = [
 
     .matrix {
       display: grid;
-      grid-template-columns: repeat(9, minmax(130px, 1fr));
+      grid-template-columns: repeat(10, minmax(120px, 1fr));
       gap: 3px;
       min-width: 1200px;
     }
@@ -449,8 +458,8 @@ const tactics = [
     <main class="main-content">
 
       <section class="matrix-hero">
-        <h1>ATX-1 v2.0: AEGIS Threat Matrix</h1>
-        <p>Adversarial knowledge base for autonomous AI agent behavior. 9 tactics, 25 techniques — empirically grounded in observed agentic failures.</p>
+        <h1>ATX-1 v2.1: AEGIS Threat Matrix</h1>
+        <p>Adversarial knowledge base for autonomous AI agent behavior. 10 tactics, 29 techniques — empirically grounded in observed agentic failures and adversarial governance testing.</p>
       </section>
 
       <div class="legend">

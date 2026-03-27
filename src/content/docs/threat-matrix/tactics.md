@@ -1,11 +1,11 @@
 ---
 title: Tactics
-description: The nine ATX-1 v2.0 tactics — categories of ungoverned agentic AI behavior
+description: The ten ATX-1 v2.1 tactics — categories of ungoverned agentic AI behavior
 sidebar:
   order: 1
 ---
 
-# ATX-1 v2.0 Tactics
+# ATX-1 v2.1 Tactics
 
 Tactics represent categories of ungoverned agentic behavior. Each tactic answers the question: **what kind of harm is the agent producing?** Tactics are not mutually exclusive -- a single agent action may fall under multiple tactics.
 
@@ -136,3 +136,19 @@ The agent's failures are invisible to operators -- either because the agent acti
 **Root causes:** RC2 (Missing Consequence Modeling)
 
 **Techniques:** [T9001](/threat-matrix/techniques/#t9001), [T9002](/threat-matrix/techniques/#t9002)
+
+---
+
+## TA010: Exploit Governance Visibility Gap
+
+**Primitive:** Environment Model
+
+**Agent performs actions whose actual effects are invisible to the governance layer.**
+
+The agent's actions are evaluated by the governance layer at one abstraction level (file write, shell command) but the execution environment interprets them at a lower level with fundamentally different effects (network connection, code execution, persistent instruction injection). The governance layer permits the action based on its model; the environment does something the model doesn't represent. This tactic is unique to governed systems — it only manifests when a governance enforcement layer exists and the execution environment provides capabilities below that layer's abstraction level.
+
+**Root causes:** RC5 (No Environment Model)
+
+**Discovery:** RFC-0006 adversarial testing, 5 rounds, 2026-03-26. Novel tactic class — not in MITRE ATT&CK or ATLAS.
+
+**Techniques:** [T10001](/threat-matrix/techniques/#t10001), [T10002](/threat-matrix/techniques/#t10002), [T10003](/threat-matrix/techniques/#t10003), [T10004](/threat-matrix/techniques/#t10004)

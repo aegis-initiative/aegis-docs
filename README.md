@@ -72,6 +72,9 @@ Guidelines:
 
 ## License & Trademark
 
-Licensed under the [Apache License 2.0](LICENSE).
+Dual-licensed:
+
+- **Code:** [Apache License 2.0](LICENSE)
+- **Documentation & non-code content:** [CC-BY-SA-4.0](LICENSE-DOCS)
 
 AEGIS™ and **"Capability without constraint is not intelligence™"** are trademarks of **Finnoybu IP LLC**.

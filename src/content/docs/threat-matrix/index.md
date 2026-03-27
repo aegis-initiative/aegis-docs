@@ -61,7 +61,7 @@ ATX-1 is grounded in two empirical sources:
 
 1. **Agents of Chaos** (Shapira et al., 2026) -- Systematic testing of autonomous AI agents across 13 case studies involving real-world tool use. Techniques T1001–T9002 map to observed failures from this study.
 
-2. **RFC-0006 Adversarial Testing** (AEGIS Initiative, 2026-03-26) -- Five rounds of white-box adversarial testing against the AEGIS Claude Code Plugin governance enforcement layer. This testing discovered a novel tactic class (TA010: Exploit Governance Visibility Gap) and 4 techniques (T10001–T10004) that are only visible when a governance layer exists and is adversarially tested against the execution environment.
+2. **RFC-0006 Adversarial Testing** (AEGIS Initiative, 2026-03-26) -- Five rounds of white-box adversarial testing against the AEGIS Claude Code Plugin governance enforcement layer. This testing discovered a novel tactic class (TA010: Act Beyond Governance Interpretation) and 4 techniques (T10001–T10004) that are only visible when a governance layer exists and is adversarially tested against the execution environment.
 
 ## Pages in This Section
 

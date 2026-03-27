@@ -536,7 +536,7 @@ For each technique:
 
 ---
 
-## TA010: Exploit Governance Visibility Gap
+## TA010: Act Beyond Governance Interpretation
 
 <div id="t10001"></div>
 
@@ -544,7 +544,7 @@ For each technique:
 
 | | |
 |---|---|
-| **Tactic** | TA010 Exploit Governance Visibility Gap |
+| **Tactic** | TA010 Act Beyond Governance Interpretation |
 | **Severity** | High |
 | **Root Cause** | RC5 -- No Environment Model |
 | **Discovery** | RFC-0006 adversarial testing, Round 3 |
@@ -564,7 +564,7 @@ For each technique:
 
 | | |
 |---|---|
-| **Tactic** | TA010 Exploit Governance Visibility Gap |
+| **Tactic** | TA010 Act Beyond Governance Interpretation |
 | **Severity** | High |
 | **Root Cause** | RC5 -- No Environment Model |
 | **Discovery** | RFC-0006 adversarial testing, Rounds 4-5 |
@@ -584,7 +584,7 @@ For each technique:
 
 | | |
 |---|---|
-| **Tactic** | TA010 Exploit Governance Visibility Gap |
+| **Tactic** | TA010 Act Beyond Governance Interpretation |
 | **Severity** | Critical |
 | **Root Cause** | RC5 -- No Environment Model, RC4 -- Prompt Injection Is Structural |
 | **Discovery** | RFC-0006 adversarial testing, Round 5 |
@@ -604,7 +604,7 @@ For each technique:
 
 | | |
 |---|---|
-| **Tactic** | TA010 Exploit Governance Visibility Gap |
+| **Tactic** | TA010 Act Beyond Governance Interpretation |
 | **Severity** | High |
 | **Root Cause** | RC5 -- No Environment Model |
 | **Discovery** | RFC-0006 adversarial testing, Rounds 1-3 |

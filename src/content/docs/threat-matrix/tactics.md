@@ -139,7 +139,7 @@ The agent's failures are invisible to operators -- either because the agent acti
 
 ---
 
-## TA010: Exploit Governance Visibility Gap
+## TA010: Act Beyond Governance Interpretation
 
 **Primitive:** Environment Model
 
@@ -150,5 +150,7 @@ The agent's actions are evaluated by the governance layer at one abstraction lev
 **Root causes:** RC5 (No Environment Model)
 
 **Discovery:** RFC-0006 adversarial testing, 5 rounds, 2026-03-26. Novel tactic class — not in MITRE ATT&CK or ATLAS.
+
+**Distinction from TA009:** TA009 (Evade Detection or Oversight) describes failures where the agent's actions are *not observed* by governance systems. TA010 describes failures where the agent's actions are *observed and permitted* by governance, but their semantic effect is misinterpreted. In TA009, governance doesn't see the action. In TA010, governance sees the action, approves it, and logs it — but a different action actually occurred.
 
 **Techniques:** [T10001](/threat-matrix/techniques/#t10001), [T10002](/threat-matrix/techniques/#t10002), [T10003](/threat-matrix/techniques/#t10003), [T10004](/threat-matrix/techniques/#t10004)

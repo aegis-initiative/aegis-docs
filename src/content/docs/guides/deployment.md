@@ -5,9 +5,12 @@ description: Deploy the AEGIS governance runtime in your infrastructure.
 
 # Deployment Guide
 
-> **Note:** The managed platform, operator dashboard, container images, and deployment tooling described on this page are under active development and not yet available. There is no running service at `aegis-platform.net` today. The content below describes the planned deployment model. Check back soon.
+> **Note:** The managed platform, operator dashboard, container images, and deployment tooling described on this page
+are under active development and not yet available. There is no running service at `aegis-platform.net` today. The
+content below describes the planned deployment model. Check back soon.
 
-This guide covers deployment options for integrating AEGIS governance into your infrastructure. AEGIS can be consumed as a managed service or self-hosted.
+This guide covers deployment options for integrating AEGIS governance into your infrastructure. AEGIS can be consumed as
+a managed service or self-hosted.
 
 ## Deployment Options
 
@@ -29,9 +32,11 @@ To get started:
 
 ### Self-Hosted
 
-For organizations that require on-premises deployment or have data residency requirements, AEGIS can be self-hosted. The self-hosted runtime provides the same governance capabilities as the managed platform.
+For organizations that require on-premises deployment or have data residency requirements, AEGIS can be self-hosted. The
+self-hosted runtime provides the same governance capabilities as the managed platform.
 
-Self-hosted deployment details will be published as the runtime implementation matures. See the [aegis-governance repository](https://github.com/aegis-initiative/aegis-governance) for architecture specifications.
+Self-hosted deployment details will be published as the runtime implementation matures. See the [aegis-governance
+repository](https://github.com/aegis-initiative/aegis-governance) for architecture specifications.
 
 ## Integration Architecture
 
@@ -81,7 +86,8 @@ Governance policies can be managed as code and deployed through your existing CI
 3. Deploy policy updates via the [Enforcement API](/api/enforcement/)
 4. Monitor rollout through the operator dashboard
 
-The [aegis-ops repository](https://github.com/aegis-initiative/aegis-ops) contains reference CI/CD workflows for policy deployment.
+The [aegis-ops repository](https://github.com/aegis-initiative/aegis-ops) contains reference CI/CD workflows for policy
+deployment.
 
 ## Network Requirements
 
@@ -91,7 +97,8 @@ The AEGIS governance gateway requires:
 - Inbound connections from AI agents (configurable port)
 - Outbound connections to target external systems (for the tool proxy layer)
 
-AI agents should be configured to route all external operations through the governance gateway. Direct access to external systems should be blocked at the network level.
+AI agents should be configured to route all external operations through the governance gateway. Direct access to
+external systems should be blocked at the network level.
 
 ## Next Steps
 
@@ -99,4 +106,5 @@ AI agents should be configured to route all external operations through the gove
 - [Policy Authoring](/guides/policy-authoring/) -- Define governance rules
 - [Troubleshooting](/guides/troubleshooting/) -- Diagnose deployment issues
 
-> **Note:** Deployment tooling and container images are under active development. This guide reflects the target deployment model. See the [aegis-ops repository](https://github.com/aegis-initiative/aegis-ops) for current status.
+> **Note:** Deployment tooling and container images are under active development. This guide reflects the target
+deployment model. See the [aegis-ops repository](https://github.com/aegis-initiative/aegis-ops) for current status.

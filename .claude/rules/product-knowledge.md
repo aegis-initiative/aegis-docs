@@ -6,7 +6,10 @@
 
 ## 1. Site Overview
 
-The AEGIS Documentation site is a static documentation website built with **Astro 6** and deployed to **Cloudflare Pages** at aegis-docs.com. It publishes public documentation for the AEGIS ecosystem -- architecture, APIs, SDK, and developer guides.
+The AEGIS Documentation site is a static documentation website built
+with **Astro 6** and deployed to **Cloudflare Pages** at aegis-docs.com.
+It publishes public documentation for the AEGIS ecosystem —
+architecture, APIs, SDK, and developer guides.
 
 - **Framework:** Astro 6 with MDX integration
 - **Search:** Pagefind (static search index, built post-build)
@@ -53,7 +56,8 @@ The AEGIS Documentation site is a static documentation website built with **Astr
 - / -- src/pages/index.astro (landing page, standalone layout)
 - All other routes -- src/pages/[...slug].astro (dynamic, uses DocLayout)
 
-The slug page uses getStaticPaths() to generate routes from the docs content collection. Every .md and .mdx file in src/content/docs/ becomes a page.
+The slug page uses getStaticPaths() to generate routes from the docs content collection. Every .md and .mdx file in
+src/content/docs/ becomes a page.
 
 ### Pages That Do NOT Exist (vs Constitution)
 
@@ -62,7 +66,9 @@ The slug page uses getStaticPaths() to generate routes from the docs content col
 
 ### Content Collection
 
-Defined in src/content.config.ts. Uses glob loader for md/mdx in src/content/docs. Schema: title (string, required), description (string, optional), section (string, optional), sidebar.hidden (boolean, optional), sidebar.order (number, optional).
+Defined in src/content.config.ts. Uses glob loader for md/mdx in src/content/docs. Schema: title (string, required),
+description (string, optional), section (string, optional), sidebar.hidden (boolean, optional), sidebar.order (number,
+optional).
 
 **Difference from constitution:** docs adds a section field that constitution does not have.
 
@@ -86,15 +92,18 @@ Defined in src/content.config.ts. Uses glob loader for md/mdx in src/content/doc
 
 ### DocLayout (src/layouts/DocLayout.astro)
 
-Primary layout. Default description: "Official documentation for the AEGIS ecosystem". Title: {title} | AEGIS Documentation.
+Primary layout. Default description: "Official documentation for the AEGIS ecosystem". Title: {title} | AEGIS
+Documentation.
 
-Structure: html > head + body > Header, breadcrumb slot, page-wrapper (Sidebar + main-content + ToC). main-content has slot, Footer, watermark (AegisWordmark height 720).
+Structure: html > head + body > Header, breadcrumb slot, page-wrapper (Sidebar + main-content + ToC). main-content has
+slot, Footer, watermark (AegisWordmark height 720).
 
 Three-column layout: **identical to constitution** (sidebar 320px, content flexible, ToC 320px).
 
 ### Landing Page
 
-Centered card-grid design (NOT the constitution hero+wordmark). AegisLogo size 80, title, tagline, 6 nav cards. Own CSS variables.
+Centered card-grid design (NOT the constitution hero+wordmark). AegisLogo size 80, title, tagline, 6 nav cards. Own CSS
+variables.
 
 ---
 
@@ -141,11 +150,12 @@ Same accordion mechanism as constitution. Missing: legal nav, version badge.
 
 ### CRITICAL BUG: Sidebar CSS
 
-Missing closing brace on .sidebar rule (line 105). Subsequent rules nested via CSS nesting. Missing bottom:0 and height:calc(100vh - 4rem).
+Missing closing brace on .sidebar rule (line 105). Subsequent rules nested via CSS nesting. Missing bottom:0 and
+height:calc(100vh - 4rem).
 
 ### PrevNext: NOT IMPLEMENTED (component exists, unused)
 
-### Breadcrumb: NOT USED (component exists, unused). Bug: home link says "AEGIS Constitution".
+### Breadcrumb: NOT USED (component exists, unused). Bug: home link says "AEGIS Constitution"
 
 ---
 
@@ -204,14 +214,14 @@ OG references /OG_image.png which does not exist. Assets: favicon.svg and fonts 
 
 ### Moderate
 
-4. **PDF buttons** -- Link to constitution PDFs that do not exist here
-5. **OG image missing** -- /OG_image.png referenced but absent
-6. **Breadcrumb text** -- Says "AEGIS Constitution" instead of "AEGIS Docs"
-7. **Plugins dead code** -- remark-asides.mjs, rehype-asides.mjs not in astro.config.mjs
-8. **Version links** -- CalVer links to /releases/ which has no content
+1. **PDF buttons** -- Link to constitution PDFs that do not exist here
+2. **OG image missing** -- /OG_image.png referenced but absent
+3. **Breadcrumb text** -- Says "AEGIS Constitution" instead of "AEGIS Docs"
+4. **Plugins dead code** -- remark-asides.mjs, rehype-asides.mjs not in astro.config.mjs
+5. **Version links** -- CalVer links to /releases/ which has no content
 
 ### Minor
 
-9. **Stale READMEs** -- Describe planned items that exist
-10. **Root index.md** -- Duplicates getting-started content
-11. **Section field** -- In schema but unused by content
+1. **Stale READMEs** -- Describe planned items that exist
+2. **Root index.md** -- Duplicates getting-started content
+3. **Section field** -- In schema but unused by content

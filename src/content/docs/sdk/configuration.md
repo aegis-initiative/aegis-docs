@@ -5,11 +5,13 @@ description: Configuration options for the AEGIS TypeScript and Python SDKs.
 
 # SDK Configuration
 
-This page documents the configuration options available in both AEGIS SDKs, and is honest about what is implemented versus planned.
+This page documents the configuration options available in both AEGIS SDKs, and is honest about what is implemented
+versus planned.
 
 ## Constructor Options
 
-Both SDKs currently accept a minimal set of constructor options. Additional configuration (retries, timeouts, logging) is planned but not yet implemented.
+Both SDKs currently accept a minimal set of constructor options. Additional configuration (retries, timeouts, logging)
+is planned but not yet implemented.
 
 ### Python
 
@@ -48,7 +50,8 @@ const client = new AegisClient({
 The SDKs currently implement:
 
 - **Client construction** with `base_url`/`baseUrl` and optional `api_key`/`apiKey`
-- **`propose()` method signature** accepting an `ActionProposal` and returning `Promise<GovernanceDecision>` -- currently stubbed with `NotImplementedError` / `Error`
+- **`propose()` method signature** accepting an `ActionProposal` and returning `Promise<GovernanceDecision>` --
+currently stubbed with `NotImplementedError` / `Error`
 - **Type definitions** -- `ActionProposal`, `GovernanceDecision`, `Verdict` enum
 - **Error hierarchy** -- `AegisError`, `AegisConnectionError`, `AegisAuthError`, `AegisDeniedError`
 
@@ -63,6 +66,7 @@ Not yet available. When implemented, both SDKs will support a configurable reque
 ### Retry Logic
 
 Not yet available. Planned behavior:
+
 - Automatic retries for transient failures (network errors, timeouts, 5xx responses)
 - Governance decisions (including `DENY`) will never be retried
 - Exponential backoff with jitter
@@ -78,7 +82,8 @@ Not yet implemented. Planned variables:
 
 ### Logging
 
-Not yet available. The SDKs do not currently emit logs. Standard Python `logging` integration and a TypeScript `logLevel` option are planned.
+Not yet available. The SDKs do not currently emit logs. Standard Python `logging` integration and a TypeScript
+`logLevel` option are planned.
 
 ### Custom HTTP Client
 
@@ -86,7 +91,8 @@ Not yet available. The SDKs do not currently accept a custom HTTP client or fetc
 
 ### Async Client (Python)
 
-There is no separate `AsyncAegisClient` class. The existing `AegisClient.propose()` method is already `async`. A synchronous wrapper may be added in the future.
+There is no separate `AsyncAegisClient` class. The existing `AegisClient.propose()` method is already `async`. A
+synchronous wrapper may be added in the future.
 
 ## Local Development
 

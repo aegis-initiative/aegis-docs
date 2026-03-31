@@ -5,7 +5,8 @@ description: AGP-1 protocol message flow and the lifecycle of a governance decis
 
 # Data Flow
 
-This page describes the lifecycle of an action proposal as it flows through the AEGIS governance system, following the AEGIS Governance Protocol (AGP-1).
+This page describes the lifecycle of an action proposal as it flows through the AEGIS governance system, following the
+AEGIS Governance Protocol (AGP-1).
 
 ## Protocol Overview
 
@@ -34,7 +35,8 @@ AI Agent --> ACTION_PROPOSE --> AEGIS Governance Gateway
 
 ### 2. Governance Evaluation
 
-The gateway authenticates the request and routes it to the decision engine, which evaluates the proposal through the full pipeline:
+The gateway authenticates the request and routes it to the decision engine, which evaluates the proposal through the
+full pipeline:
 
 ```
 Authentication --> Capability Check --> Authority Check --> Risk Scoring --> Policy Evaluation
@@ -117,4 +119,5 @@ This enables full forensic reconstruction of any governance decision.
 - [Core Concepts](/getting-started/core-concepts/) -- Governance concepts explained
 - [API Reference](/api/) -- How to interact with the governance API programmatically
 
-> **Note:** For the full AGP-1 protocol specification including wire formats, authentication, and error handling, see the [aegis-governance repository](https://github.com/aegis-initiative/aegis-governance/tree/main/aegis-core/protocol).
+> **Note:** For the full AGP-1 protocol specification including wire formats, authentication, and error handling, see
+the [aegis-governance repository](https://github.com/aegis-initiative/aegis-governance/tree/main/aegis-core/protocol).

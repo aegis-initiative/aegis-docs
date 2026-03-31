@@ -5,13 +5,16 @@ description: The POST /api/v1/governance/propose endpoint -- submit action propo
 
 # Governance API
 
-The governance API is the primary integration point for AI systems. It accepts action proposals, evaluates them against registered capabilities, agent grants, and policies, and returns deterministic decisions.
+The governance API is the primary integration point for AI systems. It accepts action proposals, evaluates them against
+registered capabilities, agent grants, and policies, and returns deterministic decisions.
 
-> **Status:** The API is running locally at `https://demo.aegis-platform.net` and is functional. It is not yet deployed to `aegis-platform.net`. Authentication is not yet implemented -- requests are currently accepted without credentials.
+> **Status:** The API is running locally at `https://demo.aegis-platform.net` and is functional. It is not yet deployed
+to `aegis-platform.net`. Authentication is not yet implemented -- requests are currently accepted without credentials.
 
 ## POST /api/v1/governance/propose
 
-Submit an action proposal for governance evaluation. The engine checks whether the requesting agent has the required capability grant, then evaluates matching policies to produce an outcome.
+Submit an action proposal for governance evaluation. The engine checks whether the requesting agent has the required
+capability grant, then evaluates matching policies to produce an outcome.
 
 ### Request Format
 
@@ -47,13 +50,15 @@ Submit an action proposal for governance evaluation. The engine checks whether t
 | `decision` | string | One of `ALLOW`, `DENY`, `ESCALATE`, or `REQUIRE_CONFIRMATION` |
 | `reason` | string | Human-readable explanation of why the decision was made |
 
-All governance outcomes return HTTP 200. The `decision` field determines the result. HTTP error codes (4xx) indicate request-level validation failures, not governance decisions.
+All governance outcomes return HTTP 200. The `decision` field determines the result. HTTP error codes (4xx) indicate
+request-level validation failures, not governance decisions.
 
 ---
 
 ## Decision Outcomes
 
-The governance engine supports four outcomes. When multiple policies match, the strictest outcome wins according to this precedence rule:
+The governance engine supports four outcomes. When multiple policies match, the strictest outcome wins according to this
+precedence rule:
 
 **DENY > ESCALATE > REQUIRE_CONFIRMATION > ALLOW**
 
@@ -91,11 +96,13 @@ curl -s -X POST https://demo.aegis-platform.net/api/v1/governance/propose \
 }
 ```
 
-Note: `demo-agent` is not granted the `file.write` capability, so the request is denied at the capability-check stage before policy evaluation.
+Note: `demo-agent` is not granted the `file.write` capability, so the request is denied at the capability-check stage
+before policy evaluation.
 
 ### ESCALATE
 
-The action requires elevated review. It is neither approved nor denied -- a human or higher-authority system must make the final call.
+The action requires elevated review. It is neither approved nor denied -- a human or higher-authority system must make
+the final call.
 
 ```bash
 curl -s -X POST https://demo.aegis-platform.net/api/v1/governance/propose \
@@ -158,8 +165,10 @@ Returns HTTP 400 with a validation error describing which fields are missing.
 
 The governance engine evaluates proposals in this order:
 
-1. **Capability check** -- Does the agent have a grant covering the requested action? If not, the result is `DENY` immediately.
-2. **Policy evaluation** -- All matching policies are evaluated. If multiple policies match, the strictest outcome wins per the precedence rule: `DENY > ESCALATE > REQUIRE_CONFIRMATION > ALLOW`.
+1. **Capability check** -- Does the agent have a grant covering the requested action? If not, the result is `DENY`
+immediately.
+2. **Policy evaluation** -- All matching policies are evaluated. If multiple policies match, the strictest outcome wins
+per the precedence rule: `DENY > ESCALATE > REQUIRE_CONFIRMATION > ALLOW`.
 
 ### Demo Configuration
 

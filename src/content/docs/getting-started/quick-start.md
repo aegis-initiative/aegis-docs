@@ -5,7 +5,8 @@ description: Make your first governance call and see all four outcomes in under 
 
 # Quick Start
 
-This guide walks you through making your first AEGIS governance call. You'll propose actions and see all four governance outcomes: ALLOW, DENY, ESCALATE, and REQUIRE_CONFIRMATION.
+This guide walks you through making your first AEGIS governance call. You'll propose actions and see all four governance
+outcomes: ALLOW, DENY, ESCALATE, and REQUIRE_CONFIRMATION.
 
 ## Prerequisites
 
@@ -37,11 +38,13 @@ curl https://demo.aegis-platform.net/api/v1/health
 }
 ```
 
-> The interactive API explorer is available at [https://demo.aegis-platform.net/docs](https://demo.aegis-platform.net/docs).
+> The interactive API explorer is available at
+[https://demo.aegis-platform.net/docs](https://demo.aegis-platform.net/docs).
 
 ## 2. Make Your First Governance Call
 
-The demo environment comes pre-configured with a `demo-agent` that has specific capabilities and policies. Let's see all four outcomes.
+The demo environment comes pre-configured with a `demo-agent` that has specific capabilities and policies. Let's see all
+four outcomes.
 
 ### ALLOW — Agent has permission
 
@@ -119,7 +122,8 @@ curl -X POST https://demo.aegis-platform.net/api/v1/governance/propose \
 }
 ```
 
-The agent has the `network.fetch` capability, but the escalation policy requires elevated review before network calls proceed.
+The agent has the `network.fetch` capability, but the escalation policy requires elevated review before network calls
+proceed.
 
 ### REQUIRE_CONFIRMATION — Needs human approval
 
@@ -172,7 +176,8 @@ The precedence is: **DENY > ESCALATE > REQUIRE_CONFIRMATION > ALLOW**. A deny po
 
 ## 4. Using the SDK (Coming Soon)
 
-> **Note:** The AEGIS SDK packages are under active development and not yet published to npm or PyPI. Once published, the following commands will work:
+> **Note:** The AEGIS SDK packages are under active development and not yet published to npm or PyPI. Once published,
+the following commands will work:
 
 ### Python
 

@@ -5,22 +5,31 @@ description: AEGIS Threat Matrix — a structured adversarial knowledge base for
 
 # ATX-1 v2.1: AEGIS Threat Matrix
 
-ATX-1 is a structured adversarial knowledge base that catalogs the ways autonomous AI agents fail, misbehave, or are exploited in real-world deployments. It fills a critical gap between two existing frameworks:
+ATX-1 is a structured adversarial knowledge base that catalogs the ways autonomous AI agents fail, misbehave, or are
+exploited in real-world deployments. It fills a critical gap between two existing frameworks:
 
-- **MITRE ATT&CK** -- Models human adversaries attacking computer systems. It does not address AI agents as threat actors or victims.
-- **MITRE ATLAS** -- Models adversarial attacks against ML models (evasion, poisoning, extraction). It does not address the operational behavior of autonomous agents acting in the world.
+- **MITRE ATT&CK** -- Models human adversaries attacking computer systems. It does not address AI agents as threat
+actors or victims.
+- **MITRE ATLAS** -- Models adversarial attacks against ML models (evasion, poisoning, extraction). It does not address
+the operational behavior of autonomous agents acting in the world.
 
-Neither framework addresses what happens when an AI agent with legitimate tool access causes harm -- not because the model was attacked, but because nothing governed what it was allowed to do. ATX-1 exists for that space.
+Neither framework addresses what happens when an AI agent with legitimate tool access causes harm -- not because the
+model was attacked, but because nothing governed what it was allowed to do. ATX-1 exists for that space.
 
 ## The Authority-Capability Distinction
 
-ATX-1 is built on a foundational insight: **the ability to perform an action (capability) is not the same as the right to perform it (authority)**. Most agent failures stem from this conflation. An agent that can delete files is not necessarily authorized to delete files. An agent that can read a database is not necessarily authorized to read every table.
+ATX-1 is built on a foundational insight: **the ability to perform an action (capability) is not the same as the right
+to perform it (authority)**. Most agent failures stem from this conflation. An agent that can delete files is not
+necessarily authorized to delete files. An agent that can read a database is not necessarily authorized to read every
+table.
 
-Traditional security models enforce this distinction for human users through access control. No equivalent exists for autonomous AI agents -- until AEGIS.
+Traditional security models enforce this distinction for human users through access control. No equivalent exists for
+autonomous AI agents -- until AEGIS.
 
 ## Structural Root Causes
 
-Every ATX-1 technique traces back to one or more of four structural root causes. These are not bugs to fix but architectural gaps that require governance infrastructure:
+Every ATX-1 technique traces back to one or more of four structural root causes. These are not bugs to fix but
+architectural gaps that require governance infrastructure:
 
 | ID | Root Cause | Description |
 |---|---|---|
@@ -32,7 +41,8 @@ Every ATX-1 technique traces back to one or more of four structural root causes.
 
 ## Governance Primitives
 
-ATX-1 v2.1 maps each tactic to one or more governance primitives -- the fundamental control surfaces that must be present in any agent governance system:
+ATX-1 v2.1 maps each tactic to one or more governance primitives -- the fundamental control surfaces that must be
+present in any agent governance system:
 
 | Primitive | Description | Tactics |
 |---|---|---|
@@ -53,19 +63,25 @@ ATX-1 v2.1 organizes adversarial behaviors into a three-level hierarchy:
 
 - **10 Tactics** -- Categories of ungoverned behavior (the "why" -- what the agent is doing wrong)
 - **29 Techniques** -- Specific failure modes within each tactic (the "how" -- the concrete behavior)
-- **29 Mitigations** -- AEGIS governance mechanisms that address each technique (the "fix" -- constitutional articles and AGP protocol mechanisms)
+- **29 Mitigations** -- AEGIS governance mechanisms that address each technique (the "fix" -- constitutional articles
+and AGP protocol mechanisms)
 
 ## Empirical Foundation
 
 ATX-1 is grounded in two empirical sources:
 
-1. **Agents of Chaos** (Shapira et al., 2026) -- Systematic testing of autonomous AI agents across 13 case studies involving real-world tool use. Techniques T1001–T9002 map to observed failures from this study.
+1. **Agents of Chaos** (Shapira et al., 2026) -- Systematic testing of autonomous AI agents across 13 case studies
+involving real-world tool use. Techniques T1001–T9002 map to observed failures from this study.
 
-2. **RFC-0006 Adversarial Testing** (AEGIS Initiative, 2026-03-26) -- Five rounds of white-box adversarial testing against the AEGIS Claude Code Plugin governance enforcement layer. This testing discovered a novel tactic class (TA010: Act Beyond Governance Interpretation) and 4 techniques (T10001–T10004) that are only visible when a governance layer exists and is adversarially tested against the execution environment.
+2. **RFC-0006 Adversarial Testing** (AEGIS Initiative, 2026-03-26) -- Five rounds of white-box adversarial testing
+against the AEGIS Claude Code Plugin governance enforcement layer. This testing discovered a novel tactic class (TA010:
+Act Beyond Governance Interpretation) and 4 techniques (T10001–T10004) that are only visible when a governance layer
+exists and is adversarially tested against the execution environment.
 
 ## Pages in This Section
 
 - [Tactics](/threat-matrix/tactics/) -- The ten ATX-1 tactics and their descriptions
 - [Techniques](/threat-matrix/techniques/) -- Full catalog of 29 techniques with case studies, severity, and mitigations
-- [Regulatory Cross-Reference](/threat-matrix/regulatory-crossref/) -- Mapping to NIST AI RMF, EU AI Act, and OWASP LLM Top 10
+- [Regulatory Cross-Reference](/threat-matrix/regulatory-crossref/) -- Mapping to NIST AI RMF, EU AI Act, and OWASP LLM
+Top 10
 - [Machine-Readable Formats](/threat-matrix/machine-readable/) -- STIX 2.1 bundles, JSON Schema, and programmatic access

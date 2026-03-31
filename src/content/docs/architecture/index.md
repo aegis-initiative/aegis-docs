@@ -5,7 +5,8 @@ description: System architecture of the AEGIS governance ecosystem -- how compon
 
 # Architecture Overview
 
-AEGIS separates **AI reasoning** from **operational execution** through a governance mediation layer. This page provides a high-level view of the system architecture and how components interact.
+AEGIS separates **AI reasoning** from **operational execution** through a governance mediation layer. This page provides
+a high-level view of the system architecture and how components interact.
 
 ## Architectural Model
 
@@ -29,19 +30,23 @@ Tool Proxy Layer
 External Systems
 ```
 
-This architecture ensures that **incorrect reasoning or adversarial manipulation cannot directly produce unsafe operational outcomes**. The AI system never interacts with external infrastructure directly -- every action passes through the governance gateway first.
+This architecture ensures that **incorrect reasoning or adversarial manipulation cannot directly produce unsafe
+operational outcomes**. The AI system never interacts with external infrastructure directly -- every action passes
+through the governance gateway first.
 
 ## Key Components
 
 ### Governance Gateway
 
-The entry point for all action proposals. The gateway receives AGP-1 protocol messages from AI systems, authenticates the requesting actor, and routes proposals to the decision engine.
+The entry point for all action proposals. The gateway receives AGP-1 protocol messages from AI systems, authenticates
+the requesting actor, and routes proposals to the decision engine.
 
 ### Decision Engine
 
 The core evaluation pipeline that determines whether an action should be allowed. It runs four checks in sequence:
 
-1. **Capability Authorization** -- Is the requested capability registered in the system? Does the actor have a grant for it?
+1. **Capability Authorization** -- Is the requested capability registered in the system? Does the actor have a grant for
+it?
 2. **Authority Verification** -- Does the actor have the required authority level for this capability in this context?
 3. **Risk Evaluation** -- Does the computed risk score fall within acceptable thresholds?
 4. **Policy Enforcement** -- Do active policies permit this action given the full context?
@@ -58,7 +63,8 @@ For approved actions, the tool proxy layer handles execution against external sy
 
 ### Audit Subsystem
 
-Every governance decision -- whether allowed, denied, or escalated -- is persisted to an immutable, hash-chained audit log. The audit subsystem operates independently to ensure that governance failures do not compromise the audit trail.
+Every governance decision -- whether allowed, denied, or escalated -- is persisted to an immutable, hash-chained audit
+log. The audit subsystem operates independently to ensure that governance failures do not compromise the audit trail.
 
 ## Platform Components
 
@@ -83,7 +89,8 @@ The architecture is grounded in several non-negotiable principles:
 - **Immutable audit** -- Every decision is persisted permanently and cannot be modified
 - **Fail-closed semantics** -- All subsystem failures result in denial or escalation, never implicit allow
 
-For detailed exploration of each principle, see the [AGP-1 Protocol Overview](https://github.com/aegis-initiative/aegis-governance/blob/main/aegis-core/protocol/AEGIS_AGP1_OVERVIEW.md).
+For detailed exploration of each principle, see the [AGP-1 Protocol
+Overview](https://github.com/aegis-initiative/aegis-governance/blob/main/aegis-core/protocol/AEGIS_AGP1_OVERVIEW.md).
 
 ## Next Steps
 

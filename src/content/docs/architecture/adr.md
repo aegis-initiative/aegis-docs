@@ -5,11 +5,13 @@ description: Architecture Decision Records (ADRs) documenting key design decisio
 
 # Architecture Decision Records
 
-Architecture Decision Records (ADRs) document the significant technical and architectural decisions made in the AEGIS ecosystem. Each ADR captures the context, decision drivers, considered options, and consequences of a decision.
+Architecture Decision Records (ADRs) document the significant technical and architectural decisions made in the AEGIS
+ecosystem. Each ADR captures the context, decision drivers, considered options, and consequences of a decision.
 
 ## What Are ADRs?
 
-ADRs are short documents that record architectural decisions along with their context and consequences. They follow the [MADR (Markdown Any Decision Record)](https://adr.github.io/madr/) format and are numbered sequentially.
+ADRs are short documents that record architectural decisions along with their context and consequences. They follow the
+[MADR (Markdown Any Decision Record)](https://adr.github.io/madr/) format and are numbered sequentially.
 
 Each ADR includes:
 
@@ -31,9 +33,11 @@ Each ADR includes:
 
 ## Where ADRs Live
 
-The canonical source for AEGIS ADRs is the [aegis governance repository](https://github.com/aegis-initiative/aegis) under `docs/adr/`. ADRs in that repository govern decisions that span the entire ecosystem.
+The canonical source for AEGIS ADRs is the [aegis governance repository](https://github.com/aegis-initiative/aegis)
+under `docs/adr/`. ADRs in that repository govern decisions that span the entire ecosystem.
 
-Individual component repositories may maintain their own ADRs for component-specific decisions, but cross-cutting architectural decisions are always recorded in the central governance repository.
+Individual component repositories may maintain their own ADRs for component-specific decisions, but cross-cutting
+architectural decisions are always recorded in the central governance repository.
 
 ## Contributing an ADR
 

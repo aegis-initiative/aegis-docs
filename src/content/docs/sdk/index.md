@@ -5,11 +5,14 @@ description: Client SDK libraries for integrating with the AEGIS governance plat
 
 # SDK Overview
 
-The AEGIS SDK provides client libraries for submitting action proposals to the AEGIS governance engine and receiving typed governance decisions. Both SDKs wrap the `POST /v1/governance/propose` REST endpoint.
+The AEGIS SDK provides client libraries for submitting action proposals to the AEGIS governance engine and receiving
+typed governance decisions. Both SDKs wrap the `POST /v1/governance/propose` REST endpoint.
 
 ## Current Status
 
-Both SDKs are in early development. The `propose()` method is stubbed -- it raises `NotImplementedError` (Python) / throws `Error` (TypeScript) until the aegis-platform API is deployed. The type definitions, error hierarchy, and client structure are implemented and usable for development.
+Both SDKs are in early development. The `propose()` method is stubbed -- it raises `NotImplementedError` (Python) /
+throws `Error` (TypeScript) until the aegis-platform API is deployed. The type definitions, error hierarchy, and client
+structure are implemented and usable for development.
 
 **The packages are not yet published to npm or PyPI.** Install from source:
 
@@ -37,7 +40,8 @@ npm install && npm run build
 - **Action proposal** -- Submit governance proposals via `propose()` (stubbed, awaiting platform API)
 - **Typed models** -- `ActionProposal` and `GovernanceDecision` dataclasses/interfaces matching the AGP schema
 - **Verdict enum** -- `ALLOW`, `DENY`, `ESCALATE`, `REQUIRE_CONFIRMATION`
-- **Error hierarchy** -- `AegisError`, `AegisConnectionError`, `AegisDeniedError`, `AegisAuthError`, each with documentation URLs
+- **Error hierarchy** -- `AegisError`, `AegisConnectionError`, `AegisDeniedError`, `AegisAuthError`, each with
+documentation URLs
 - **Type safety** -- Full TypeScript types and Python type hints
 
 ## Quick Example

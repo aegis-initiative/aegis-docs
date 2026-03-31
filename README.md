@@ -1,7 +1,9 @@
 <p align="center">
   <img src="https://img.shields.io/badge/ip--owner-Finnoybu%20IP%20LLC-blueviolet?style=flat-square" alt="IP Owner">
-  <a href="https://github.com/aegis-initiative"><img src="https://img.shields.io/badge/org-aegis--initiative-0084e7?style=flat-square&logo=github" alt="Org"></a>
-  <a href="https://aegis-docs.com"><img src="https://img.shields.io/badge/domain-aegis--docs.com-0084e7?style=flat-square" alt="Domain"></a>
+<a href="https://github.com/aegis-initiative"><img
+src="https://img.shields.io/badge/org-aegis--initiative-0084e7?style=flat-square&logo=github" alt="Org"></a>
+<a href="https://aegis-docs.com"><img src="https://img.shields.io/badge/domain-aegis--docs.com-0084e7?style=flat-square"
+alt="Domain"></a>
   <img src="https://img.shields.io/badge/visibility-public-lightgrey?style=flat-square" alt="Public">
 </p>
 
@@ -18,7 +20,10 @@
 
 ## Overview
 
-`aegis-docs` is the public-facing documentation site for the AEGIS™ ecosystem, deployed at [aegis-docs.com](https://aegis-docs.com). It is the primary reference for developers, operators, researchers, and anyone building with or learning about AEGIS™.
+`aegis-docs` is the public-facing documentation site for the AEGIS™
+ecosystem, deployed at [aegis-docs.com](https://aegis-docs.com). It is
+the primary reference for developers, operators, researchers, and anyone
+building with or learning about AEGIS™.
 
 > **Capability without constraint is not intelligence™**
 
@@ -50,9 +55,11 @@
 
 ## Contributing to Docs
 
-Documentation contributions are welcome. All content lives in `src/content/`. Navigation is configured in `astro.config.mjs`.
+Documentation contributions are welcome. All content lives in `src/content/`. Navigation is configured in
+`astro.config.mjs`.
 
 Guidelines:
+
 - All content in Markdown or MDX — no hand-edited HTML
 - New pages require a navigation entry in `astro.config.mjs`
 - All changes via pull request with 1 required review

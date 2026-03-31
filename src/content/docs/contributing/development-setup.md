@@ -23,7 +23,8 @@ npm install
 npm run dev
 ```
 
-The site runs at `http://localhost:4321`. Content pages are in `src/content/docs/` -- edit a Markdown file and the page reloads automatically.
+The site runs at `http://localhost:4321`. Content pages are in `src/content/docs/` -- edit a Markdown file and the page
+reloads automatically.
 
 ### Project Structure
 

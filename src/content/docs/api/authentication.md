@@ -5,7 +5,9 @@ description: Authentication for the AEGIS platform API -- current status and pla
 
 # Authentication
 
-> **Authentication is not yet implemented.** The AEGIS platform API currently accepts all requests without credentials. No API keys, JWT tokens, mTLS, or any other authentication mechanism is enforced. The content below describes the planned authentication model for future releases.
+> **Authentication is not yet implemented.** The AEGIS platform API currently accepts all requests without credentials.
+No API keys, JWT tokens, mTLS, or any other authentication mechanism is enforced. The content below describes the
+planned authentication model for future releases.
 
 ## Current Status
 
@@ -20,7 +22,8 @@ curl -s -X POST http://127.0.0.1:8000/api/v1/governance/propose \
   -d '{"agent_id": "demo-agent", "action": "file.read", "target": "file.read"}'
 ```
 
-This is acceptable for local development and testing. Authentication will be required before the API is deployed to `aegis-platform.net`.
+This is acceptable for local development and testing. Authentication will be required before the API is deployed to
+`aegis-platform.net`.
 
 ---
 
@@ -47,15 +50,18 @@ Authorization: Bearer aegis_sk_live_...
 | `policies:manage` | Create and update policies |
 | `admin` | Full administrative access |
 
-API keys will be provisioned through the operator dashboard at [aegis-platform.net](https://aegis-platform.net) once it is available.
+API keys will be provisioned through the operator dashboard at [aegis-platform.net](https://aegis-platform.net) once it
+is available.
 
 ### JWT Bearer Tokens
 
-JWT tokens are planned for user sessions and dashboard interactions. They will be issued by the AEGIS authentication service upon login.
+JWT tokens are planned for user sessions and dashboard interactions. They will be issued by the AEGIS authentication
+service upon login.
 
 ### Mutual TLS (mTLS)
 
-For high-security deployments, the platform will support mutual TLS authentication where both client and server present certificates.
+For high-security deployments, the platform will support mutual TLS authentication where both client and server present
+certificates.
 
 ## Security Best Practices
 

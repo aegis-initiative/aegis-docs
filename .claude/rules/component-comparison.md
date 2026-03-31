@@ -2,7 +2,8 @@
 
 *Line-by-line comparison of every shared component. Generated 2026-03-23.*
 
-This document identifies what is identical, what differs, and what is missing -- forming the basis for extracting a shared component library.
+This document identifies what is identical, what differs, and what is missing -- forming the basis for extracting a
+shared component library.
 
 ---
 
@@ -30,19 +31,22 @@ This document identifies what is identical, what differs, and what is missing --
 
 ## AegisLogo.astro
 
-**Verdict: IDENTICAL** -- Props, SVG markup, CSS variable usage, and aspect ratio calculation are byte-for-byte identical.
+**Verdict: IDENTICAL** -- Props, SVG markup, CSS variable usage, and aspect ratio calculation are byte-for-byte
+identical.
 
 ---
 
 ## AegisWordmark.astro
 
-**Verdict: IDENTICAL** -- Props (height, width), SVG markup, aspect ratio math, and CSS variables are byte-for-byte identical.
+**Verdict: IDENTICAL** -- Props (height, width), SVG markup, aspect ratio math, and CSS variables are byte-for-byte
+identical.
 
 ---
 
 ## Aside.astro
 
-**Verdict: IDENTICAL** -- Same four types (doctrine, application, constraint, prohibition). Same labels, same shield SVG icon, same color map (light and dark), same CSS classes, same slot usage.
+**Verdict: IDENTICAL** -- Same four types (doctrine, application, constraint, prohibition). Same labels, same shield SVG
+icon, same color map (light and dark), same CSS classes, same slot usage.
 
 ---
 
@@ -68,9 +72,9 @@ All other markup, props, CSS, ARIA, and responsive behavior are identical.
 
 | Link | Constitution | Docs |
 |---|---|---|
-| About | /about/ | https://aegis-initiative.com/about/ |
-| Contact | /legal/impressum/#contact | https://aegis-initiative.com/legal/impressum/#contact |
-| Legal | /legal/ | https://aegis-initiative.com/legal/ |
+| About | /about/ | <https://aegis-initiative.com/about/> |
+| Contact | /legal/impressum/#contact | <https://aegis-initiative.com/legal/impressum/#contact> |
+| Legal | /legal/ | <https://aegis-initiative.com/legal/> |
 
 All other markup, CSS, responsive behavior, and computed values (year, buildDate) are identical.
 
@@ -90,7 +94,8 @@ All other markup, CSS, responsive behavior, and computed values (year, buildDate
 | Download PDF href | /AEGIS_Constitution.pdf | /AEGIS_Constitution.pdf (BUG) |
 | AegisLogo size | 48 | 48 |
 
-Everything else is identical: imports, version logic, theme toggle script, menu button script, CSS, SVG icons, ARIA attributes.
+Everything else is identical: imports, version logic, theme toggle script, menu button script, CSS, SVG icons, ARIA
+attributes.
 
 **To share:** Parameterize siteName, githubUrl, printPdfHref, downloadPdfHref. Make PDF buttons conditionally rendered.
 
@@ -100,13 +105,15 @@ Everything else is identical: imports, version logic, theme toggle script, menu 
 
 ## PrevNext.astro
 
-**Verdict: IDENTICAL (unused in docs)** -- Props, markup, CSS, responsive behavior, SVG arrows all byte-for-byte identical. The docs slug page does not import or render this component.
+**Verdict: IDENTICAL (unused in docs)** -- Props, markup, CSS, responsive behavior, SVG arrows all byte-for-byte
+identical. The docs slug page does not import or render this component.
 
 ---
 
 ## Search.astro
 
-**Verdict: IDENTICAL** -- Same props, same web component, same dialog, same Pagefind integration, same recent searches, same keyboard shortcuts, same CSS, same localStorage key.
+**Verdict: IDENTICAL** -- Same props, same web component, same dialog, same Pagefind integration, same recent searches,
+same keyboard shortcuts, same CSS, same localStorage key.
 
 ---
 
@@ -135,17 +142,20 @@ Everything else is identical: imports, version logic, theme toggle script, menu 
 
 ### CSS Bug in Docs
 
-Docs Sidebar line 105-113 -- missing closing brace on .sidebar causes subsequent rules to nest via CSS nesting. Constitution has proper flat CSS with explicit height/bottom.
+Docs Sidebar line 105-113 -- missing closing brace on .sidebar causes subsequent rules to nest via CSS nesting.
+Constitution has proper flat CSS with explicit height/bottom.
 
 ### To Share
 
-Extract nav data into a prop. Make legal nav and version badge optional. Use constitution CSS as the base (fixes the bug).
+Extract nav data into a prop. Make legal nav and version badge optional. Use constitution CSS as the base (fixes the
+bug).
 
 ---
 
 ## TableOfContents.astro
 
-**Verdict: IDENTICAL** -- Same HTML, CSS, JS (buildToc, renderList, setupScrollSpy, injectHeaderButton, resize handler), same IntersectionObserver config, same click behavior.
+**Verdict: IDENTICAL** -- Same HTML, CSS, JS (buildToc, renderList, setupScrollSpy, injectHeaderButton, resize handler),
+same IntersectionObserver config, same click behavior.
 
 ---
 
@@ -160,7 +170,9 @@ Extract nav data into a prop. Make legal nav and version badge optional. Use con
 | og:site_name | "AEGIS Constitution" | "AEGIS Documentation" |
 | site URL | aegis-constitution.com | aegis-docs.com |
 
-Everything else is identical: imports, all 10 font-face declarations, CSS reset, all CSS variables (50+ vars, both themes), base typography, table styles, page layout, footnotes, watermark, responsive rules, ToC globals, FOUC script, footnote script.
+Everything else is identical: imports, all 10 font-face declarations, CSS reset, all CSS variables (50+ vars, both
+themes), base typography, table styles, page layout, footnotes, watermark, responsive rules, ToC globals, FOUC script,
+footnote script.
 
 **To share:** Parameterize siteName and defaultDescription. Extract the ~500 lines of shared CSS.
 
@@ -237,7 +249,8 @@ AegisLogo, AegisWordmark, Aside, PrevNext, Search, TableOfContents, remark-aside
 
 ### Tier 2: Share with parameterization (props/config)
 
-Breadcrumb (homeName), Footer (link URLs), Header (siteName, githubUrl, PDF options), DocLayout (siteName, description, CSS extraction)
+Breadcrumb (homeName), Footer (link URLs), Header (siteName, githubUrl, PDF options), DocLayout (siteName, description,
+CSS extraction)
 
 ### Tier 3: Share architecture, customize data
 

@@ -5,9 +5,11 @@ description: Endpoints for managing capabilities, policies, and enforcement conf
 
 # Enforcement API
 
-The enforcement API provides endpoints for inspecting and managing the governance configuration -- capabilities, policies, and actor grants.
+The enforcement API provides endpoints for inspecting and managing the governance configuration -- capabilities,
+policies, and actor grants.
 
-> **Status:** Only `GET /api/v1/capabilities` is implemented today. All other endpoints described on this page (creating capabilities, policy CRUD, actor grants) are planned but not yet available. Authentication is not yet implemented.
+> **Status:** Only `GET /api/v1/capabilities` is implemented today. All other endpoints described on this page (creating
+capabilities, policy CRUD, actor grants) are planned but not yet available. Authentication is not yet implemented.
 
 ## Implemented Endpoints
 
@@ -26,7 +28,8 @@ The demo configuration returns four capabilities:
 - `network.fetch`
 - `shell.exec`
 
-These capabilities define the universe of actions that agents can request through the [governance proposal endpoint](/api/governance/).
+These capabilities define the universe of actions that agents can request through the [governance proposal
+endpoint](/api/governance/).
 
 ---
 

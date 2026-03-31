@@ -5,7 +5,8 @@ description: How to write governance policies for the AEGIS platform -- from cap
 
 # Writing Governance Policies
 
-This guide walks through the process of defining governance policies for the AEGIS platform. By the end, you will understand how to register capabilities, write policy rules, and test them before deployment.
+This guide walks through the process of defining governance policies for the AEGIS platform. By the end, you will
+understand how to register capabilities, write policy rules, and test them before deployment.
 
 ## Overview
 
@@ -42,7 +43,8 @@ Key considerations:
 - **Risk level** -- Assign an appropriate base risk (`low`, `medium`, `high`, `critical`)
 - **Parameter schema** -- Define the expected parameters using JSON Schema
 
-Register the capability via the [Enforcement API](/api/enforcement/) or the operator dashboard. *(The operator dashboard is not yet available; the Enforcement API endpoints for creating capabilities and policies are not yet implemented.)*
+Register the capability via the [Enforcement API](/api/enforcement/) or the operator dashboard. *(The operator dashboard
+is not yet available; the Enforcement API endpoints for creating capabilities and policies are not yet implemented.)*
 
 ## Step 2: Grant Capabilities to Actors
 
@@ -102,7 +104,8 @@ Conditions are evaluated against the full action context, including:
 
 ## Step 4: Policy Precedence
 
-When multiple policies match a given action, the policy with the highest priority wins. If two policies have the same priority, the more restrictive outcome takes precedence:
+When multiple policies match a given action, the policy with the highest priority wins. If two policies have the same
+priority, the more restrictive outcome takes precedence:
 
 ```
 DENY > ESCALATE > REQUIRE_CONFIRMATION > ALLOW
@@ -112,7 +115,10 @@ This ensures that safety-critical policies always override permissive ones.
 
 ## Step 5: Test Your Policies
 
-> **Note:** The code example below requires the SDK packages to be published and the platform API to be deployed, neither of which is available yet. The governance runtime can be tested locally using the [aegis-governance/aegis-runtime](https://github.com/aegis-initiative/aegis-governance) Python package (176 tests passing).
+> **Note:** The code example below requires the SDK packages to be published and the platform API to be deployed,
+neither of which is available yet. The governance runtime can be tested locally using the
+[aegis-governance/aegis-runtime](https://github.com/aegis-initiative/aegis-governance) Python package (176 tests
+passing).
 
 Before deploying policies to production, test them using the governance API with test actor credentials:
 
@@ -173,4 +179,6 @@ Review the audit log entry for the decision to verify that the correct policies 
 - [Monitoring](/guides/monitoring/) -- Monitor policy evaluation in real time
 - [Enforcement API](/api/enforcement/) -- Manage capabilities and policies via API
 
-> **Note:** The policy language and configuration format are under active development. This guide reflects the current design direction. See the [aegis-governance repository](https://github.com/aegis-initiative/aegis-governance) for the latest specifications.
+> **Note:** The policy language and configuration format are under active development. This guide reflects the current
+design direction. See the [aegis-governance repository](https://github.com/aegis-initiative/aegis-governance) for the
+latest specifications.

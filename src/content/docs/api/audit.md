@@ -5,9 +5,12 @@ description: Query the audit event log for governance decisions and compliance r
 
 # Audit API
 
-The audit API provides read access to the governance audit log. Every governance decision is recorded and queryable through this endpoint.
+The audit API provides read access to the governance audit log. Every governance decision is recorded and queryable
+through this endpoint.
 
-> **Status:** The `GET /api/v1/audit/events` endpoint is implemented and functional at `https://demo.aegis-platform.net`. The API is not yet deployed to `aegis-platform.net`. Authentication is not yet implemented.
+> **Status:** The `GET /api/v1/audit/events` endpoint is implemented and functional at
+`https://demo.aegis-platform.net`. The API is not yet deployed to `aegis-platform.net`. Authentication is not yet
+implemented.
 
 ## GET /api/v1/audit/events
 
@@ -79,7 +82,8 @@ The following audit capabilities are designed but not yet implemented:
 
 - **Filtering** -- Query by `agent_id`, `action`, `decision`, or time range
 - **Pagination** -- Cursor-based pagination for large result sets
-- **Decision detail endpoint** (`GET /api/v1/audit/log/:decision_id`) -- Full audit trail for a specific decision, including evaluation path and policy chain
+- **Decision detail endpoint** (`GET /api/v1/audit/log/:decision_id`) -- Full audit trail for a specific decision,
+including evaluation path and policy chain
 - **Hash-chained integrity** -- Tamper-evident audit entries with SHA-256 hash chains
 - **Bulk export** -- Time-range queries for compliance reporting
 

@@ -5,7 +5,8 @@ description: How to contribute to the AEGIS ecosystem -- repositories, conventio
 
 # Contributing to AEGIS
 
-AEGIS is an ecosystem of interconnected repositories, each with a specific role. This guide explains how to contribute effectively, covering repository structure, conventions, and processes.
+AEGIS is an ecosystem of interconnected repositories, each with a specific role. This guide explains how to contribute
+effectively, covering repository structure, conventions, and processes.
 
 ## Repository Map
 
@@ -55,7 +56,8 @@ All repositories use [Conventional Commits](https://www.conventionalcommits.org/
 
 ## Contributing to Documentation
 
-This documentation site ([aegis-docs](https://github.com/aegis-initiative/aegis-docs)) is built with [Astro](https://astro.build/) and uses Markdown content pages.
+This documentation site ([aegis-docs](https://github.com/aegis-initiative/aegis-docs)) is built with
+[Astro](https://astro.build/) and uses Markdown content pages.
 
 ### Content Structure
 
@@ -99,7 +101,8 @@ The development server will start at `http://localhost:4321`.
 
 ## Contributing Architecture Decisions
 
-Architecture Decision Records (ADRs) are the formal mechanism for proposing and recording cross-cutting design decisions. ADRs live in the [aegis repository](https://github.com/aegis-initiative/aegis) under `docs/adr/`.
+Architecture Decision Records (ADRs) are the formal mechanism for proposing and recording cross-cutting design
+decisions. ADRs live in the [aegis repository](https://github.com/aegis-initiative/aegis) under `docs/adr/`.
 
 To propose an ADR:
 
@@ -113,6 +116,8 @@ See the [Decision Records](/architecture/adr/) page for more details on the ADR 
 
 ## IP Notice
 
-All contributions to AEGIS repositories become proprietary intellectual property of **Finnoybu IP LLC** under the terms of the contributor agreement. AEGIS is a trademark of Finnoybu IP LLC.
+All contributions to AEGIS repositories become proprietary intellectual property of **Finnoybu IP LLC** under the terms
+of the contributor agreement. AEGIS is a trademark of Finnoybu IP LLC.
 
-For the full contributing guidelines for the governance repository, see the [CONTRIBUTING.md in aegis](https://github.com/aegis-initiative/aegis/blob/main/CONTRIBUTING.md).
+For the full contributing guidelines for the governance repository, see the [CONTRIBUTING.md in
+aegis](https://github.com/aegis-initiative/aegis/blob/main/CONTRIBUTING.md).

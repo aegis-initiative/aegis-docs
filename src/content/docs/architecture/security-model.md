@@ -5,7 +5,8 @@ description: Threat model and security architecture of the AEGIS governance syst
 
 # Security Model
 
-AEGIS is designed to be a security-critical component -- the last line of defense between AI reasoning and operational execution. This page summarizes the security architecture and the threat model it addresses.
+AEGIS is designed to be a security-critical component -- the last line of defense between AI reasoning and operational
+execution. This page summarizes the security architecture and the threat model it addresses.
 
 ## Threat Model Overview
 
@@ -15,11 +16,13 @@ The AEGIS Threat Model (ATM-1) identifies and addresses threats across several c
 
 Attempts by AI systems or adversaries to circumvent the governance layer entirely:
 
-- **Direct infrastructure access** -- AI system attempts to reach external systems without going through the governance gateway
+- **Direct infrastructure access** -- AI system attempts to reach external systems without going through the governance
+gateway
 - **Protocol manipulation** -- Malformed or crafted AGP-1 messages designed to confuse the decision engine
 - **Proxy circumvention** -- Attempts to interact with the tool proxy layer directly, bypassing governance
 
-**Mitigation:** Network-level enforcement ensures AI systems can only reach the governance gateway. The tool proxy layer is not directly addressable by AI agents.
+**Mitigation:** Network-level enforcement ensures AI systems can only reach the governance gateway. The tool proxy layer
+is not directly addressable by AI agents.
 
 ### Manipulation Threats
 
@@ -29,7 +32,8 @@ Attempts to influence governance decisions through crafted inputs:
 - **Capability confusion** -- Requesting a low-risk capability but encoding a high-risk operation in parameters
 - **Context spoofing** -- Falsifying contextual information to manipulate risk scores
 
-**Mitigation:** Parameter schemas are validated against registered capability definitions. Risk scoring considers the full action context, not just the capability name.
+**Mitigation:** Parameter schemas are validated against registered capability definitions. Risk scoring considers the
+full action context, not just the capability name.
 
 ### Escalation Threats
 
@@ -39,7 +43,8 @@ Attempts to gain unauthorized capabilities or elevated privileges:
 - **Trust inflation** -- Manipulating trust scores through repeated benign actions before attempting a harmful one
 - **Policy gap exploitation** -- Finding combinations of policies that produce unintended allow decisions
 
-**Mitigation:** Grants are explicit (no implicit inheritance). Trust scores are computed from long-term patterns with decay. Policy evaluation uses deterministic precedence rules.
+**Mitigation:** Grants are explicit (no implicit inheritance). Trust scores are computed from long-term patterns with
+decay. Policy evaluation uses deterministic precedence rules.
 
 ### Audit Threats
 
@@ -49,13 +54,15 @@ Attempts to compromise the integrity of the audit trail:
 - **Decision replay** -- Reusing a previous allow decision for a new, different action
 - **Attribution spoofing** -- Falsifying actor identity to misattribute actions
 
-**Mitigation:** Audit logs are append-only and hash-chained. Each decision includes a unique nonce. Actor identity is cryptographically verified.
+**Mitigation:** Audit logs are append-only and hash-chained. Each decision includes a unique nonce. Actor identity is
+cryptographically verified.
 
 ## Security Principles
 
 1. **Defense in depth** -- Multiple independent checks (capability, authority, risk, policy) must all pass
 2. **Fail-closed** -- Any failure in any subsystem results in denial, never implicit allow
-3. **Zero trust for AI agents** -- AI systems are treated as untrusted by default; every action requires explicit authorization
+3. **Zero trust for AI agents** -- AI systems are treated as untrusted by default; every action requires explicit
+authorization
 4. **Cryptographic integrity** -- Audit trails, actor identity, and message integrity are cryptographically enforced
 
 ## Further Reading

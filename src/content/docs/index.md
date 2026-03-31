@@ -11,7 +11,10 @@ Welcome to the AEGIS documentation site. This is the central hub for all documen
 
 ## What is AEGIS?
 
-AEGIS (Adaptive Ethics Governance for Intelligent Systems) is an ecosystem for constrained intelligence — providing governance frameworks, enforcement engines, and developer tools for building AI systems with built-in ethical constraints.
+AEGIS (Architectural Enforcement & Governance of Intelligent Systems)
+is an ecosystem for constrained intelligence — providing governance
+frameworks, enforcement engines, and developer tools for building AI
+systems with built-in ethical constraints.
 
 ## Documentation Sections
 

@@ -10,7 +10,8 @@ This guide covers the process for submitting pull requests to AEGIS repositories
 ## Before You Start
 
 1. **Check for existing work** -- Search open issues and PRs to avoid duplicating effort
-2. **Understand the scope** -- Make sure you are contributing to the right repository (see [Repository Map](/contributing/))
+2. **Understand the scope** -- Make sure you are contributing to the right repository (see [Repository
+Map](/contributing/))
 3. **Follow conventions** -- Use conventional commits, descriptive branch names, and the project's code style
 
 ## Creating a Pull Request
@@ -47,7 +48,8 @@ git add .
 git commit -m "docs: add deployment guide for self-hosted runtime"
 ```
 
-Use the appropriate type prefix (`feat:`, `docs:`, `fix:`, `chore:`, `refactor:`). Write a clear, concise commit message that explains *what* changed.
+Use the appropriate type prefix (`feat:`, `docs:`, `fix:`, `chore:`, `refactor:`). Write a clear, concise commit message
+that explains *what* changed.
 
 ### 4. Push and Open the PR
 
@@ -72,7 +74,8 @@ Then open a pull request on GitHub. In the PR description:
 ## PR Best Practices
 
 - **Keep PRs small** -- Smaller PRs are easier to review and less likely to introduce issues
-- **Separate refactoring from features** -- If you need to refactor to support a new feature, do the refactoring in a separate PR first
+- **Separate refactoring from features** -- If you need to refactor to support a new feature, do the refactoring in a
+separate PR first
 - **Update the PR description** -- If the scope of the PR evolves during review, update the description to match
 - **Respond to all review comments** -- Even if you disagree, acknowledge the feedback and explain your position
 

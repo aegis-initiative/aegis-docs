@@ -6,13 +6,17 @@
 
 ## Executive Summary
 
-This audit examined **all 11 AEGIS repositories** for data consistency — both within each repo (intra-repo) and across the ecosystem (cross-repo). It also assessed structural hygiene (missing files, template consistency).
+This audit examined **all 11 AEGIS repositories** for data consistency —
+both within each repo (intra-repo) and across the ecosystem (cross-repo).
+It also assessed structural hygiene (missing files, template consistency).
 
 **Key Findings:**
+
 - **23 intra-repo inconsistencies** across the ecosystem (6 critical, 8 high/moderate, 9 low)
 - **5 cross-repo data conflicts** (2 critical, 2 high, 1 moderate)
 - **Repo hygiene score: 52%** — core files are strong, secondary governance docs are sparse
-- **The #1 systemic issue: platform domain confusion** (`aegissystems.app` vs `aegissystems.live`) — inconsistent across 6+ repos
+- **The #1 systemic issue: platform domain confusion**
+  (`aegissystems.app` vs `aegissystems.live`) — inconsistent across 6+ repos
 
 ---
 
@@ -44,9 +48,12 @@ The single most pervasive inconsistency in the ecosystem. Six repos reference th
 | **aegis-initiative** | Ecosystem table (platform row) | `aegissystems.live` |
 | **aegis** | domain-registry.md | Lists both; `aegissystems.app` as "in use", `aegissystems.live` as "undecided/demo" |
 
-**Root cause:** The domain-registry in the aegis hub repo shows `aegissystems.app` as the current domain and `aegissystems.live` as undecided. But aegis-platform (the actual platform repo) claims `.live`, and several downstream repos followed that lead.
+**Root cause:** The domain-registry in the aegis hub repo shows `aegissystems.app` as the current domain and
+`aegissystems.live` as undecided. But aegis-platform (the actual platform repo) claims `.live`, and several downstream
+repos followed that lead.
 
-**Impact:** Developers following docs from different repos will point to different domains. SDK source code defaults to `.app` but root SDK README says `.live`.
+**Impact:** Developers following docs from different repos will point to different domains. SDK source code defaults to
+`.app` but root SDK README says `.live`.
 
 ---
 
@@ -59,7 +66,8 @@ The single most pervasive inconsistency in the ecosystem. Six repos reference th
 | **aegis-docs** content pages | `endpoint` (matches SDK root README) | `endpoint` |
 | **aegis-sdk** CLAUDE.md | `baseUrl` | (not specified) |
 
-**Impact:** Code examples in both aegis-sdk root README and aegis-docs are non-functional. Copying them will produce parameter name errors.
+**Impact:** Code examples in both aegis-sdk root README and aegis-docs are non-functional. Copying them will produce
+parameter name errors.
 
 ---
 
@@ -104,7 +112,8 @@ Four different documentation base URLs across one repo. Only `aegis-docs.com` is
 
 ### 1.6 Cross-Repo Duplication Inventory
 
-These data points are repeated across multiple repos. Currently consistent, but fragile — a single source of truth should be designated.
+These data points are repeated across multiple repos. Currently consistent, but fragile — a single source of truth
+should be designated.
 
 | Data Point | Repos That State It | Currently Consistent? |
 |---|---|---|
@@ -165,6 +174,7 @@ These data points are repeated across multiple repos. Currently consistent, but 
 | LOW | README claims content is sourced from other repos, but it's all written directly in src/content/docs/ |
 
 **Component bugs (known, documented in .claude/rules/):**
+
 - Sidebar CSS missing closing brace
 - Header PDF buttons link to constitution PDFs
 - Header version badge links to non-existent /releases/
@@ -276,7 +286,8 @@ These data points are repeated across multiple repos. Currently consistent, but 
 
 ## 4. Recommended Source-of-Truth Designations
 
-For each recurring data point, one repo should be the canonical source. All others should either link to it or derive from it.
+For each recurring data point, one repo should be the canonical source. All others should either link to it or derive
+from it.
 
 | Data Point | Recommended Source of Truth | Current Sources |
 |---|---|---|
@@ -302,54 +313,60 @@ For each recurring data point, one repo should be the canonical source. All othe
 
 ### P0 — Critical (Data Conflicts)
 
-1. **Resolve platform domain once and for all.** Update `aegis/docs/domain-registry.md` with the definitive answer, then propagate to all repos. Every reference to `aegissystems.app` or `aegissystems.live` in docs/READMEs/source code must match.
+1. **Resolve platform domain once and for all.** Update `aegis/docs/domain-registry.md` with the definitive answer, then
+propagate to all repos. Every reference to `aegissystems.app` or `aegissystems.live` in docs/READMEs/source code must
+match.
 
-2. **Fix aegis-sdk root README.** Constructor parameter names (`endpoint` → `baseUrl`/`base_url`) and endpoint URL must match actual source code.
+2. **Fix aegis-sdk root README.** Constructor parameter names (`endpoint` → `baseUrl`/`base_url`) and endpoint URL must
+match actual source code.
 
 3. **Fix aegis-sdk license conflict.** README badge says Apache 2.0, packages say BSL-1.1. Pick one.
 
 4. **Fix aegis-governance NCCoE trademark attribution.** "AEGIS Initiative" → "Finnoybu IP LLC".
 
-5. **Fix "immutable" → "tamper-evident"** in aegis-governance specs (manifesto, constitution, protocol index, system overview). RFC-0010 already documents this as a known gap.
+5. **Fix "immutable" → "tamper-evident"** in aegis-governance specs (manifesto, constitution, protocol index, system
+overview). RFC-0010 already documents this as a known gap.
 
 6. **Fix aegis-constitution version history.** Add v0.1.1 to amendments.mdx. Resolve v0.2.0 date (March 15 vs March 21).
 
 ### P1 — High (Stale Data)
 
-7. **Fix aegis hub CLAUDE.md** line 18: "Astro/Starlight" → "Astro 6, custom build, no Starlight".
+1. **Fix aegis hub CLAUDE.md** line 18: "Astro/Starlight" → "Astro 6, custom build, no Starlight".
 
-8. **Fix aegis-docs Node.js version** in content pages: "Node 18+" → "Node 22.12+".
+2. **Fix aegis-docs Node.js version** in content pages: "Node 18+" → "Node 22.12+".
 
-9. **Fix aegis-platform README**: Remove "GraphQL" claim or document it as planned.
+3. **Fix aegis-platform README**: Remove "GraphQL" claim or document it as planned.
 
-10. **Fix aegis-docs repo name references**: Standardize whether architecture source is `aegis-governance`, `aegis`, or `aegis-core`.
+4. **Fix aegis-docs repo name references**: Standardize whether architecture source is `aegis-governance`, `aegis`, or
+`aegis-core`.
 
-11. **Fix aegis-sdk documentation URLs**: Consolidate to `aegis-docs.com` everywhere.
+5. **Fix aegis-sdk documentation URLs**: Consolidate to `aegis-docs.com` everywhere.
 
 ### P2 — Repo Hygiene
 
-12. **Add LICENSE to 4 repos** missing it (aegis-constitution, aegis-core, aegis-labs, aegis-ops). Decide on license strategy.
+1. **Add LICENSE to 4 repos** missing it (aegis-constitution, aegis-core, aegis-labs, aegis-ops). Decide on license
+strategy.
 
-13. **Add CONTRIBUTING.md** to all public-facing repos (template from aegis or aegis-governance).
+2. **Add CONTRIBUTING.md** to all public-facing repos (template from aegis or aegis-governance).
 
-14. **Add .gitignore** to repos missing it (aegis-core, aegis-federation, aegis-labs, aegis-ops).
+3. **Add .gitignore** to repos missing it (aegis-core, aegis-federation, aegis-labs, aegis-ops).
 
-15. **Add PR template** to all repos (template from aegis-governance).
+4. **Add PR template** to all repos (template from aegis-governance).
 
-16. **Add .editorconfig** to all 11 repos.
+5. **Add .editorconfig** to all 11 repos.
 
-17. **Add CI/CD workflows** to aegis-initiative (Astro project without any).
+6. **Add CI/CD workflows** to aegis-initiative (Astro project without any).
 
-18. **Standardize CODEOWNERS location** to `.github/CODEOWNERS` across all repos.
+7. **Standardize CODEOWNERS location** to `.github/CODEOWNERS` across all repos.
 
 ### P3 — Nice to Have
 
-19. Standardize CLAUDE.md header format across all repos.
-20. Standardize README structure with a shared template.
-21. Add SECURITY.md, CHANGELOG.md to public repos.
-22. Standardize "coming soon" / "not yet available" phrasing in aegis-docs.
-23. Remove dead code: aegis-docs remark/rehype plugins (configured but unused).
-24. Fix aegis-constitution README links to root-level .md files that don't exist.
+1. Standardize CLAUDE.md header format across all repos.
+2. Standardize README structure with a shared template.
+3. Add SECURITY.md, CHANGELOG.md to public repos.
+4. Standardize "coming soon" / "not yet available" phrasing in aegis-docs.
+5. Remove dead code: aegis-docs remark/rehype plugins (configured but unused).
+6. Fix aegis-constitution README links to root-level .md files that don't exist.
 
 ---
 

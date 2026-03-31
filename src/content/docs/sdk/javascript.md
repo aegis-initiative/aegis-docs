@@ -5,7 +5,8 @@ description: Full reference for the AEGIS TypeScript SDK.
 
 # TypeScript / JavaScript SDK
 
-The `@aegis-initiative/sdk` package provides a typed TypeScript client for submitting action proposals to the AEGIS governance engine.
+The `@aegis-initiative/sdk` package provides a typed TypeScript client for submitting action proposals to the AEGIS
+governance engine.
 
 ## Installation
 
@@ -61,7 +62,8 @@ async propose(proposal: ActionProposal): Promise<GovernanceDecision>
 
 Submits an `ActionProposal` to the governance engine and returns a `GovernanceDecision`.
 
-**Current status:** Throws `Error("Not yet implemented -- awaiting aegis-platform API")` until the HTTP call to `POST /v1/governance/propose` is implemented.
+**Current status:** Throws `Error("Not yet implemented -- awaiting aegis-platform API")` until the HTTP call to `POST
+/v1/governance/propose` is implemented.
 
 ```typescript
 const decision = await client.propose({
@@ -185,7 +187,8 @@ enum Verdict {
 
 ## Error Classes
 
-All errors include a `helpUrl` property pointing to troubleshooting documentation at `https://aegis-docs.com/sdk/errors`.
+All errors include a `helpUrl` property pointing to troubleshooting documentation at
+`https://aegis-docs.com/sdk/errors`.
 
 ### AegisError
 
@@ -248,7 +251,8 @@ Common causes: missing API key, expired key, insufficient permissions.
 
 ### AegisDeniedError
 
-Thrown when a governance proposal is denied. Subclass of `AegisError`. Includes the denial reason and the policies that caused it.
+Thrown when a governance proposal is denied. Subclass of `AegisError`. Includes the denial reason and the policies that
+caused it.
 
 ```typescript
 import { AegisDeniedError } from "@aegis-initiative/sdk";

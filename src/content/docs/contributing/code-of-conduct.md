@@ -7,7 +7,8 @@ description: Community standards and expectations for participating in the AEGIS
 
 ## Our Commitment
 
-The AEGIS project is committed to providing a welcoming, inclusive, and professional environment for everyone involved in the project -- contributors, maintainers, users, and community members.
+The AEGIS project is committed to providing a welcoming, inclusive, and professional environment for everyone involved
+in the project -- contributors, maintainers, users, and community members.
 
 ## Standards
 
@@ -37,9 +38,11 @@ This code of conduct applies to all AEGIS project spaces, including:
 
 ## Enforcement
 
-Instances of unacceptable behavior may be reported to the project maintainers. All reports will be reviewed and investigated promptly and fairly.
+Instances of unacceptable behavior may be reported to the project maintainers. All reports will be reviewed and
+investigated promptly and fairly.
 
-Maintainers have the right to remove, edit, or reject contributions that violate this code of conduct, and to temporarily or permanently ban contributors for behavior they deem inappropriate, threatening, or harmful.
+Maintainers have the right to remove, edit, or reject contributions that violate this code of conduct, and to
+temporarily or permanently ban contributors for behavior they deem inappropriate, threatening, or harmful.
 
 ## Attribution
 
@@ -47,4 +50,5 @@ This code of conduct is adapted from the [Contributor Covenant](https://www.cont
 
 ## Contact
 
-For questions about this code of conduct or to report an issue, contact the AEGIS project maintainers through the [GitHub organization](https://github.com/aegis-initiative).
+For questions about this code of conduct or to report an issue, contact the AEGIS project maintainers through the
+[GitHub organization](https://github.com/aegis-initiative).

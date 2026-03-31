@@ -5,13 +5,18 @@ description: Monitor AEGIS governance activity, audit decisions, and build compl
 
 # Monitoring Guide
 
-> **Note:** The operator dashboard, alerting integrations, and Prometheus metrics described on this page are under active development and not yet available. There is no operator dashboard at `aegis-platform.net` today, and no Prometheus-compatible metrics endpoint exists yet. The content below describes the planned monitoring model. Check back soon.
+> **Note:** The operator dashboard, alerting integrations, and Prometheus metrics described on this page are under
+active development and not yet available. There is no operator dashboard at `aegis-platform.net` today, and no
+Prometheus-compatible metrics endpoint exists yet. The content below describes the planned monitoring model. Check back
+soon.
 
-This guide covers monitoring governance activity in AEGIS -- using the operator dashboard, querying the audit log, setting up alerts, and generating compliance reports.
+This guide covers monitoring governance activity in AEGIS -- using the operator dashboard, querying the audit log,
+setting up alerts, and generating compliance reports.
 
 ## Operator Dashboard
 
-The AEGIS operator dashboard at [aegis-platform.net](https://aegis-platform.net) *(coming soon)* provides real-time visibility into governance activity:
+The AEGIS operator dashboard at [aegis-platform.net](https://aegis-platform.net) *(coming soon)* provides real-time
+visibility into governance activity:
 
 - **Decision feed** -- Live stream of governance decisions with outcome, actor, and capability details
 - **Policy activity** -- Which policies are being triggered and how often
@@ -23,7 +28,9 @@ The AEGIS operator dashboard at [aegis-platform.net](https://aegis-platform.net)
 
 The [Audit API](/api/audit/) provides programmatic access to the full governance audit trail. Common query patterns:
 
-> **Note:** The audit log query examples below reference `api.aegis-platform.net` which is not yet deployed, and the `/api/v1/audit/log` endpoint which is not yet implemented. The only audit endpoint available today is `GET /api/v1/audit/events`. Authentication is also not yet available.
+> **Note:** The audit log query examples below reference `api.aegis-platform.net` which is not yet deployed, and the
+`/api/v1/audit/log` endpoint which is not yet implemented. The only audit endpoint available today is `GET
+/api/v1/audit/events`. Authentication is also not yet available.
 
 ### Recent Denials
 
@@ -63,7 +70,8 @@ Configure alerts to be notified of governance events that require attention:
 - **Policy changes** -- A governance policy was created or modified
 - **Risk threshold breaches** -- Actions with unusually high risk scores
 
-Alerting integrations (webhook, Slack, PagerDuty) will be configurable through the operator dashboard. *(Alerting integrations are not yet implemented.)*
+Alerting integrations (webhook, Slack, PagerDuty) will be configurable through the operator dashboard. *(Alerting
+integrations are not yet implemented.)*
 
 ## Metrics and Observability
 
@@ -77,7 +85,8 @@ AEGIS exposes governance metrics for integration with existing observability sta
 | `aegis.policies.evaluated` | Number of policies evaluated per decision |
 | `aegis.capabilities.usage` | Capability usage counts |
 
-Metrics will be available in Prometheus-compatible format for integration with Grafana, Datadog, and similar platforms. *(Prometheus metrics are not yet implemented.)*
+Metrics will be available in Prometheus-compatible format for integration with Grafana, Datadog, and similar platforms.
+*(Prometheus metrics are not yet implemented.)*
 
 ## Compliance Reporting
 
@@ -87,7 +96,8 @@ The immutable audit log is designed to satisfy compliance requirements. To gener
 2. Filter by event type and outcome as needed
 3. Export the results for review
 
-The hash-chained integrity of the audit log provides cryptographic proof that the log has not been tampered with, satisfying SOX, HIPAA, and similar audit requirements.
+The hash-chained integrity of the audit log provides cryptographic proof that the log has not been tampered with,
+satisfying SOX, HIPAA, and similar audit requirements.
 
 ## Next Steps
 
@@ -95,4 +105,6 @@ The hash-chained integrity of the audit log provides cryptographic proof that th
 - [Troubleshooting](/guides/troubleshooting/) -- Diagnose unexpected governance behavior
 - [Deployment](/guides/deployment/) -- Infrastructure setup
 
-> **Note:** Dashboard features and alerting integrations are under active development. This guide describes the target monitoring model. See the [aegis-platform repository](https://github.com/aegis-initiative/aegis-platform) for current status.
+> **Note:** Dashboard features and alerting integrations are under active development. This guide describes the target
+monitoring model. See the [aegis-platform repository](https://github.com/aegis-initiative/aegis-platform) for current
+status.

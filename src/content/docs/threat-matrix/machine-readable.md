@@ -7,11 +7,15 @@ sidebar:
 
 # Machine-Readable Formats
 
-ATX-1 is designed for programmatic consumption. All threat matrix data is available in structured formats for integration into security tooling, compliance dashboards, and automated governance systems.
+ATX-1 is designed for programmatic consumption. All threat matrix data is available in structured formats for
+integration into security tooling, compliance dashboards, and automated governance systems.
 
 ## STIX 2.1 Bundle
 
-The canonical machine-readable representation of ATX-1 is a [STIX 2.1](https://oasis-open.github.io/cti-documentation/stix/intro.html) bundle. STIX (Structured Threat Information Expression) is the standard format for sharing cyber threat intelligence, and ATX-1 uses it to enable interoperability with existing security infrastructure.
+The canonical machine-readable representation of ATX-1 is a [STIX
+2.1](https://oasis-open.github.io/cti-documentation/stix/intro.html) bundle. STIX (Structured Threat Information
+Expression) is the standard format for sharing cyber threat intelligence, and ATX-1 uses it to enable interoperability
+with existing security infrastructure.
 
 ### Bundle Contents
 
@@ -26,7 +30,8 @@ The ATX-1 STIX bundle contains the following object types:
 | `course-of-action` | Mitigations (AEGIS governance mechanisms) | 25 |
 | `relationship` | Links between techniques, tactics, and mitigations | 75+ |
 
-The bundle uses MITRE ATT&CK STIX extensions (`x-mitre-tactic`, `x-mitre-matrix`) for compatibility with ATT&CK-aware tooling.
+The bundle uses MITRE ATT&CK STIX extensions (`x-mitre-tactic`, `x-mitre-matrix`) for compatibility with ATT&CK-aware
+tooling.
 
 ### Python Example
 
@@ -92,7 +97,8 @@ jq '[.objects[]
 
 ## JSON Schema Validation
 
-ATX-1 data files conform to JSON Schemas defined in the aegis-governance repository. Use these schemas to validate custom ATX-1 data or to build tooling that consumes ATX-1 structures.
+ATX-1 data files conform to JSON Schemas defined in the aegis-governance repository. Use these schemas to validate
+custom ATX-1 data or to build tooling that consumes ATX-1 structures.
 
 ### Validating with ajv
 
@@ -184,7 +190,8 @@ The regulatory cross-reference file (`atx1-regulatory-crossref.json`) uses the f
 
 ## Data File Locations
 
-ATX-1 machine-readable files are maintained in the [aegis-governance](https://github.com/aegis-initiative/aegis-governance) repository:
+ATX-1 machine-readable files are maintained in the
+[aegis-governance](https://github.com/aegis-initiative/aegis-governance) repository:
 
 | File | Path | Description |
 |---|---|---|
@@ -194,13 +201,22 @@ ATX-1 machine-readable files are maintained in the [aegis-governance](https://gi
 | Technique Schema | `threat-model/atx-1/schemas/atx1-technique-schema.json` | JSON Schema for technique validation |
 | Cross-Ref Schema | `threat-model/atx-1/schemas/atx1-regulatory-crossref-schema.json` | JSON Schema for cross-reference validation |
 
-These files are also available for direct programmatic consumption at [aegis-governance.com](https://aegis-governance.com) — the machine-readable governance data portal. Fetch the [ATX-1 dataset index](https://aegis-governance.com/atx-1/index.json) for a complete listing of available artifacts and URLs.
+These files are also available for direct programmatic consumption at
+[aegis-governance.com](https://aegis-governance.com) — the machine-readable governance data portal. Fetch the [ATX-1
+dataset index](https://aegis-governance.com/atx-1/index.json) for a complete listing of available artifacts and URLs.
 
 ---
 
 ## Integration Notes
 
-- **ATT&CK Navigator** -- A Navigator-compatible layer file is available at [aegis-governance.com/atx-1/navigator-layer.json](https://aegis-governance.com/atx-1/navigator-layer.json) for visualization in the [ATT&CK Navigator](https://mitre-attack.github.io/attack-navigator/). Load it via "Open Existing Layer" → "Upload from URL." Note: ATX-1 uses a custom domain; techniques will display in the Navigator but are not part of the ATT&CK or ATLAS matrices.
-- **Threat intelligence platforms** -- Any STIX 2.1-compatible platform (TAXII servers, OpenCTI, MISP) can ingest the ATX-1 bundle.
-- **CI/CD integration** -- Use the JSON Schema files to validate ATX-1 data as part of your CI pipeline, ensuring data integrity across updates.
-- **Custom tooling** -- The structured JSON data files are designed for easy consumption by custom scripts and dashboards without requiring STIX libraries.
+- **ATT&CK Navigator** -- A Navigator-compatible layer file is available at
+[aegis-governance.com/atx-1/navigator-layer.json](https://aegis-governance.com/atx-1/navigator-layer.json) for
+visualization in the [ATT&CK Navigator](https://mitre-attack.github.io/attack-navigator/). Load it via "Open Existing
+Layer" → "Upload from URL." Note: ATX-1 uses a custom domain; techniques will display in the Navigator but are not part
+of the ATT&CK or ATLAS matrices.
+- **Threat intelligence platforms** -- Any STIX 2.1-compatible platform (TAXII servers, OpenCTI, MISP) can ingest the
+ATX-1 bundle.
+- **CI/CD integration** -- Use the JSON Schema files to validate ATX-1 data as part of your CI pipeline, ensuring data
+integrity across updates.
+- **Custom tooling** -- The structured JSON data files are designed for easy consumption by custom scripts and
+dashboards without requiring STIX libraries.

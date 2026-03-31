@@ -5,9 +5,12 @@ description: Overview of the AEGIS platform API -- working endpoints, base URL, 
 
 # API Reference
 
-The AEGIS platform exposes a REST API for governance operations, capability inspection, health checking, and audit queries.
+The AEGIS platform exposes a REST API for governance operations, capability inspection, health checking, and audit
+queries.
 
-> **Status:** The API is running locally at `https://demo.aegis-platform.net` and is functional. It is not yet deployed to `aegis-platform.net`. Authentication is not yet implemented -- all requests are currently accepted without credentials.
+> **Status:** The API is running locally at `https://demo.aegis-platform.net` and is functional. It is not yet deployed
+to `aegis-platform.net`. Authentication is not yet implemented -- all requests are currently accepted without
+credentials.
 
 ## Base URL
 
@@ -15,7 +18,8 @@ The AEGIS platform exposes a REST API for governance operations, capability insp
 https://demo.aegis-platform.net
 ```
 
-All API routes are under `/api/v1/`. When the platform is deployed, the base URL will change to `https://api.aegis-platform.net`.
+All API routes are under `/api/v1/`. When the platform is deployed, the base URL will change to
+`https://api.aegis-platform.net`.
 
 ## Working Endpoints
 
@@ -80,7 +84,8 @@ The four possible `decision` values are `ALLOW`, `DENY`, `ESCALATE`, and `REQUIR
 
 ## Authentication
 
-Authentication is not yet implemented. The API currently accepts all requests without credentials. See the [Authentication](/api/authentication/) page for the planned authentication model.
+Authentication is not yet implemented. The API currently accepts all requests without credentials. See the
+[Authentication](/api/authentication/) page for the planned authentication model.
 
 ## Planned Endpoints
 

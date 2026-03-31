@@ -5,7 +5,8 @@ description: Full reference for the AEGIS Python SDK.
 
 # Python SDK
 
-The `aegis-sdk` Python package provides a typed client for submitting action proposals to the AEGIS governance engine. It requires Python 3.10+ and uses `dataclasses`, `StrEnum`, and `from __future__ import annotations`.
+The `aegis-sdk` Python package provides a typed client for submitting action proposals to the AEGIS governance engine.
+It requires Python 3.10+ and uses `dataclasses`, `StrEnum`, and `from __future__ import annotations`.
 
 ## Installation
 
@@ -51,7 +52,8 @@ async def propose(self, proposal: ActionProposal) -> GovernanceDecision
 
 Submits an `ActionProposal` to the governance engine and returns a `GovernanceDecision`. This is an `async` method.
 
-**Current status:** Raises `NotImplementedError` -- the HTTP call to `POST /v1/governance/propose` is stubbed until the aegis-platform API is deployed.
+**Current status:** Raises `NotImplementedError` -- the HTTP call to `POST /v1/governance/propose` is stubbed until the
+aegis-platform API is deployed.
 
 ```python
 from aegis_sdk import AegisClient, ActionProposal
@@ -183,7 +185,8 @@ decision.decision == Verdict.ALLOW # True
 
 ## Error Classes
 
-All errors include a `help_url` attribute pointing to troubleshooting documentation. The base URL for help links is `https://aegis-docs.com/sdk/python/errors`.
+All errors include a `help_url` attribute pointing to troubleshooting documentation. The base URL for help links is
+`https://aegis-docs.com/sdk/python/errors`.
 
 ### AegisError
 
@@ -238,7 +241,8 @@ Common causes: missing API key, expired key, insufficient permissions.
 
 ### AegisDeniedError
 
-Raised when a governance proposal is denied. Subclass of `AegisError`. Includes the denial reason and the policies that caused it.
+Raised when a governance proposal is denied. Subclass of `AegisError`. Includes the denial reason and the policies that
+caused it.
 
 ```python
 from aegis_sdk.errors import AegisDeniedError

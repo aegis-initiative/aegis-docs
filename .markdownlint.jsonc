@@ -5,8 +5,18 @@
     "tables": false,
     "code_blocks": false
   },
+  // Multiple H1s allowed (index pages)
+  "MD025": false,
+  // Duplicate headings allowed (repeated section names)
+  "MD024": false,
   // Allow inline HTML - needed for centered badges and logos in READMEs
   "MD033": false,
+  // Emphasis as heading - stylistic choice, not an error
+  "MD036": false,
+  // Fenced code language - not all blocks need a language
+  "MD040": false,
+  // First line heading - not required (frontmatter pages)
+  "MD041": false,
   // Table column style - allow compact tables
   "MD060": false
 }

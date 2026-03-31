@@ -5,7 +5,9 @@ description: Diagnose and resolve common issues with AEGIS governance integratio
 
 # Troubleshooting
 
-> **Note:** The platform API at `api.aegis-platform.net` is not yet deployed, and authentication is not yet implemented. The troubleshooting scenarios below describe the planned integration experience and will be applicable once the platform is available.
+> **Note:** The platform API at `api.aegis-platform.net` is not yet deployed, and authentication is not yet implemented.
+The troubleshooting scenarios below describe the planned integration experience and will be applicable once the platform
+is available.
 
 This guide covers common issues encountered when integrating with the AEGIS governance platform and how to resolve them.
 
@@ -19,7 +21,8 @@ This guide covers common issues encountered when integrating with the AEGIS gove
 
 1. Verify the endpoint URL is correct: `https://api.aegis-platform.net`
 2. Check that your network allows outbound HTTPS (port 443)
-3. If behind a corporate proxy, configure the SDK with a custom HTTP client (see [SDK Configuration](/sdk/configuration/))
+3. If behind a corporate proxy, configure the SDK with a custom HTTP client (see [SDK
+Configuration](/sdk/configuration/))
 4. Test connectivity: `curl -I https://api.aegis-platform.net/health`
 
 ### Authentication failures (401)
@@ -42,10 +45,14 @@ This guide covers common issues encountered when integrating with the AEGIS gove
 **Debugging steps:**
 
 1. **Check capability registration** -- Is the capability registered? Unregistered capabilities are always denied.
-2. **Check actor grants** -- Does the actor have a grant for this capability? Missing grants produce denial before policy evaluation.
-3. **Check grant constraints** -- Is the grant active? Time windows, rate limits, and other constraints may be blocking the action.
-4. **Check policy priority** -- A higher-priority DENY policy may be overriding your ALLOW policy. Review policy precedence.
-5. **Review the audit log** -- The audit entry for the decision shows exactly which checks passed or failed and which policy matched.
+2. **Check actor grants** -- Does the actor have a grant for this capability? Missing grants produce denial before
+policy evaluation.
+3. **Check grant constraints** -- Is the grant active? Time windows, rate limits, and other constraints may be blocking
+the action.
+4. **Check policy priority** -- A higher-priority DENY policy may be overriding your ALLOW policy. Review policy
+precedence.
+5. **Review the audit log** -- The audit entry for the decision shows exactly which checks passed or failed and which
+policy matched.
 
 ```bash
 curl -H "Authorization: Bearer $AEGIS_API_KEY" \
@@ -84,7 +91,8 @@ curl -H "Authorization: Bearer $AEGIS_API_KEY" \
 
 - List all active policies for the relevant capability
 - Sort by priority to understand evaluation order
-- Remember: when priorities are equal, the more restrictive outcome wins (`DENY > ESCALATE > REQUIRE_CONFIRMATION > ALLOW`)
+- Remember: when priorities are equal, the more restrictive outcome wins (`DENY > ESCALATE > REQUIRE_CONFIRMATION >
+ALLOW`)
 - Use the audit log to see exactly which policy matched for each decision
 
 ## Performance
@@ -118,4 +126,5 @@ If you are unable to resolve an issue using this guide:
 - Check the [AEGIS GitHub organization](https://github.com/aegis-initiative) for known issues
 - Open an issue in the relevant repository with the decision ID and audit log entry
 
-> **Note:** As the platform matures, this troubleshooting guide will be expanded with additional scenarios and diagnostic tools.
+> **Note:** As the platform matures, this troubleshooting guide will be expanded with additional scenarios and
+diagnostic tools.

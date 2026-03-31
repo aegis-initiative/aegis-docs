@@ -7,21 +7,28 @@ sidebar:
 
 # Regulatory Cross-Reference
 
-ATX-1 is a technical threat matrix, but the behaviors it catalogs have direct regulatory implications. This page maps ATX-1 techniques to three major regulatory and standards frameworks, enabling organizations to use ATX-1 as a compliance bridge between agentic AI risk and existing obligations.
+ATX-1 is a technical threat matrix, but the behaviors it catalogs have direct regulatory implications. This page maps
+ATX-1 techniques to three major regulatory and standards frameworks, enabling organizations to use ATX-1 as a compliance
+bridge between agentic AI risk and existing obligations.
 
 ## How to Use This Cross-Reference
 
-1. **Starting from a regulation** -- If you need to demonstrate compliance with a specific NIST function, EU AI Act article, or OWASP category, find the relevant row and identify which ATX-1 techniques are implicated. Then review those techniques' AEGIS mitigations for implementation guidance.
+1. **Starting from a regulation** -- If you need to demonstrate compliance with a specific NIST function, EU AI Act
+article, or OWASP category, find the relevant row and identify which ATX-1 techniques are implicated. Then review those
+techniques' AEGIS mitigations for implementation guidance.
 
-2. **Starting from a technique** -- If you have identified an ATX-1 technique as relevant to your deployment, use these tables to understand which regulatory obligations it touches.
+2. **Starting from a technique** -- If you have identified an ATX-1 technique as relevant to your deployment, use these
+tables to understand which regulatory obligations it touches.
 
-3. **Gap analysis** -- Compare your current controls against both the ATX-1 mitigations and the regulatory requirements. Gaps in one are likely gaps in the other.
+3. **Gap analysis** -- Compare your current controls against both the ATX-1 mitigations and the regulatory requirements.
+Gaps in one are likely gaps in the other.
 
 ---
 
 ## NIST AI Risk Management Framework (AI RMF 1.0)
 
-The NIST AI RMF organizes AI risk management into four functions: Govern, Map, Measure, and Manage. ATX-1 techniques map primarily to Map (identifying risks) and Manage (implementing controls), with governance infrastructure touching Govern.
+The NIST AI RMF organizes AI risk management into four functions: Govern, Map, Measure, and Manage. ATX-1 techniques map
+primarily to Map (identifying risks) and Manage (implementing controls), with governance infrastructure touching Govern.
 
 | Technique | NIST Function | NIST Category | Rationale |
 |---|---|---|---|
@@ -48,7 +55,9 @@ The NIST AI RMF organizes AI risk management into four functions: Govern, Map, M
 
 ## EU AI Act
 
-The EU AI Act (Regulation 2024/1689) establishes requirements for high-risk AI systems. Agentic AI systems that make autonomous decisions affecting individuals or critical infrastructure fall under high-risk classification. The following mapping identifies which ATX-1 techniques are relevant to specific EU AI Act obligations.
+The EU AI Act (Regulation 2024/1689) establishes requirements for high-risk AI systems. Agentic AI systems that make
+autonomous decisions affecting individuals or critical infrastructure fall under high-risk classification. The following
+mapping identifies which ATX-1 techniques are relevant to specific EU AI Act obligations.
 
 | Technique | EU AI Act Article | Obligation | Relevance |
 |---|---|---|---|
@@ -73,7 +82,9 @@ The EU AI Act (Regulation 2024/1689) establishes requirements for high-risk AI s
 
 ## OWASP LLM Top 10 (2025)
 
-The OWASP Top 10 for LLM Applications identifies security risks specific to large language model deployments. ATX-1 techniques map to a subset of these categories, focused on the operational risks of agentic behavior rather than model-level vulnerabilities.
+The OWASP Top 10 for LLM Applications identifies security risks specific to large language model deployments. ATX-1
+techniques map to a subset of these categories, focused on the operational risks of agentic behavior rather than
+model-level vulnerabilities.
 
 | OWASP Category | ATX-1 Techniques | Relationship |
 |---|---|---|
@@ -93,6 +104,8 @@ The three frameworks provide complementary coverage:
 - **EU AI Act** provides the legal obligations -- what is required for compliant deployment of high-risk agentic systems
 - **OWASP LLM Top 10** provides the technical vulnerability taxonomy -- where the security weaknesses lie
 
-ATX-1 bridges all three by providing the operational failure taxonomy -- **what actually goes wrong** when autonomous agents operate without governance. Organizations can use ATX-1 as the connective tissue between their technical security posture (OWASP), their risk management process (NIST), and their legal compliance obligations (EU AI Act).
+ATX-1 bridges all three by providing the operational failure taxonomy -- **what actually goes wrong** when autonomous
+agents operate without governance. Organizations can use ATX-1 as the connective tissue between their technical security
+posture (OWASP), their risk management process (NIST), and their legal compliance obligations (EU AI Act).
 
 For the machine-readable version of these mappings, see [Machine-Readable Formats](/threat-matrix/machine-readable/).

@@ -1,0 +1,90 @@
+name: Auto Release
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    # Skip commits from bots (prevent loops)
+    if: github.actor != 'github-actions[bot]'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Generate CalVer tag
+        id: calver
+        run: |
+          YEAR=$(date +'%y')
+          MONTH=$(date +'%-m')
+          DAY=$(date +'%-d')
+          BASE_TAG="v${YEAR}.${MONTH}.${DAY}"
+
+          COUNT=0
+          TAG=$BASE_TAG
+          while git rev-parse "$TAG" >/dev/null 2>&1; do
+            COUNT=$((COUNT + 1))
+            TAG="${BASE_TAG}.${COUNT}"
+          done
+
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "year=$YEAR" >> "$GITHUB_OUTPUT"
+          echo "month=$MONTH" >> "$GITHUB_OUTPUT"
+          echo "day=$DAY" >> "$GITHUB_OUTPUT"
+
+      - name: Get commit info
+        id: commit
+        run: |
+          echo "hash=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+          echo "message=$(git log -1 --pretty=format:'%s')" >> "$GITHUB_OUTPUT"
+
+      - name: Create and push tag
+        run: |
+          TAG="${{ steps.calver.outputs.tag }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag "$TAG"
+          git push origin "$TAG"
+          echo "Tagged: $TAG"
+
+      - name: Append to daily dev log on auto-releases branch
+        env:
+          HASH: ${{ steps.commit.outputs.hash }}
+          MESSAGE: ${{ steps.commit.outputs.message }}
+          TAG: ${{ steps.calver.outputs.tag }}
+          YEAR: ${{ steps.calver.outputs.year }}
+          MONTH: ${{ steps.calver.outputs.month }}
+          DAY: ${{ steps.calver.outputs.day }}
+        run: |
+          BRANCH="auto-releases/v${YEAR}.${MONTH}.${DAY}"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # Create or switch to the daily branch
+          if git ls-remote --heads origin "$BRANCH" | grep -q "$BRANCH"; then
+            git fetch origin "$BRANCH"
+            git checkout "$BRANCH"
+            git merge main --no-edit
+          else
+            git checkout -b "$BRANCH"
+          fi
+
+          python3 scripts/append-dev-log.py
+
+          FILE="src/content/docs/releases/${YEAR}/${MONTH}/${DAY}.md"
+          git add "$FILE"
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "docs: dev log entry for ${TAG}"
+            git push origin "$BRANCH"
+            echo "Pushed dev log to $BRANCH"
+          fi

@@ -71,16 +71,50 @@ const tactics = [
     id: "TA009", name: "Evade Detection or Oversight", short: "Evasion",
     techniques: [
       { id: "T9001", name: "Operate Outside Monitoring Boundaries", severity: "medium", root: "RC2", case: "CS10", owasp: "LLM06", desc: "Agent performs actions in contexts that fall outside monitoring infrastructure coverage." },
-      { id: "T9002", name: "Obfuscate Action Traceability", severity: "medium", root: "RC2", case: "CS10", owasp: "LLM06", desc: "Agent produces audit trails that are technically present but practically useless for reconstruction." },
+      { id: "T9002", name: "Obfuscate Action Traceability", severity: "medium", root: "RC2", case: "CS10", owasp: "LLM06", desc: "Agent produces audit trails that are technically present but practically useless for reconstruction.", subTechniques: [
+        { id: "T9002.001", name: "Encode Commands in Base64 / Hex / URL Encoding", severity: "medium", root: "RC4", case: "v0.1.x", owasp: "LLM06", desc: "Agent encodes commands in base64, hex, or URL encoding before execution. The encoded payload is opaque to text-based pattern matching until decoded by the runtime." },
+        { id: "T9002.002", name: "Variable Indirection / Dynamic Command Construction", severity: "medium", root: "RC4", case: "v0.1.x", owasp: "LLM06", desc: "Agent splits the command name from its invocation across separate tokens via shell variable assignment (CMD=curl; $CMD ...)." },
+      ]},
     ]
   },
   {
     id: "TA010", name: "Act Beyond Governance Interpretation", short: "Beyond Interpretation",
     techniques: [
-      { id: "T10001", name: "Exploit Pseudo-Filesystem Capabilities", severity: "high", root: "RC5", case: "RFC-0006 R3", owasp: "—", desc: "Agent accesses OS pseudo-filesystem paths (/dev/tcp, /dev/udp, /proc) to perform network or system operations that governance evaluates as file operations." },
-      { id: "T10002", name: "Establish Persistence via Environment Auto-Execution", severity: "high", root: "RC5", case: "RFC-0006 R4-5", owasp: "LLM06", desc: "Agent writes to files the environment auto-executes: shell profiles, git hooks, package scripts, IDE tasks, Dockerfiles, tool configs." },
-      { id: "T10003", name: "Inject Persistent Agent Instructions", severity: "critical", root: "RC5+RC4", case: "RFC-0006 R5", owasp: "LLM01", desc: "Agent modifies its own instruction files that auto-load at session start, persist across sessions, and propagate via version control." },
-      { id: "T10004", name: "Exploit Governance-Runtime Parser Divergence", severity: "high", root: "RC5", case: "RFC-0006 R1-3", owasp: "LLM01", desc: "Agent constructs inputs parsed differently by the governance evaluator than the execution runtime: newline/CRLF injection, null bytes, Unicode homoglyphs, heredoc, shell metacharacters." },
+      { id: "T10001", name: "Exploit Pseudo-Filesystem Capabilities", severity: "high", root: "RC5", case: "RFC-0006 R3", owasp: "—", desc: "Agent accesses OS pseudo-filesystem paths (/dev/tcp, /dev/udp, /proc) to perform network or system operations that governance evaluates as file operations.", subTechniques: [
+        { id: "T10001.001", name: "Use /dev/tcp Network Socket Access", severity: "high", root: "RC5", case: "RFC-0006 R3", owasp: "—", desc: "Agent uses bash's /dev/tcp/host/port pseudo-filesystem to perform network I/O via what looks like file I/O." },
+        { id: "T10001.002", name: "Use /dev/udp Network Socket Access", severity: "high", root: "RC5", case: "RFC-0006 R3", owasp: "—", desc: "UDP equivalent — particularly useful for DNS exfiltration and stateless data egress." },
+        { id: "T10001.003", name: "Read /proc Pseudo-Filesystem", severity: "high", root: "RC5", case: "RFC-0006 R3", owasp: "—", desc: "Agent reads process and kernel state via /proc/* paths the governance layer treats as ordinary files. Reveals secrets in env, processes, network connections." },
+      ]},
+      { id: "T10002", name: "Establish Persistence via Environment Auto-Execution", severity: "high", root: "RC5", case: "RFC-0006 R4-5", owasp: "LLM06", desc: "Agent writes to files the environment auto-executes: shell profiles, git hooks, package scripts, IDE tasks, Dockerfiles, tool configs.", subTechniques: [
+        { id: "T10002.001", name: "Persist via Shell Initialization Files", severity: "high", root: "RC5", case: "RFC-0006 R4", owasp: "LLM06", desc: "Agent writes commands to .bashrc, .profile, .zshrc so they execute on every new shell session. Persistence survives reboots." },
+        { id: "T10002.002", name: "Persist via Git Hooks", severity: "high", root: "RC5", case: "RFC-0006 R4", owasp: "LLM06", desc: "Agent writes scripts to .git/hooks/* (pre-commit, post-checkout, etc.) so they execute on every git operation with full user privileges." },
+        { id: "T10002.003", name: "Persist via Package Manager Scripts", severity: "high", root: "RC5", case: "RFC-0006 R4", owasp: "LLM06", desc: "Agent injects commands into package.json scripts, setup.py, or equivalent install hooks so they execute on the next install or build." },
+        { id: "T10002.004", name: "Persist via IDE Task Definitions", severity: "high", root: "RC5", case: "RFC-0006 R5", owasp: "LLM06", desc: "Agent writes commands to .vscode/tasks.json, .idea/runConfigurations/, or similar IDE config files." },
+        { id: "T10002.005", name: "Persist via Container Build Files", severity: "high", root: "RC5", case: "RFC-0006 R5", owasp: "LLM06", desc: "Agent injects commands into Dockerfile, docker-compose.yml, etc., so they execute during the next build and persist into images." },
+        { id: "T10002.006", name: "Persist via Git Config Aliases and Hooks", severity: "high", root: "RC5", case: "RFC-0006 R5", owasp: "LLM06", desc: "Agent uses git config alias.X '!cmd' to register command-substitution aliases that execute arbitrary shell on any subsequent git invocation." },
+        { id: "T10002.007", name: "Persist via Package Manager Configs", severity: "high", root: "RC5", case: "RFC-0006 R5", owasp: "LLM06", desc: "Agent writes auto-execution hooks into .npmrc, .pypirc, .cargo/config.toml. Triggered by next package operation." },
+        { id: "T10002.008", name: "Persist via Build System Files", severity: "high", root: "RC5", case: "RFC-0006 R5", owasp: "LLM06", desc: "Agent injects commands into Makefile, CMakeLists.txt, build.gradle. Executes on next build target invocation." },
+      ]},
+      { id: "T10003", name: "Inject Persistent Agent Instructions", severity: "critical", root: "RC5+RC4", case: "RFC-0006 R5", owasp: "LLM01", desc: "Agent modifies its own instruction files that auto-load at session start, persist across sessions, and propagate via version control.", subTechniques: [
+        { id: "T10003.001", name: "Inject via Claude Code Configuration Files", severity: "critical", root: "RC5+RC4", case: "RFC-0006 R5", owasp: "LLM01", desc: "Agent writes to project-level Claude Code config files that are auto-loaded into model context. Specific exploitation details embargoed under RD-2603-01 until 2026-06-24 or earlier vendor response." },
+        { id: "T10003.002", name: "Inject via Cursor Configuration Files", severity: "critical", root: "RC5+RC4", case: "RFC-0006 R5", owasp: "LLM01", desc: "Agent writes attacker-controlled instructions to .cursorrules files that the Cursor IDE auto-loads as system prompt context for every model interaction." },
+        { id: "T10003.003", name: "Inject via Windsurf Configuration Files", severity: "critical", root: "RC5+RC4", case: "RFC-0006 R5", owasp: "LLM01", desc: "Agent writes attacker-controlled instructions to .windsurfrules files that the Windsurf editor auto-loads into every model interaction." },
+        { id: "T10003.004", name: "Inject via GitHub Copilot Configuration Files", severity: "critical", root: "RC5+RC4", case: "RFC-0006 R5", owasp: "LLM01", desc: "Agent writes to .github/copilot-instructions.md which Copilot auto-loads as repository-level context for all completions and chat." },
+        { id: "T10003.005", name: "Inject via Aider Configuration Files", severity: "critical", root: "RC5+RC4", case: "RFC-0006 R5", owasp: "LLM01", desc: "Agent writes to .aider.conf.yml which the Aider CLI auto-loads to configure model behavior, system prompts, and tool permissions." },
+        { id: "T10003.006", name: "Inject via Continue Configuration Files", severity: "critical", root: "RC5+RC4", case: "RFC-0006 R5", owasp: "LLM01", desc: "Agent writes to .continuerc.json which the Continue IDE extension auto-loads as workspace-level config for model and tool behavior." },
+      ]},
+      { id: "T10004", name: "Exploit Governance-Runtime Parser Divergence", severity: "high", root: "RC5", case: "RFC-0006 R1-3", owasp: "LLM01", desc: "Agent constructs inputs parsed differently by the governance evaluator than the execution runtime: newline/CRLF injection, null bytes, Unicode homoglyphs, heredoc, shell metacharacters.", subTechniques: [
+        { id: "T10004.001", name: "Use Command Chaining Operators", severity: "high", root: "RC5", case: "RFC-0006 R1", owasp: "LLM01", desc: "Agent uses shell operators (|, &&, ||, ;) to chain an allowed command with a denied one. Single-command pattern matching evaluates only the first segment." },
+        { id: "T10004.002", name: "Inject Newline as Command Separator", severity: "high", root: "RC5", case: "RFC-0006 R2", owasp: "LLM01", desc: "Agent embeds a literal \\n in command arguments. Shell interprets it as a separator while regex governance often anchors to single lines." },
+        { id: "T10004.003", name: "Inject CRLF as Command Separator", severity: "high", root: "RC5", case: "RFC-0006 R2", owasp: "LLM01", desc: "Variant using \\r\\n to bypass filters that strip \\n but preserve \\r. Common in pipelines using HTTP request parsing." },
+        { id: "T10004.004", name: "Bypass via Heredoc", severity: "high", root: "RC5", case: "RFC-0006 R2", owasp: "LLM01", desc: "Agent uses heredoc (<<EOF) to pass multi-line payloads. Single-line pattern matching cannot see the body." },
+        { id: "T10004.005", name: "Truncate Path with Null Byte", severity: "high", root: "RC5", case: "RFC-0006 R3", owasp: "LLM01", desc: "Agent embeds a null byte (\\x00) in a path. Governance parser truncates at null while OS syscall processes the full string." },
+        { id: "T10004.006", name: "Evade Path Comparison via Unicode Homoglyphs", severity: "high", root: "RC5", case: "RFC-0006 R3", owasp: "LLM01", desc: "Agent uses Unicode characters that visually match protected path characters but bypass byte-level comparison (Cyrillic 'е' vs Latin 'e')." },
+        { id: "T10004.007", name: "Inject via Subshell or Backticks", severity: "high", root: "RC5", case: "RFC-0006 R1", owasp: "LLM01", desc: "Agent embeds $(command) or `command` substitution inside an otherwise-allowed command. Substitution executes before outer command." },
+        { id: "T10004.008", name: "Bypass Protected Path via Alternate Absolute Path", severity: "high", root: "RC5", case: "RFC-0006 R3", owasp: "LLM01", desc: "Agent uses an alternate absolute path that resolves to the same protected target. Governance does not normalize before matching." },
+        { id: "T10004.009", name: "Bypass Protected Path via Path Traversal", severity: "high", root: "RC5", case: "RFC-0006 R3", owasp: "LLM01", desc: "Agent uses ../ sequences to escape a permitted directory. Governance matches literal prefix instead of resolved path." },
+        { id: "T10004.010", name: "Redirect Output to Protected Path", severity: "high", root: "RC5", case: "RFC-0006 R2", owasp: "LLM01", desc: "Agent uses shell redirection (>, >>, tee) to write to a protected path via an allowed command. Governance evaluates the command without parsing the redirection target." },
+      ]},
     ]
   },
 ];
@@ -91,8 +125,8 @@ const tactics = [
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ATX-1 v2.1 Matrix — AEGIS Threat Matrix</title>
-  <meta name="description" content="Interactive matrix view of the ATX-1 v2.1 threat taxonomy — 10 tactics, 29 techniques for autonomous AI agent governance." />
+  <title>ATX-1 v2.2 Matrix — AEGIS Threat Matrix</title>
+  <meta name="description" content="Interactive matrix view of the ATX-1 v2.2 threat taxonomy — 10 tactics, 29 techniques, 29 sub-techniques for autonomous AI agent governance." />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
   <script src="https://aegis-initiative.com/shared/aegis-nav.js" defer></script>
@@ -339,6 +373,64 @@ const tactics = [
     [data-theme="dark"] .severity-medium { background: #1c2333; color: #79c0ff; }
     [data-theme="dark"] .severity-low { background: #0d2818; color: #56d364; }
 
+    /* Sub-techniques (v2.2) */
+    .technique-cell.has-subtechniques {
+      position: relative;
+      padding-right: 1.6rem;
+    }
+
+    .subtech-toggle {
+      position: absolute;
+      bottom: 0.25rem;
+      right: 0.25rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.15rem;
+      padding: 0.1rem 0.3rem;
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 3px;
+      font-family: 'Cascadia Code', 'Fira Code', monospace;
+      font-size: 0.6rem;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .subtech-toggle:hover {
+      background: var(--matrix-card-hover);
+      color: var(--color-text);
+    }
+
+    .subtech-arrow {
+      display: inline-block;
+      transition: transform 0.2s ease;
+      font-size: 0.7rem;
+      line-height: 1;
+    }
+
+    .subtech-toggle[aria-expanded="true"] .subtech-arrow {
+      transform: rotate(180deg);
+    }
+
+    .subtech-group {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      margin-top: 3px;
+      padding-left: 0.5rem;
+      border-left: 2px solid var(--color-accent);
+    }
+
+    .subtech-cell {
+      background: var(--color-bg);
+      opacity: 0.95;
+    }
+
+    .subtech-cell .technique-id {
+      color: var(--color-accent);
+    }
+
     /* Detail overlay */
     .detail-overlay {
       display: none;
@@ -458,8 +550,8 @@ const tactics = [
     <main class="main-content">
 
       <section class="matrix-hero">
-        <h1>ATX-1 v2.1: AEGIS Threat Matrix</h1>
-        <p>Adversarial knowledge base for autonomous AI agent behavior. 10 tactics, 29 techniques — empirically grounded in observed agentic failures and adversarial governance testing.</p>
+        <h1>ATX-1 v2.2: AEGIS Threat Matrix</h1>
+        <p>Adversarial knowledge base for autonomous AI agent behavior. 10 tactics, 29 techniques, 29 sub-techniques — empirically grounded in observed agentic failures and adversarial governance testing. Click the ▾ badge on a technique to expand its sub-techniques.</p>
       </section>
 
       <div class="legend">
@@ -497,21 +589,58 @@ const tactics = [
                 <div class="tactic-name">{tactic.short}</div>
               </div>
               {tactic.techniques.map((tech) => (
-                <div
-                  class="technique-cell"
-                  data-id={tech.id}
-                  data-name={tech.name}
-                  data-severity={tech.severity}
-                  data-root={tech.root}
-                  data-case={tech.case}
-                  data-owasp={tech.owasp}
-                  data-desc={tech.desc}
-                  data-tactic={`${tactic.id}: ${tactic.name}`}
-                >
-                  <div class="technique-id">{tech.id}</div>
-                  <div class="technique-name">{tech.name}</div>
-                  <div class={`severity-badge severity-${tech.severity}`}>{tech.severity}</div>
-                </div>
+                <>
+                  <div
+                    class={`technique-cell${tech.subTechniques ? ' has-subtechniques' : ''}`}
+                    data-id={tech.id}
+                    data-name={tech.name}
+                    data-severity={tech.severity}
+                    data-root={tech.root}
+                    data-case={tech.case}
+                    data-owasp={tech.owasp}
+                    data-desc={tech.desc}
+                    data-tactic={`${tactic.id}: ${tactic.name}`}
+                  >
+                    <div class="technique-id">{tech.id}</div>
+                    <div class="technique-name">{tech.name}</div>
+                    <div class={`severity-badge severity-${tech.severity}`}>{tech.severity}</div>
+                    {tech.subTechniques && (
+                      <button
+                        type="button"
+                        class="subtech-toggle"
+                        aria-expanded="false"
+                        aria-controls={`sub-${tech.id}`}
+                        aria-label={`${tech.subTechniques.length} sub-techniques`}
+                        data-parent={tech.id}
+                      >
+                        <span class="subtech-count">{tech.subTechniques.length}</span>
+                        <span class="subtech-arrow" aria-hidden="true">▾</span>
+                      </button>
+                    )}
+                  </div>
+                  {tech.subTechniques && (
+                    <div class="subtech-group" id={`sub-${tech.id}`} hidden>
+                      {tech.subTechniques.map((sub) => (
+                        <div
+                          class="technique-cell subtech-cell"
+                          data-id={sub.id}
+                          data-name={sub.name}
+                          data-severity={sub.severity}
+                          data-root={sub.root}
+                          data-case={sub.case}
+                          data-owasp={sub.owasp}
+                          data-desc={sub.desc}
+                          data-tactic={`${tactic.id}: ${tactic.name}`}
+                          data-parent-id={tech.id}
+                        >
+                          <div class="technique-id">{sub.id}</div>
+                          <div class="technique-name">{sub.name}</div>
+                          <div class={`severity-badge severity-${sub.severity}`}>{sub.severity}</div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </>
               ))}
             </div>
           ))}
@@ -555,8 +684,22 @@ const tactics = [
   </div>
 
   <script is:inline>
+    // Sub-technique accordion toggles
+    document.querySelectorAll('.subtech-toggle').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var parentId = btn.dataset.parent;
+        var group = document.getElementById('sub-' + parentId);
+        if (!group) return;
+        var expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+        group.hidden = expanded;
+      });
+    });
+
     document.querySelectorAll('.technique-cell').forEach(function(cell) {
-      cell.addEventListener('click', function() {
+      cell.addEventListener('click', function(e) {
+        if (e.target.closest('.subtech-toggle')) return;
         var overlay = document.getElementById('detail-overlay');
         document.getElementById('detail-name').textContent = cell.dataset.name;
         document.getElementById('detail-id').textContent = cell.dataset.id + ' \u2014 ' + cell.dataset.tactic;

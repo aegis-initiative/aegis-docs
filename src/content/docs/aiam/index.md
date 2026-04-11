@@ -106,7 +106,7 @@ AIAM-1 addresses seven threat classes specific to agent IAM:
 - **Full specification**: [aegis-governance/aiam/](https://github.com/aegis-initiative/aegis-governance/tree/main/aiam)
 - **Position paper**: [AIAM-1-position-paper-v0.1.md](https://github.com/aegis-initiative/aegis-governance/blob/main/docs/position-papers/aiam/AIAM-1-position-paper-v0.1.md)
 - **RFC-0019**: [RFC-0019-AIAM-1](https://github.com/aegis-initiative/aegis-governance/blob/main/rfc/RFC-0019-AIAM-1-Identity-Access-Management-AI-Agents.md)
-- **JSON schemas**: [aegis-core/schemas/aiam/](https://github.com/aegis-initiative/aegis-governance/tree/main/aegis-core/schemas/aiam)
+- **JSON schemas**: canonical shared schemas live in [`aegis/schemas/`](https://github.com/aegis-initiative/aegis/tree/main/schemas); the current AIAM-specific schemas remain documented in [`aegis-governance/aegis-core/schemas/aiam/`](https://github.com/aegis-initiative/aegis-governance/tree/main/aegis-core/schemas/aiam)
 
 ---
 

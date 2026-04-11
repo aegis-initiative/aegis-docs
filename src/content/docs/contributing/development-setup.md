@@ -72,7 +72,7 @@ cd aegis-governance
 ```
 
 - Specifications are in `aegis-core/` (Markdown, no build step)
-- JSON schemas are in `aegis-core/schemas/` (validate with any JSON Schema tool)
+- Canonical JSON schemas are in `aegis/schemas/` (validate with any JSON Schema tool)
 - The reference runtime is in `aegis-runtime/` (Python)
 
 ## Governance Hub (aegis)

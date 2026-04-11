@@ -68,7 +68,10 @@
     "zenodo",
     "AIAM",
     "IBAC",
-    "ABAC"
+    "ABAC",
+    "SCIM",
+    "venv",
+    "pytest"
   ],
   "ignorePaths": [
     "node_modules/**",

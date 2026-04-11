@@ -65,7 +65,10 @@
     "TDSC",
     "Ukil",
     "Zenodo",
-    "zenodo"
+    "zenodo",
+    "AIAM",
+    "IBAC",
+    "ABAC"
   ],
   "ignorePaths": [
     "node_modules/**",

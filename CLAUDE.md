@@ -8,8 +8,8 @@ design system with aegis-constitution.
 ## Org Context
 
 - GitHub Org: github.com/aegis-initiative
-- IP Owner: Finnoybu IP LLC
-- Parent Ecosystem: Finnoybu Holdings LLC
+- Operating Entity: AEGIS Operations LLC
+- Trademark Owner: Finnoybu IP LLC
 - Domain: aegis-docs.com (public docs), aegis-platform.net (platform)
 
 ## This Repo's Role

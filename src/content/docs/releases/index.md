@@ -14,9 +14,11 @@ automatically from CalVer tags.
 
 ### [April](/releases/26/4/)
 
-- [v26.4.10](/releases/26/4/#release--v26410) — Added AIAM-1 documentation and published release notes
-- [v26.4.3](/releases/26/4/#release--v2643) — docs: dev log entry for v26.4.2 (#9) (52b5b5d)
-*No releases yet.*
+- [v26.4.12](/releases/26/4/#release--v26412) — Legal entity sync, cache policy pinned in repo, VERSION file plumbing, centralized readSiteVersion, live demo link fix
+- [v26.4.11](/releases/26/4/#release--v26411) — Shared design-system adoption, ecosystem nav bar, MCP integration guide
+- [v26.4.10](/releases/26/4/#release--v26410) — AIAM-1 specification documentation page
+- [v26.4.9](/releases/26/4/#release--v2649) — ATX-1 v2.2 sub-technique accordion on the threat matrix page
+- [v26.4.1](/releases/26/4/#release--v2641) — Initial CalVer release automation
 
 ### [March](/releases/26/3/)
 

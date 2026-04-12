@@ -69,8 +69,14 @@ jobs:
           git fetch origin "$BRANCH"
           git merge "origin/$BRANCH" --no-edit
 
-          # Now run the nightly rollup to add release recap + update monthly + index
-          python3 scripts/nightly-release.py
+          # Run the nightly rollup for the target date. Passing year/month/day
+          # explicitly avoids a date-drift bug where the script's internal
+          # get_yesterday() helper disagreed with the workflow's notion of
+          # "yesterday" when the workflow fired after 06:00 UTC.
+          python3 scripts/nightly-release.py \
+            --year "${{ steps.date.outputs.year }}" \
+            --month "${{ steps.date.outputs.month }}" \
+            --day "${{ steps.date.outputs.day }}"
 
       - name: Create and merge PR
         if: steps.branch.outputs.found == 'true'
@@ -83,8 +89,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          # Stage any rollup changes
-          git add src/content/docs/releases/
+          # Stage any rollup changes — release notes and VERSION file
+          git add src/content/docs/releases/ VERSION
           if git diff --cached --quiet; then
             echo "No additional rollup changes"
           else

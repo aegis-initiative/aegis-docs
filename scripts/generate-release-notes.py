@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Generate release notes from git commit messages using the Claude API.
+"""
+Generate release notes from git commit messages using the Claude API.
 
 Reads:
   ANTHROPIC_API_KEY — from environment
@@ -17,10 +18,7 @@ api_key = os.environ.get("ANTHROPIC_API_KEY", "")
 raw_commits = os.environ.get("RAW_COMMITS", "")
 
 if not api_key:
-    print(
-        "Warning: ANTHROPIC_API_KEY not set, using raw commits",
-        file=sys.stderr,
-    )
+    print("Warning: ANTHROPIC_API_KEY not set, using raw commits", file=sys.stderr)
     print(raw_commits)
     sys.exit(0)
 
@@ -36,11 +34,13 @@ payload = {
             "role": "user",
             "content": (
                 "You are writing release notes for the AEGIS™ Documentation "
-                "site (aegis-docs.com). Convert these raw git commit messages "
-                "into clear, professional release note entries. Keep them "
-                "concise and human-readable. Return ONLY a markdown bulleted "
-                "list, nothing else. No preamble, no explanation, no code "
-                "fences.\n\nRaw commits:\n" + raw_commits
+                "site (aegis-docs.com — public developer documentation: "
+                "getting-started, architecture, APIs, SDK, threat matrix). "
+                "Convert these raw git commit "
+                "messages into clear, professional release note entries. Keep "
+                "them concise and human-readable. Return ONLY a markdown "
+                "bulleted list, nothing else. No preamble, no explanation, "
+                "no code fences.\n\nRaw commits:\n" + raw_commits
             ),
         }
     ],
@@ -61,8 +61,5 @@ try:
         data = json.loads(resp.read().decode("utf-8"))
         print(data["content"][0]["text"])
 except Exception as e:
-    print(
-        f"Warning: Claude API call failed ({e}), using raw commits",
-        file=sys.stderr,
-    )
+    print(f"Warning: Claude API call failed ({e}), using raw commits", file=sys.stderr)
     print(raw_commits)

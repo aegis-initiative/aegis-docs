@@ -10,27 +10,50 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
-    # Skip commits from bots (prevent loops)
-    if: github.actor != 'github-actions[bot]'
+    # Skip out-of-scope pushes so they don't pollute the development log:
+    #
+    # 1. Self-initiated runs (github-actions[bot]) — prevents loops where a
+    #    workflow commit triggers another workflow run.
+    # 2. Dependabot — dependency bumps are maintenance, not substantive
+    #    user-facing changes. Dependabot-style commit messages
+    #    (chore(deps...) / build(deps...)) are skipped regardless of who
+    #    merged the PR.
+    # 3. Meta rollup commits — the nightly release-index workflow creates
+    #    commits like "docs: release notes for YYYY-MM-DD", "docs: dev log
+    #    entry for vYY.M.D", and "docs: nightly release rollup for ...".
+    #    These are the workflow writing to its own output; including them
+    #    in the dev log creates a feedback loop of meaningless entries.
+    if: >-
+      github.actor != 'github-actions[bot]' &&
+      github.actor != 'dependabot[bot]' &&
+      !startsWith(github.event.head_commit.message, 'chore(deps') &&
+      !startsWith(github.event.head_commit.message, 'build(deps') &&
+      !startsWith(github.event.head_commit.message, 'docs: release notes for ') &&
+      !startsWith(github.event.head_commit.message, 'docs: dev log entry for ') &&
+      !startsWith(github.event.head_commit.message, 'docs: nightly release rollup')
     steps:
       - name: Checkout
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
-      - name: Generate CalVer tag
+      - name: Generate development log tag
         id: calver
         run: |
+          # Per-push tags are always 4-part development log tags.
+          # The 3-part release tag (vYY.M.D) is reserved for the nightly
+          # rollup at the start of the next day.
           YEAR=$(date +'%y')
           MONTH=$(date +'%-m')
           DAY=$(date +'%-d')
-          BASE_TAG="v${YEAR}.${MONTH}.${DAY}"
+          BASE="v${YEAR}.${MONTH}.${DAY}"
 
-          COUNT=0
-          TAG=$BASE_TAG
+          # Start at .1 and increment until we find an unused slot.
+          COUNT=1
+          TAG="${BASE}.${COUNT}"
           while git rev-parse "$TAG" >/dev/null 2>&1; do
             COUNT=$((COUNT + 1))
-            TAG="${BASE_TAG}.${COUNT}"
+            TAG="${BASE}.${COUNT}"
           done
 
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"

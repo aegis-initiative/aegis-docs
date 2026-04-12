@@ -1,26 +1,23 @@
 # Components
 
-This directory will contain Astro components shared with the aegis-constitution site.
+Local Astro components for aegis-docs. Shared UI primitives live in the
+`@aegis-initiative/design-system` package and should be imported from there:
 
-## Shared Design System
+```astro
+import Header from '@aegis-initiative/design-system/components/Header.astro';
+import AegisLogo from '@aegis-initiative/design-system/components/AegisLogo.astro';
+import AegisWordmark from '@aegis-initiative/design-system/components/AegisWordmark.astro';
+import Search from '@aegis-initiative/design-system/components/Search.astro';
+```
 
-aegis-docs and aegis-constitution use the same custom design system. Components will be
-extracted from aegis-constitution and shared here when the design system package is built.
+## What stays local
 
-### Components to share from constitution
+Components in this directory are either:
 
-- `Header.astro` — Site header with navigation and theme toggle
-- `Footer.astro` — Site footer with links and copyright
-- `AegisWordmark.astro` — SVG wordmark component
-- `ThemeToggle.astro` — Dark/light mode toggle
-- `SearchDialog.astro` — Pagefind search modal
-- `Aside.astro` — Callout/admonition blocks (note, tip, caution, danger)
-- `TableOfContents.astro` — Heading-based ToC sidebar
+- site-specific wrappers around a shared component (e.g. `Header.astro` wraps
+  the design-system `Header`)
+- not yet migrated to the design system (e.g. `Aside`, `PrevNext`, `Footer`,
+  `Sidebar`, `TableOfContents`, `Breadcrumb`)
 
-### Design tokens (CSS custom properties)
-
-The shared design system uses IBM Plex Sans for body text and Poppins for headings,
-with a light/dark theme toggle. All color tokens are defined as CSS custom properties
-on `:root` and `[data-theme]` selectors.
-
-See the aegis-constitution repository for the current implementation.
+New shared primitives should be added to the design-system package first and
+consumed here, not duplicated locally.

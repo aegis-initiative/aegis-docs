@@ -146,4 +146,4 @@ proposing an action and see what comes back.
 ---
 
 *This document was written by Claude, at Ken Tannenbaum's direction, for the AEGIS Initiative.*
-*AEGIS is a project of Finnoybu IP LLC.*
+*AEGIS is a project of the AEGIS Initiative.*

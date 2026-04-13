@@ -41,14 +41,10 @@ if (parts[0] === 'releases' && parts.length >= 3) {
   ];
 
   if (day !== undefined) {
-    // Daily dev-log page: AEGIS Docs > Releases > Month YYYY > <page title>
-    breadcrumbItems.push({
-      label: `${monthName} ${year}`,
-      href: `/releases/${yy}/${month}/`,
-    });
+    // Daily dev-log page: AEGIS Docs > Releases > April 12, 2026
     breadcrumbItems.push({ label: entry.data.title });
   } else {
-    // Monthly release page: AEGIS Docs > Releases > Month YYYY
+    // Monthly release page: AEGIS Docs > Releases > April 2026
     breadcrumbItems.push({ label: `${monthName} ${year}` });
   }
 } else {

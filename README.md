@@ -1,5 +1,4 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/ip--owner-Finnoybu%20IP%20LLC-blueviolet?style=flat-square" alt="IP Owner">
 <a href="https://github.com/aegis-initiative"><img
 src="https://img.shields.io/badge/org-aegis--initiative-0084e7?style=flat-square&logo=github" alt="Org"></a>
 <a href="https://aegis-docs.com"><img src="https://img.shields.io/badge/domain-aegis--docs.com-0084e7?style=flat-square"

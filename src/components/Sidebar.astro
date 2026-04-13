@@ -1,7 +1,18 @@
 ---
-const pathname = Astro.url.pathname;
+/**
+ * Site-specific Sidebar wrapper.
+ * Declares the aegis-docs nav structure and delegates rendering
+ * to the shared design-system Sidebar component.
+ */
+import SharedSidebar from '@aegis-initiative/design-system/components/Sidebar.astro';
 
-const nav = [
+interface NavItem {
+  label: string;
+  slug: string;
+  items?: NavItem[];
+}
+
+const nav: NavItem[] = [
   {
     label: 'Getting Started',
     slug: 'getting-started',
@@ -79,191 +90,6 @@ const nav = [
     ],
   },
 ];
-
-function isActive(slug: string): boolean {
-  return pathname === `/${slug}/` || pathname === `/${slug}`;
-}
-
-function isGroupActive(items: { slug: string }[]): boolean {
-  return items.some(item => isActive(item.slug));
-}
 ---
 
-<nav class="sidebar" id="sidebar" aria-label="Documentation navigation">
-  <div class="sidebar-inner">
-    {nav.map((group) => (
-      <details class="nav-group" open={isGroupActive(group.items)}>
-        <summary class="nav-group-label">
-          <span>{group.label}</span>
-          <svg class="caret" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M6 9l6 6 6-6"/>
-          </svg>
-        </summary>
-        <ul class="nav-items">
-          {group.items.map((item) => (
-            <li>
-              <a href={`/${item.slug}/`} class={`nav-link ${isActive(item.slug) ? 'active' : ''}`} aria-current={isActive(item.slug) ? 'page' : undefined}>{item.label}</a>
-            </li>
-          ))}
-        </ul>
-      </details>
-    ))}
-  </div>
-</nav>
-
-<!-- Mobile overlay -->
-<div class="sidebar-overlay" id="sidebar-overlay"></div>
-
-<style>
-  .sidebar {
-    width: 320px;
-    flex-shrink: 0;
-    background-color: var(--sidebar-bg);
-    border-right: 1px solid var(--color-border-subtle);
-    overflow-y: auto;
-    position: fixed;
-    top: calc(4rem + var(--aegis-nav-height, 0px));
-    left: 0;
-    height: calc(100vh - 4rem - var(--aegis-nav-height, 0px));
-    display: flex;
-    flex-direction: column;
-    z-index: 40;
-    display: none;
-  }
-
-  .sidebar-inner {
-    padding: 1rem 0;
-    flex: 1;
-  }
-
-  .nav-group-label {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.75rem 1.25rem;
-    cursor: pointer;
-    font-family: "IBM Plex Sans", system-ui, sans-serif;
-    font-weight: 600;
-    font-size: 0.875rem;
-    color: var(--color-text);
-    list-style: none;
-    user-select: none;
-  }
-
-  .nav-group-label::-webkit-details-marker {
-    display: none;
-  }
-
-  .nav-group-label:hover {
-    color: var(--color-accent);
-  }
-
-  .caret {
-    transition: transform 0.2s ease;
-    flex-shrink: 0;
-  }
-
-  details[open] .caret {
-    transform: rotate(180deg);
-  }
-
-  .nav-items {
-    list-style: none;
-    padding: 0.25rem 0 0.75rem;
-    margin-left: 1.25rem;
-    border-left: 1px solid var(--color-border);
-  }
-
-  .nav-link {
-    display: block;
-    padding: 0.3rem 1rem 0.3rem 1rem;
-    margin-left: -1px;
-    font-size: 0.875rem;
-    color: var(--color-text-secondary);
-    text-decoration: none;
-    line-height: 1.4;
-    border-left: 2px solid transparent;
-    transition: color 0.15s, border-color 0.15s, background-color 0.15s;
-  }
-
-  .nav-link:hover {
-    color: var(--color-accent);
-    border-left-color: var(--color-text-muted);
-  }
-
-  .nav-link.active {
-    color: #ffffff;
-    background-color: var(--color-accent);
-    border-left-color: var(--color-accent);
-    font-weight: 600;
-    border-radius: 0 4px 4px 0;
-  }
-
-  :global([data-theme="dark"]) .nav-link.active {
-    color: #161616;
-  }
-
-  .sidebar-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.4);
-    z-index: 50;
-  }
-
-  @media (min-width: 1024px) {
-    .sidebar {
-      display: flex;
-    }
-  }
-
-  .sidebar.open {
-    display: flex;
-    position: fixed;
-    top: calc(4rem + var(--aegis-nav-height, 0px));
-    left: 0;
-    height: calc(100vh - 4rem - var(--aegis-nav-height, 0px));
-    z-index: 60;
-    width: min(320px, 85vw);
-  }
-
-  .sidebar-overlay.open {
-    display: block;
-  }
-</style>
-
-<script>
-  // Accordion — only one group open at a time
-  const details = document.querySelectorAll<HTMLDetailsElement>('.nav-group');
-  details.forEach((detail) => {
-    detail.addEventListener('toggle', () => {
-      if (detail.open) {
-        details.forEach((other) => {
-          if (other !== detail && other.open) other.open = false;
-        });
-      }
-    });
-  });
-
-  // Mobile drawer toggle
-  const sidebar = document.getElementById('sidebar');
-  const overlay = document.getElementById('sidebar-overlay');
-
-  function openSidebar() {
-    sidebar?.classList.add('open');
-    overlay?.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeSidebar() {
-    sidebar?.classList.remove('open');
-    overlay?.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  overlay?.addEventListener('click', closeSidebar);
-
-  // Expose for header menu button
-  (window as any).openSidebar = openSidebar;
-  (window as any).closeSidebar = closeSidebar;
-</script>
+<SharedSidebar nav={nav} />

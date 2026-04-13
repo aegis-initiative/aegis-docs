@@ -16,13 +16,47 @@ const { Content } = await render(entry);
 
 // Build breadcrumb from slug (first "AEGIS Docs" is hardcoded in Breadcrumb component)
 const parts = entry.id.split('/');
-const breadcrumbItems = [
-  ...parts.slice(0, -1).map((part: string, i: number) => ({
-    label: part.charAt(0).toUpperCase() + part.slice(1).replace(/-/g, ' '),
-    href: '/' + parts.slice(0, i + 1).join('/') + '/',
-  })),
-  { label: entry.data.title },
+
+// Month name lookup for /releases/YY/M/[D] paths
+const MONTH_NAMES = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December',
 ];
+
+let breadcrumbItems: { label: string; href?: string }[];
+
+if (parts[0] === 'releases' && parts.length >= 3) {
+  // Release-notes pages have a YY/M/[D] path structure where YY is a
+  // 2-digit year and M is a 1-2 digit month. There is no /releases/YY/
+  // index page, so the year segment must not be a link. The month
+  // segment should be rendered as "Month YYYY" since the monthly page
+  // is the actual content for that URL.
+  const [, yy, month, day] = parts;
+  const year = 2000 + parseInt(yy, 10);
+  const monthIdx = parseInt(month, 10) - 1;
+  const monthName = MONTH_NAMES[monthIdx] ?? month;
+
+  breadcrumbItems = [
+    { label: 'Releases', href: '/releases/' },
+  ];
+
+  if (day !== undefined) {
+    // Daily dev-log page: AEGIS Docs > Releases > April 12, 2026
+    breadcrumbItems.push({ label: entry.data.title });
+  } else {
+    // Monthly release page: AEGIS Docs > Releases > April 2026
+    breadcrumbItems.push({ label: `${monthName} ${year}` });
+  }
+} else {
+  // Default path-based breadcrumb for all other sections
+  breadcrumbItems = [
+    ...parts.slice(0, -1).map((part: string, i: number) => ({
+      label: part.charAt(0).toUpperCase() + part.slice(1).replace(/-/g, ' '),
+      href: '/' + parts.slice(0, i + 1).join('/') + '/',
+    })),
+    { label: entry.data.title },
+  ];
+}
 ---
 
 <DocLayout title={entry.data.title} description={entry.data.description}>

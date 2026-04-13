@@ -7,8 +7,7 @@ sidebar:
 
 # Release Notes
 
-Release notes for the AEGIS Documentation site, generated
-automatically from CalVer tags.
+Release notes for the AEGIS Documentation site, generated automatically from CalVer tags. For the broader project timeline — pre-release milestones, publication history, and key dates — see [Milestones](https://aegis-initiative.com/press/milestones/).
 
 ## 2026
 

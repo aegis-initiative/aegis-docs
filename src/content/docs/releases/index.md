@@ -13,6 +13,7 @@ Release notes for the AEGIS Documentation site, generated automatically from Cal
 
 ### [April](/releases/26/4/)
 
+- [v26.4.13](/releases/26/4/#release--v26413) — Navigation improvements and design system consistency updates
 - [v26.4.12](/releases/26/4/#release--v26412) — Legal entity sync, cache policy pinned in repo, VERSION file plumbing, centralized readSiteVersion, live demo link fix
 - [v26.4.11](/releases/26/4/#release--v26411) — Shared design-system adoption, ecosystem nav bar, MCP integration guide
 - [v26.4.10](/releases/26/4/#release--v26410) — AIAM-1 specification documentation page

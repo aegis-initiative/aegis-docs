@@ -1,11 +1,11 @@
 ---
 title: Tactics
-description: The ten ATX-1 v2.1 tactics — categories of ungoverned agentic AI behavior
+description: The ten ATX-1 v2.2 tactics — categories of ungoverned agentic AI behavior
 sidebar:
   order: 1
 ---
 
-# ATX-1 v2.1 Tactics
+# ATX-1 v2.2 Tactics
 
 Tactics represent categories of ungoverned agentic behavior. Each tactic answers the question: **what kind of harm is
 the agent producing?** Tactics are not mutually exclusive -- a single agent action may fall under multiple tactics.

@@ -3,7 +3,7 @@ title: ATX-1 Threat Matrix
 description: AEGIS Threat Matrix — a structured adversarial knowledge base for agentic AI behavior
 ---
 
-# ATX-1 v2.1: AEGIS Threat Matrix
+# ATX-1 v2.2: AEGIS Threat Matrix
 
 ATX-1 is a structured adversarial knowledge base that catalogs the ways autonomous AI agents fail, misbehave, or are
 exploited in real-world deployments. It fills a critical gap between two existing frameworks:
@@ -41,7 +41,7 @@ architectural gaps that require governance infrastructure:
 
 ## Governance Primitives
 
-ATX-1 v2.1 maps each tactic to one or more governance primitives -- the fundamental control surfaces that must be
+ATX-1 v2.2 maps each tactic to one or more governance primitives -- the fundamental control surfaces that must be
 present in any agent governance system:
 
 | Primitive | Description | Tactics |
@@ -59,7 +59,7 @@ present in any agent governance system:
 
 ## Structure
 
-ATX-1 v2.1 organizes adversarial behaviors into a three-level hierarchy:
+ATX-1 v2.2 organizes adversarial behaviors into a three-level hierarchy:
 
 - **10 Tactics** -- Categories of ungoverned behavior (the "why" -- what the agent is doing wrong)
 - **29 Techniques** -- Specific failure modes within each tactic (the "how" -- the concrete behavior)

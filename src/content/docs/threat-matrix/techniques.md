@@ -1,11 +1,11 @@
 ---
 title: Techniques
-description: All 29 ATX-1 v2.1 techniques with case studies, severity, root causes, and AEGIS mitigations
+description: All 29 ATX-1 v2.2 techniques with case studies, severity, root causes, and AEGIS mitigations
 sidebar:
   order: 2
 ---
 
-# ATX-1 v2.1 Technique Catalog
+# ATX-1 v2.2 Technique Catalog
 
 This page documents all 29 ATX-1 techniques. Each technique describes a specific failure mode in autonomous AI agents.
 Techniques T1001–T9002 are grounded in the Agents of Chaos study (Shapira et al. 2026). Techniques T10001–T10004 were

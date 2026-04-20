@@ -5,6 +5,8 @@ sidebar:
   order: 1
 ---
 
+<!-- cspell:ignore unvalidated Unvalidated exfiltrates exfiltrating exfiltrated exfiltration chokepoint homoglyphs metacharacters Metacharacter -->
+
 # ATX-1 v2.2 Tactics
 
 Tactics represent categories of ungoverned agentic behavior. Each tactic answers the question: **what kind of harm is

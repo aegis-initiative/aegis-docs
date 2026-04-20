@@ -5,6 +5,8 @@ sidebar:
   order: 2
 ---
 
+<!-- cspell:ignore unvalidated Unvalidated exfiltrates exfiltrating exfiltrated exfiltration chokepoint homoglyphs metacharacters Metacharacter -->
+
 # ATX-1 v2.2 Technique Catalog
 
 This page documents all 29 ATX-1 techniques. Each technique describes a specific failure mode in autonomous AI agents.

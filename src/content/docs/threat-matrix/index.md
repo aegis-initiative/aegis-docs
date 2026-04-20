@@ -3,6 +3,8 @@ title: ATX-1 Threat Matrix
 description: AEGIS Threat Matrix — a structured adversarial knowledge base for agentic AI behavior
 ---
 
+<!-- cspell:ignore unvalidated Unvalidated exfiltrates exfiltrating exfiltrated exfiltration chokepoint homoglyphs metacharacters Metacharacter -->
+
 # ATX-1 v2.2: AEGIS Threat Matrix
 
 ATX-1 is a structured adversarial knowledge base that catalogs the ways autonomous AI agents fail, misbehave, or are

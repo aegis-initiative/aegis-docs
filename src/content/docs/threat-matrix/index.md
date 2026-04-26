@@ -5,7 +5,7 @@ description: AEGIS Threat Matrix — a structured adversarial knowledge base for
 
 <!-- cspell:ignore unvalidated Unvalidated exfiltrates exfiltrating exfiltrated exfiltration chokepoint homoglyphs metacharacters Metacharacter -->
 
-# ATX-1 v2.2: AEGIS Threat Matrix
+# ATX-1 v2.3: AEGIS Threat Matrix
 
 ATX-1 is a structured adversarial knowledge base that catalogs the ways autonomous AI agents fail, misbehave, or are
 exploited in real-world deployments. It fills a critical gap between two existing frameworks:
@@ -43,7 +43,7 @@ architectural gaps that require governance infrastructure:
 
 ## Governance Primitives
 
-ATX-1 v2.2 maps each tactic to one or more governance primitives -- the fundamental control surfaces that must be
+ATX-1 v2.3 maps each tactic to one or more governance primitives -- the fundamental control surfaces that must be
 present in any agent governance system:
 
 | Primitive | Description | Tactics |
@@ -61,7 +61,7 @@ present in any agent governance system:
 
 ## Structure
 
-ATX-1 v2.2 organizes adversarial behaviors into a three-level hierarchy:
+ATX-1 v2.3 organizes adversarial behaviors into a three-level hierarchy:
 
 - **10 Tactics** -- Categories of ungoverned behavior (the "why" -- what the agent is doing wrong)
 - **29 Techniques** -- Specific failure modes within each tactic (the "how" -- the concrete behavior)
@@ -83,7 +83,7 @@ exists and is adversarially tested against the execution environment.
 ## Pages in This Section
 
 - [Tactics](/threat-matrix/tactics/) -- The ten ATX-1 tactics and their descriptions
-- [Techniques](/threat-matrix/techniques/) -- Full catalog of 29 techniques with case studies, severity, and mitigations
+- [Techniques](/threat-matrix/techniques/) -- Full catalog of 29 techniques with case studies, root causes, and mitigations
 - [Regulatory Cross-Reference](/threat-matrix/regulatory-crossref/) -- Mapping to NIST AI RMF, EU AI Act, and OWASP LLM
 Top 10
 - [Machine-Readable Formats](/threat-matrix/machine-readable/) -- STIX 2.1 bundles, JSON Schema, and programmatic access

@@ -1,0 +1,24 @@
+---
+title: Techniques
+description: All ATX-1 techniques with case studies, root causes, and AEGIS mitigations — rendered from the canonical aegis-governance source
+sidebar:
+  order: 2
+---
+
+import TechniqueCatalog from '../../../components/atx/TechniqueCatalog.astro';
+
+# ATX-1 Technique Catalog
+
+This page documents every ATX-1 technique. Each entry describes a specific failure mode in autonomous AI agents, traces it to a structural root cause, and points at the AEGIS governance mechanism that addresses it.
+
+For each technique:
+
+- **Tactic** identifies the category of ungoverned behavior the technique falls under (see [tactics](/threat-matrix/tactics/)).
+- **Root Cause** traces the structural gap that enables the behavior (see [overview](/threat-matrix/) for the four root causes).
+- **Case Study** references the Agents of Chaos study scenario that demonstrated the behavior, when applicable. Sub-techniques discovered through AEGIS adversarial testing reference RFC-0006 round numbers.
+- **OWASP Mapping** links to the relevant OWASP LLM Top 10 (2025) categories.
+- **AEGIS Mitigation** describes the constitutional article and AGP mechanism that govern the technique.
+
+The catalog below is rendered from the canonical [aegis-governance ATX-1 dataset](https://aegis-governance.com/atx-1/index.json) at build time. Bumps to the spec automatically propagate to this page on the next docs deploy. For machine-readable consumption, see [Machine-Readable Formats](/threat-matrix/machine-readable/).
+
+<TechniqueCatalog />

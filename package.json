@@ -5,12 +5,20 @@
   "engines": {
     "node": ">=22.12.0"
   },
+  "aegisGovernance": {
+    "atxMinVersion": "2.3.0"
+  },
   "scripts": {
+    "predev": "node scripts/fetch-atx.mjs",
     "dev": "astro dev",
+    "prebuild": "node scripts/fetch-atx.mjs",
     "build": "astro build && pagefind --site dist",
     "postbuild": "cp -r dist/pagefind public/",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "fetch-atx": "node scripts/fetch-atx.mjs",
+    "fetch-atx:check": "node scripts/fetch-atx.mjs --check",
+    "fetch-atx:offline": "node scripts/fetch-atx.mjs --offline"
   },
   "dependencies": {
     "@aegis-initiative/design-system": "^0.6.0",

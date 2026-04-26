@@ -56,10 +56,16 @@ section?, sidebar.{order, hidden}.
 The threat-matrix section consumes the canonical ATX-1 spec from
 [aegis-governance.com/atx-1/](https://aegis-governance.com/atx-1/) at build time.
 
-- **Fetcher:** [`scripts/fetch-atx.mjs`](scripts/fetch-atx.mjs) runs in `predev` and `prebuild`. Pulls `VERSION`, `index.json`, `techniques.json`, `regulatory-crossref.json`, `version-mapping.json`, `atm1-mapping.json`, and `atx-technique.schema.json` into `src/data/atx/` (gitignored).
-- **Pinned minimum version:** `package.json#aegisGovernance.atxMinVersion`. The fetcher refuses to use a remote version older than this.
-- **Render components:** [`src/components/atx/TechniqueCatalog.astro`](src/components/atx/TechniqueCatalog.astro) and [`src/components/atx/RegulatoryCrossRef.astro`](src/components/atx/RegulatoryCrossRef.astro). Embedded in `techniques.mdx` and `regulatory-crossref.mdx`.
-- **Editorial framing stays local:** `index.md`, `tactics.md`, and `machine-readable.md` are hand-maintained operator-facing prose. Tactic descriptions and operator framing belong here, not in the spec.
+- **Fetcher:** [`scripts/fetch-atx.mjs`](scripts/fetch-atx.mjs) runs in `predev` and `prebuild`. Pulls `VERSION`,
+  `index.json`, `techniques.json`, `regulatory-crossref.json`, `version-mapping.json`, `atm1-mapping.json`, and
+  `atx-technique.schema.json` into `src/data/atx/` (gitignored).
+- **Pinned minimum version:** `package.json#aegisGovernance.atxMinVersion`. The fetcher refuses to use a remote version
+  older than this.
+- **Render components:** [`src/components/atx/TechniqueCatalog.astro`](src/components/atx/TechniqueCatalog.astro) and
+  [`src/components/atx/RegulatoryCrossRef.astro`](src/components/atx/RegulatoryCrossRef.astro). Embedded in
+  `techniques.mdx` and `regulatory-crossref.mdx`.
+- **Editorial framing stays local:** `index.md`, `tactics.md`, and `machine-readable.md` are hand-maintained
+  operator-facing prose. Tactic descriptions and operator framing belong here, not in the spec.
 - **Offline mode:** `npm run fetch-atx:offline` (or `ATX_OFFLINE=1`) uses cached data without hitting the network.
 - **CI drift check:** `npm run fetch-atx:check` exits non-zero if local cache differs from remote.
 
@@ -118,7 +124,8 @@ docs/                       # Internal architecture / decision notes
 - Self-hosted fonts (no CDN).
 - Pagefind for search (no server-side search).
 - Content is Markdown/MDX. Pages that need to embed Astro components use MDX (`.mdx`).
-- **Spec content is fetched at build time, never duplicated.** If you find yourself hand-typing a technique definition, an article number, or a regulatory mapping, stop — that belongs in aegis-governance and should be fetched.
+- **Spec content is fetched at build time, never duplicated.** If you find yourself hand-typing a technique definition,
+  an article number, or a regulatory mapping, stop — that belongs in aegis-governance and should be fetched.
 - Branch: `main` is protected; all changes via PR with 1 required review.
 - Commit style: Conventional Commits (feat:, docs:, chore:, fix:).
 
@@ -130,8 +137,13 @@ docs/                       # Internal architecture / decision notes
 
 ## Known Follow-Ups
 
-- [`src/pages/threat-matrix/matrix.astro`](src/pages/threat-matrix/matrix.astro) hand-codes a duplicate copy of the ATX-1 technique data (~690 lines). Should be refactored to consume `src/data/atx/techniques.json` like the MDX pages do — separate change.
-- The two `.claude/rules/*.md` files (`component-comparison.md`, `product-knowledge.md`) date from 2026-03-23 when the design system was inline and the site had only six placeholder sections. They no longer reflect reality (design-system is consumed via npm; threat-matrix exists; release-notes pipeline exists; etc.). Either refresh or delete.
+- [`src/pages/threat-matrix/matrix.astro`](src/pages/threat-matrix/matrix.astro) hand-codes a duplicate copy of the
+  ATX-1 technique data (~690 lines). Should be refactored to consume `src/data/atx/techniques.json` like the MDX pages
+  do — separate change.
+- The two `.claude/rules/*.md` files (`component-comparison.md`, `product-knowledge.md`) date from 2026-03-23 when the
+  design system was inline and the site had only six placeholder sections. They no longer reflect reality
+  (design-system is consumed via npm; threat-matrix exists; release-notes pipeline exists; etc.). Either refresh or
+  delete.
 
 ## Addendum Files
 

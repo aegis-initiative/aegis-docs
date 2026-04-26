@@ -74,7 +74,12 @@
     "ABAC",
     "SCIM",
     "venv",
-    "pytest"
+    "pytest",
+    "predev",
+    "prebuild",
+    "urlopen",
+    "TAXII",
+    "MISP"
   ],
   "ignorePaths": [
     "node_modules/**",

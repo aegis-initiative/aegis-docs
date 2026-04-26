@@ -1,0 +1,29 @@
+---
+title: Regulatory Cross-Reference
+description: ATX-1 techniques mapped to NIST AI RMF, EU AI Act, OWASP LLM Top 10, and ATM-1 — rendered from the canonical aegis-governance source
+sidebar:
+  order: 3
+---
+
+import RegulatoryCrossRef from '../../../components/atx/RegulatoryCrossRef.astro';
+
+# Regulatory Cross-Reference
+
+ATX-1 is a technical threat matrix, but the behaviors it catalogs have direct regulatory implications. This page maps ATX-1 techniques to four reference frameworks so that organizations can use ATX-1 as a compliance bridge between agentic AI risk and existing obligations.
+
+## How to Use This Cross-Reference
+
+1. **Starting from a regulation** — If you need to demonstrate compliance with a NIST function, EU AI Act article, or OWASP category, find the relevant row and identify which ATX-1 techniques are implicated. Then review those techniques' [AEGIS mitigations](/threat-matrix/techniques/) for implementation guidance.
+2. **Starting from a technique** — If you have identified an ATX-1 technique as relevant to your deployment, use these tables to understand which regulatory obligations it touches.
+3. **Gap analysis** — Compare your current controls against both the ATX-1 mitigations and the regulatory requirements. A gap in one is usually a gap in the other.
+
+The mappings below are rendered from the canonical [aegis-governance regulatory cross-reference dataset](https://aegis-governance.com/atx-1/regulatory-crossref.json) at build time. Updates to the spec automatically propagate to this page on the next docs deploy.
+
+<RegulatoryCrossRef />
+
+## Notes on Coverage
+
+- **NIST AI RMF** mappings reference functions (Govern, Map, Measure, Manage) rather than line-item categories — the rendered description column captures the relevant subcategories.
+- **EU AI Act** mappings reference articles from Regulation (EU) 2024/1689. Most ATX-1 techniques touch Article 9 (risk management) and Article 14 (human oversight); high-impact techniques additionally touch Article 13 (transparency) and Article 15 (accuracy and robustness).
+- **OWASP LLM Top 10** uses the 2025 edition. The OWASP project has separately released an Agentic AI Security Project that maps closely to ATX-1; AEGIS contributes findings back to that effort.
+- **ATM-1 Threat Scenarios** describe the deployment context where each ATX-1 technique manifests in production agent systems. These scenarios feed into the AEGIS reference deployment patterns (RFC-0005).

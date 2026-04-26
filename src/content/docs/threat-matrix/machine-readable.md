@@ -1,222 +1,199 @@
 ---
 title: Machine-Readable Formats
-description: Consuming ATX-1 v2.0 data programmatically — STIX 2.1, JSON Schema, and structured datasets
+description: Consuming ATX-1 v2.3 data programmatically — STIX 2.1, JSON Schema, and structured datasets served from aegis-governance.com
 sidebar:
   order: 4
 ---
 
 # Machine-Readable Formats
 
-ATX-1 is designed for programmatic consumption. All threat matrix data is available in structured formats for
-integration into security tooling, compliance dashboards, and automated governance systems.
+ATX-1 is designed for programmatic consumption. The canonical machine-readable artifacts live at
+[aegis-governance.com/atx-1/](https://aegis-governance.com/atx-1/) and are served as static JSON for direct fetch by
+security tooling, compliance dashboards, and automated governance systems.
+
+## Quick Reference: Live Endpoints
+
+All artifacts are public, CC-BY-SA-4.0, and updated whenever ATX-1 ships a new version.
+
+| Artifact | URL |
+|---|---|
+| Dataset index | [`/atx-1/index.json`](https://aegis-governance.com/atx-1/index.json) |
+| Current version | [`/atx-1/VERSION`](https://aegis-governance.com/atx-1/VERSION) |
+| Technique database | [`/atx-1/techniques.json`](https://aegis-governance.com/atx-1/techniques.json) |
+| STIX 2.1 bundle | [`/atx-1/stix-bundle.json`](https://aegis-governance.com/atx-1/stix-bundle.json) |
+| Regulatory cross-reference | [`/atx-1/regulatory-crossref.json`](https://aegis-governance.com/atx-1/regulatory-crossref.json) |
+| ATM-1 ↔ ATX-1 mapping | [`/atx-1/atm1-mapping.json`](https://aegis-governance.com/atx-1/atm1-mapping.json) |
+| ATT&CK Navigator layer | [`/atx-1/navigator-layer.json`](https://aegis-governance.com/atx-1/navigator-layer.json) |
+| Validation against aegis-core | [`/atx-1/validation-aegis-core.json`](https://aegis-governance.com/atx-1/validation-aegis-core.json) |
+| ACF-1 counterfactual bundle | [`/atx-1/acf-1-bundle.json`](https://aegis-governance.com/atx-1/acf-1-bundle.json) |
+| Version-mapping history | [`/atx-1/version-mapping.json`](https://aegis-governance.com/atx-1/version-mapping.json) |
+| Technique JSON Schema | [`/schemas/atx-technique.schema.json`](https://aegis-governance.com/schemas/atx-technique.schema.json) |
+
+The `index.json` file is the source of truth for the full artifact list — point your tooling at it for discovery.
 
 ## STIX 2.1 Bundle
 
-The canonical machine-readable representation of ATX-1 is a [STIX
-2.1](https://oasis-open.github.io/cti-documentation/stix/intro.html) bundle. STIX (Structured Threat Information
-Expression) is the standard format for sharing cyber threat intelligence, and ATX-1 uses it to enable interoperability
-with existing security infrastructure.
+The canonical interchange format for ATX-1 is a [STIX 2.1](https://oasis-open.github.io/cti-documentation/stix/intro.html)
+bundle that uses MITRE ATT&CK STIX extensions (`x-mitre-tactic`, `x-mitre-matrix`) for compatibility with ATT&CK-aware
+tooling.
 
 ### Bundle Contents
 
-The ATX-1 STIX bundle contains the following object types:
-
-| STIX Object Type | ATX-1 Mapping | Count |
-|---|---|---|
-| `identity` | ATX-1 as a source identity | 1 |
-| `x-mitre-matrix` | The ATX-1 matrix structure | 1 |
-| `x-mitre-tactic` | Tactics (TA001--TA009) | 9 |
-| `attack-pattern` | Techniques (T1001--T9002) | 25 |
-| `course-of-action` | Mitigations (AEGIS governance mechanisms) | 25 |
-| `relationship` | Links between techniques, tactics, and mitigations | 75+ |
-
-The bundle uses MITRE ATT&CK STIX extensions (`x-mitre-tactic`, `x-mitre-matrix`) for compatibility with ATT&CK-aware
-tooling.
+| STIX Object Type | ATX-1 Mapping |
+|---|---|
+| `identity` | ATX-1 / AEGIS Operations LLC as the source identity |
+| `x-mitre-matrix` | The ATX-1 matrix container |
+| `x-mitre-tactic` | All tactics (TA001–TA010) |
+| `attack-pattern` | All techniques and sub-techniques |
+| `course-of-action` | AEGIS governance mitigations |
+| `relationship` | Cross-references between techniques, tactics, and mitigations |
 
 ### Python Example
 
-Load and query the STIX bundle using the `stix2` library:
+Load and query the bundle using the `stix2` library:
 
 ```python
+import json
+import urllib.request
 from stix2 import MemoryStore, Filter
 
-# Load the ATX-1 STIX bundle
-store = MemoryStore()
-store.load_from_file("atx-1-v2-stix-bundle.json")
+# Load the live ATX-1 STIX bundle
+with urllib.request.urlopen("https://aegis-governance.com/atx-1/stix-bundle.json") as resp:
+    bundle = json.load(resp)
 
-# Get all tactics
+store = MemoryStore(stix_data=bundle["objects"])
+
+# List every tactic
 tactics = store.query([Filter("type", "=", "x-mitre-tactic")])
 for tactic in sorted(tactics, key=lambda t: t.get("x_mitre_shortname", "")):
-    print(f"{tactic['external_references'][0]['external_id']}: {tactic['name']}")
+    ext = next(r for r in tactic["external_references"] if r.get("source_name") == "atx-1")
+    print(f'{ext["external_id"]}: {tactic["name"]}')
 
-# Get all critical-severity techniques
+# List the techniques in TA001
 techniques = store.query([Filter("type", "=", "attack-pattern")])
-critical = [t for t in techniques if t.get("x_mitre_severity") == "critical"]
-for tech in critical:
-    ext_id = tech["external_references"][0]["external_id"]
-    print(f"{ext_id}: {tech['name']}")
-
-# Get mitigations for a specific technique
-relationships = store.query([
-    Filter("type", "=", "relationship"),
-    Filter("relationship_type", "=", "mitigates"),
-    Filter("target_ref", "=", technique_id),
-])
-for rel in relationships:
-    mitigation = store.get(rel["source_ref"])
-    print(f"Mitigation: {mitigation['name']}")
+ta001 = [
+    t for t in techniques
+    if any(p.get("kill_chain_name") == "atx-1" and p.get("phase_name") == "ta001"
+           for p in t.get("kill_chain_phases", []))
+]
+for tech in ta001:
+    ext = next(r for r in tech["external_references"] if r.get("source_name") == "atx-1")
+    print(f'  {ext["external_id"]}: {tech["name"]}')
 ```
 
 ### jq Example
 
-Query the STIX bundle directly with `jq`:
+Fetch and query the bundle directly:
 
 ```bash
-# List all techniques with their severity
-jq '.objects[]
+# List every technique with its tactic
+curl -s https://aegis-governance.com/atx-1/stix-bundle.json | jq '
+  .objects[]
   | select(.type == "attack-pattern")
   | {
-      id: .external_references[0].external_id,
+      id: (.external_references[] | select(.source_name == "atx-1") | .external_id),
       name: .name,
-      severity: .x_mitre_severity
-    }' atx-1-v2-stix-bundle.json
-
-# Get all critical techniques
-jq '.objects[]
-  | select(.type == "attack-pattern" and .x_mitre_severity == "critical")
-  | .external_references[0].external_id + ": " + .name' atx-1-v2-stix-bundle.json
-
-# Count techniques per tactic
-jq '[.objects[]
-  | select(.type == "relationship" and .relationship_type == "uses")]
-  | group_by(.source_ref)
-  | map({tactic: .[0].source_ref, count: length})' atx-1-v2-stix-bundle.json
+      tactic: .kill_chain_phases[0].phase_name
+    }'
 ```
 
----
+## Plain-JSON Technique Database
 
-## JSON Schema Validation
+For consumers that do not need STIX semantics, `techniques.json` is a flat array of technique objects validated against
+[`atx-technique.schema.json`](https://aegis-governance.com/schemas/atx-technique.schema.json) (JSON Schema Draft 2020-12).
 
-ATX-1 data files conform to JSON Schemas defined in the aegis-governance repository. Use these schemas to validate
-custom ATX-1 data or to build tooling that consumes ATX-1 structures.
+### Schema (representative entry)
+
+The actual file is a flat top-level array. Each entry has the following shape:
+
+```json
+[
+  {
+    "id": "T1001",
+    "name": "Execute Non-Owner Instruction",
+    "tactic": "TA001",
+    "tactic_name": "Violate Authority Boundaries",
+    "description": "...",
+    "root_cause": "RC1 (No Stakeholder Model) — ...",
+    "agents_of_chaos_case": [1],
+    "owasp_mapping": ["LLM06"],
+    "aegis_mitigation": {
+      "constitutional_article": "Authority Delegation",
+      "agp_mechanism": "AGP Stakeholder Model",
+      "mechanism": "Formal principal hierarchy ..."
+    },
+    "v1_id": "T1001"
+  }
+]
+```
+
+Sub-techniques carry an additional `parent_technique` field with the parent's `id`, e.g. `"parent_technique": "T9002"`.
 
 ### Validating with ajv
 
 ```bash
 # Install ajv-cli
-npm install -g ajv-cli
+npm install -g ajv-cli ajv-formats
 
-# Validate the technique data file
-ajv validate -s atx1-technique-schema.json -d atx1-techniques.json
+# Pull both files locally
+curl -sO https://aegis-governance.com/schemas/atx-technique.schema.json
+curl -sO https://aegis-governance.com/atx-1/techniques.json
 
-# Validate the regulatory cross-reference
-ajv validate -s atx1-regulatory-crossref-schema.json -d atx1-regulatory-crossref.json
+# Validate
+ajv validate -c ajv-formats -s atx-technique.schema.json -d techniques.json
 ```
 
-### Technique Schema Structure
+## Regulatory Cross-Reference Structure
 
-The technique data file (`atx1-techniques.json`) uses the following structure:
+`regulatory-crossref.json` shape (top-level fields, then per-technique mapping):
 
 ```json
 {
-  "matrix_id": "ATX-1",
-  "version": "2.0.0",
+  "version": "2.3.0",
+  "date": "2026-04-24",
   "techniques": [
     {
       "id": "T1001",
       "name": "Execute Non-Owner Instruction",
       "tactic": "TA001",
-      "severity": "high",
-      "root_causes": ["RC1"],
-      "case_study": "CS1",
-      "owasp_mapping": "LLM06",
-      "description": "...",
-      "aegis_mitigation": {
-        "constitutional_article": "Article II",
-        "agp_mechanism": "Authority verification via signed actor_id"
-      }
+      "nist_ai_rmf": {
+        "functions": ["Govern", "Manage"],
+        "description": "GOVERN 1.1 ..."
+      },
+      "eu_ai_act": {
+        "articles": ["Article 9", "Article 14"],
+        "description": "Art. 9 Risk management system ..."
+      },
+      "owasp_llm_top_10": ["LLM06"],
+      "atm_1_scenario": "Agent executes destructive operations ..."
     }
   ]
 }
 ```
 
-### Regulatory Cross-Reference Structure
+## Polling for New Versions
 
-The regulatory cross-reference file (`atx1-regulatory-crossref.json`) uses the following structure:
+The lightest-weight integration is to poll `/atx-1/VERSION` (a 6-byte text file containing a semver string) and refresh
+your local cache when it changes. The `aegis-docs` site itself uses this pattern — see
+[`scripts/fetch-atx.mjs`](https://github.com/aegis-initiative/aegis-docs/blob/main/scripts/fetch-atx.mjs) for a reference
+implementation that pins a minimum version, validates JSON, and refuses to downgrade.
 
-```json
-{
-  "matrix_id": "ATX-1",
-  "version": "2.0.0",
-  "frameworks": {
-    "nist_ai_rmf": {
-      "version": "1.0",
-      "mappings": [
-        {
-          "technique_id": "T1001",
-          "functions": ["Map", "Manage"],
-          "categories": ["MAP 3.5", "MG 2.2"],
-          "rationale": "..."
-        }
-      ]
-    },
-    "eu_ai_act": {
-      "regulation": "2024/1689",
-      "mappings": [
-        {
-          "technique_ids": ["T1001", "T1002", "T1003"],
-          "article": "Art. 9",
-          "obligation": "Risk Management",
-          "relevance": "..."
-        }
-      ]
-    },
-    "owasp_llm_top10": {
-      "version": "2025",
-      "mappings": [
-        {
-          "category": "LLM01",
-          "name": "Prompt Injection",
-          "technique_ids": ["T1002", "T2001", "T7002", "T7003", "T8001", "T8002"],
-          "relationship": "..."
-        }
-      ]
-    }
-  }
-}
-```
+## Source Repository
 
----
-
-## Data File Locations
-
-ATX-1 machine-readable files are maintained in the
-[aegis-governance](https://github.com/aegis-initiative/aegis-governance) repository:
-
-| File | Path | Description |
-|---|---|---|
-| STIX 2.1 Bundle | `threat-model/atx-1/stix/atx-1-v2-stix-bundle.json` | Complete STIX v2.0 bundle with all ATX-1 objects |
-| Technique Data | `threat-model/atx-1/data/atx1-techniques.json` | Structured technique catalog (v2.0, 25 techniques) |
-| Regulatory Cross-Ref | `threat-model/atx-1/data/atx1-regulatory-crossref.json` | Framework mappings (v2.0) |
-| Technique Schema | `threat-model/atx-1/schemas/atx1-technique-schema.json` | JSON Schema for technique validation |
-| Cross-Ref Schema | `threat-model/atx-1/schemas/atx1-regulatory-crossref-schema.json` | JSON Schema for cross-reference validation |
-
-These files are also available for direct programmatic consumption at
-[aegis-governance.com](https://aegis-governance.com) — the machine-readable governance data portal. Fetch the [ATX-1
-dataset index](https://aegis-governance.com/atx-1/index.json) for a complete listing of available artifacts and URLs.
-
----
+All ATX-1 source files live in
+[`aegis-governance/docs/atx/v2/`](https://github.com/aegis-initiative/aegis-governance/tree/main/docs/atx/v2). The deploy
+to `aegis-governance.com/atx-1/` is automated by
+[`site/scripts/sync-atx.mjs`](https://github.com/aegis-initiative/aegis-governance/blob/main/site/scripts/sync-atx.mjs)
+in the `prebuild` step of the governance site. To file an issue or contribute a technique, open against
+[`aegis-initiative/aegis-governance`](https://github.com/aegis-initiative/aegis-governance).
 
 ## Integration Notes
 
-- **ATT&CK Navigator** -- A Navigator-compatible layer file is available at
-[aegis-governance.com/atx-1/navigator-layer.json](https://aegis-governance.com/atx-1/navigator-layer.json) for
-visualization in the [ATT&CK Navigator](https://mitre-attack.github.io/attack-navigator/). Load it via "Open Existing
-Layer" → "Upload from URL." Note: ATX-1 uses a custom domain; techniques will display in the Navigator but are not part
-of the ATT&CK or ATLAS matrices.
-- **Threat intelligence platforms** -- Any STIX 2.1-compatible platform (TAXII servers, OpenCTI, MISP) can ingest the
-ATX-1 bundle.
-- **CI/CD integration** -- Use the JSON Schema files to validate ATX-1 data as part of your CI pipeline, ensuring data
-integrity across updates.
-- **Custom tooling** -- The structured JSON data files are designed for easy consumption by custom scripts and
-dashboards without requiring STIX libraries.
+- **ATT&CK Navigator** — Load the layer file via "Open Existing Layer" → "Upload from URL," pointing at
+  [`/atx-1/navigator-layer.json`](https://aegis-governance.com/atx-1/navigator-layer.json). ATX-1 uses a custom kill
+  chain; techniques render in Navigator but are not part of the ATT&CK or ATLAS matrices.
+- **Threat intelligence platforms** — Any STIX 2.1-compatible platform (TAXII servers, OpenCTI, MISP) can ingest the
+  bundle as-is.
+- **CI/CD integration** — Use `atx-technique.schema.json` to validate custom ATX-1 data or to gate PRs that touch
+  technique definitions.
+- **Custom tooling** — The plain-JSON files are designed for easy consumption without requiring STIX libraries.

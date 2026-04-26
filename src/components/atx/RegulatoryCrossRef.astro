@@ -1,0 +1,112 @@
+---
+// Renders the ATX-1 ↔ regulatory framework cross-reference tables.
+// Data source: src/data/atx/regulatory-crossref.json (fetched from
+// aegis-governance.com at build time by scripts/fetch-atx.mjs).
+//
+// The page wrapping this component owns the editorial intro/outro;
+// this component renders only the four mapping tables.
+
+import data from "../../data/atx/regulatory-crossref.json";
+
+type CrossRef = {
+  id: string;
+  name: string;
+  tactic: string;
+  nist_ai_rmf: { functions: string[]; description: string };
+  eu_ai_act: { articles: string[]; description: string };
+  owasp_llm_top_10: string[];
+  atm_1_scenario: string;
+};
+
+const techniques = (data as { techniques: CrossRef[] }).techniques;
+
+// Filter to top-level techniques for the per-framework tables; sub-techniques
+// share a parent's regulatory mapping in nearly all cases and bloat the table.
+const topLevel = techniques.filter((t) => !t.id.includes("."));
+---
+
+<h2 id="nist-ai-rmf">NIST AI Risk Management Framework</h2>
+<table class="atx-crossref">
+  <thead>
+    <tr><th>Technique</th><th>NIST Functions</th><th>Description</th></tr>
+  </thead>
+  <tbody>
+    {topLevel.map((t) => (
+      <tr>
+        <td><a href={`/threat-matrix/techniques/#${t.id.toLowerCase()}`}>{t.id}</a> {t.name}</td>
+        <td>{t.nist_ai_rmf.functions.join(", ")}</td>
+        <td>{t.nist_ai_rmf.description}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
+<h2 id="eu-ai-act">EU AI Act</h2>
+<table class="atx-crossref">
+  <thead>
+    <tr><th>Technique</th><th>Articles</th><th>Description</th></tr>
+  </thead>
+  <tbody>
+    {topLevel.map((t) => (
+      <tr>
+        <td><a href={`/threat-matrix/techniques/#${t.id.toLowerCase()}`}>{t.id}</a> {t.name}</td>
+        <td>{t.eu_ai_act.articles.join(", ")}</td>
+        <td>{t.eu_ai_act.description}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
+<h2 id="owasp-llm-top-10">OWASP LLM Top 10 (2025)</h2>
+<table class="atx-crossref">
+  <thead>
+    <tr><th>Technique</th><th>OWASP Categories</th></tr>
+  </thead>
+  <tbody>
+    {topLevel.map((t) => (
+      <tr>
+        <td><a href={`/threat-matrix/techniques/#${t.id.toLowerCase()}`}>{t.id}</a> {t.name}</td>
+        <td>{t.owasp_llm_top_10.join(", ")}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
+<h2 id="atm-1-scenarios">ATM-1 Threat Scenario Mapping</h2>
+<p>Each ATX-1 technique maps to a concrete ATM-1 deployment scenario describing how the failure manifests in production agent systems.</p>
+<table class="atx-crossref">
+  <thead>
+    <tr><th>Technique</th><th>ATM-1 Scenario</th></tr>
+  </thead>
+  <tbody>
+    {topLevel.map((t) => (
+      <tr>
+        <td><a href={`/threat-matrix/techniques/#${t.id.toLowerCase()}`}>{t.id}</a> {t.name}</td>
+        <td>{t.atm_1_scenario}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
+<style>
+  .atx-crossref {
+    margin: 1rem 0 2rem;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .atx-crossref th,
+  .atx-crossref td {
+    text-align: left;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid var(--color-border-subtle);
+    vertical-align: top;
+  }
+  .atx-crossref th {
+    color: var(--color-text-muted);
+    font-weight: 500;
+    border-bottom-width: 2px;
+  }
+  .atx-crossref td:first-child {
+    white-space: nowrap;
+  }
+</style>

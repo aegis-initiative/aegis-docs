@@ -1,0 +1,141 @@
+---
+// Renders the full ATX-1 technique catalog grouped by tactic.
+// Data source: src/data/atx/techniques.json (fetched from aegis-governance.com
+// at build time by scripts/fetch-atx.mjs — see CLAUDE.md).
+//
+// The page wrapping this component owns the editorial intro/outro and any
+// section title; this component renders only the catalog body.
+
+import techniques from "../../data/atx/techniques.json";
+
+type Technique = {
+  id: string;
+  name: string;
+  tactic: string;
+  tactic_name: string;
+  description: string;
+  root_cause: string;
+  agents_of_chaos_case: number[];
+  owasp_mapping: string[];
+  aegis_mitigation: {
+    constitutional_article: string;
+    agp_mechanism: string;
+    mechanism: string;
+  };
+  parent_technique?: string;
+};
+
+const all = techniques as Technique[];
+
+// Group top-level techniques by tactic, attach sub-techniques.
+type Grouped = { tactic: string; tactic_name: string; techniques: (Technique & { sub: Technique[] })[] };
+
+const tacticOrder: string[] = [];
+const byTactic = new Map<string, Grouped>();
+for (const t of all) {
+  if (t.id.includes(".")) continue;
+  if (!byTactic.has(t.tactic)) {
+    byTactic.set(t.tactic, { tactic: t.tactic, tactic_name: t.tactic_name, techniques: [] });
+    tacticOrder.push(t.tactic);
+  }
+  byTactic.get(t.tactic)!.techniques.push({ ...t, sub: [] });
+}
+for (const t of all) {
+  if (!t.id.includes(".") || !t.parent_technique) continue;
+  const group = byTactic.get(t.tactic);
+  if (!group) continue;
+  const parent = group.techniques.find((p) => p.id === t.parent_technique);
+  if (parent) parent.sub.push(t);
+}
+tacticOrder.sort();
+
+const grouped = tacticOrder.map((id) => byTactic.get(id)!);
+
+function caseList(cases: number[]): string {
+  if (!cases || cases.length === 0) return "—";
+  return cases.map((c) => `CS${c}`).join(", ");
+}
+---
+
+{grouped.map((group) => (
+  <section class="atx-tactic-section">
+    <h2 id={group.tactic.toLowerCase()}>{group.tactic}: {group.tactic_name}</h2>
+    {group.techniques.map((tech) => (
+      <article class="atx-technique" id={tech.id.toLowerCase()}>
+        <h3>{tech.id}: {tech.name}</h3>
+        <table class="atx-technique-meta">
+          <tbody>
+            <tr><th scope="row">Tactic</th><td>{tech.tactic}: {tech.tactic_name}</td></tr>
+            <tr><th scope="row">Root Cause</th><td>{tech.root_cause}</td></tr>
+            <tr><th scope="row">Case Study</th><td>{caseList(tech.agents_of_chaos_case)}</td></tr>
+            <tr><th scope="row">OWASP Mapping</th><td>{tech.owasp_mapping.join(", ")}</td></tr>
+          </tbody>
+        </table>
+        <p><strong>Description.</strong> {tech.description}</p>
+        <p><strong>AEGIS Mitigation.</strong> Constitutional Article: <em>{tech.aegis_mitigation.constitutional_article}</em>. AGP mechanism: <em>{tech.aegis_mitigation.agp_mechanism}</em>. {tech.aegis_mitigation.mechanism}</p>
+
+        {tech.sub.length > 0 && (
+          <details class="atx-subtechniques">
+            <summary>{tech.sub.length} sub-technique{tech.sub.length === 1 ? "" : "s"}</summary>
+            {tech.sub.map((sub) => (
+              <article class="atx-subtechnique" id={sub.id.toLowerCase()}>
+                <h4>{sub.id}: {sub.name}</h4>
+                <p><strong>Description.</strong> {sub.description}</p>
+                <p class="atx-subtech-mitigation"><strong>AEGIS Mitigation.</strong> Constitutional Article: <em>{sub.aegis_mitigation.constitutional_article}</em>. AGP mechanism: <em>{sub.aegis_mitigation.agp_mechanism}</em>. {sub.aegis_mitigation.mechanism}</p>
+              </article>
+            ))}
+          </details>
+        )}
+      </article>
+    ))}
+  </section>
+))}
+
+<style>
+  .atx-tactic-section {
+    margin-top: 2.5rem;
+  }
+  .atx-tactic-section > h2 {
+    border-bottom: 1px solid var(--color-border-subtle);
+    padding-bottom: 0.4rem;
+  }
+  .atx-technique {
+    margin: 1.5rem 0 2rem;
+  }
+  .atx-technique > h3 {
+    margin-top: 1.25rem;
+  }
+  .atx-technique-meta {
+    margin: 0.5rem 0 1rem;
+    width: auto;
+  }
+  .atx-technique-meta th {
+    text-align: left;
+    padding-right: 1rem;
+    color: var(--color-text-muted);
+    font-weight: 500;
+    white-space: nowrap;
+    vertical-align: top;
+  }
+  .atx-subtechniques {
+    margin-top: 0.75rem;
+    border-left: 2px solid var(--color-border-subtle);
+    padding: 0.25rem 0 0.25rem 1rem;
+  }
+  .atx-subtechniques summary {
+    cursor: pointer;
+    color: var(--color-text-muted);
+    font-size: 0.9375rem;
+  }
+  .atx-subtechnique {
+    margin: 1rem 0 0.75rem;
+  }
+  .atx-subtechnique > h4 {
+    margin-top: 0.75rem;
+    font-size: 1rem;
+  }
+  .atx-subtech-mitigation {
+    font-size: 0.9375rem;
+    color: var(--color-text-secondary);
+  }
+</style>

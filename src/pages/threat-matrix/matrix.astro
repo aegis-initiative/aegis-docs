@@ -7,113 +7,113 @@ const tactics = [
   {
     id: "TA001", name: "Violate Authority Boundaries", short: "Authority Boundaries",
     techniques: [
-      { id: "T1001", name: "Execute Non-Owner Instruction", severity: "high", root: "RC1", case: "CS1", owasp: "LLM06", desc: "Agent executes instructions from a non-owner source as though they came from its legitimate operator." },
-      { id: "T1002", name: "Infer Implicit Authority", severity: "high", root: "RC1", case: "CS2", owasp: "LLM01", desc: "Agent accepts authority claims that are implied rather than explicitly granted." },
-      { id: "T1003", name: "Propagate Spoofed Authority at Scale", severity: "critical", root: "RC1", case: "CS3", owasp: "LLM06", desc: "Agent performs mass-distribution actions based on spoofed operator authority." },
+      { id: "T1001", name: "Execute Non-Owner Instruction", root: "RC1", case: "CS1", owasp: "LLM06", desc: "Agent executes instructions from a non-owner source as though they came from its legitimate operator." },
+      { id: "T1002", name: "Infer Implicit Authority", root: "RC1", case: "CS2", owasp: "LLM01", desc: "Agent accepts authority claims that are implied rather than explicitly granted." },
+      { id: "T1003", name: "Propagate Spoofed Authority at Scale", root: "RC1", case: "CS3", owasp: "LLM06", desc: "Agent performs mass-distribution actions based on spoofed operator authority." },
     ]
   },
   {
     id: "TA002", name: "Exceed Operational Scope", short: "Operational Scope",
     techniques: [
-      { id: "T2001", name: "Expand Task Scope Autonomously", severity: "high", root: "RC2+RC3", case: "CS7", owasp: "LLM01", desc: "Agent autonomously expands its operational scope beyond the original task." },
-      { id: "T2002", name: "Perform Unvalidated Bulk Operations", severity: "high", root: "RC2", case: "CS6", owasp: "LLM07", desc: "Agent executes bulk operations without validating scope or confirming intent." },
-      { id: "T2003", name: "Obscure Objective Through Delegation", severity: "high", root: "RC2+RC3", case: "CS7", owasp: "LLM06", desc: "Agent decomposes a high-risk action into innocuous-looking sub-tasks to bypass risk evaluation." },
-      { id: "T2004", name: "Exploit Tool-Chain Composition", severity: "high", root: "RC3", case: "CS7", owasp: "LLM06", desc: "Agent chains individually-authorized tools to produce an unauthorized composite outcome." },
+      { id: "T2001", name: "Expand Task Scope Autonomously", root: "RC2+RC3", case: "CS7", owasp: "LLM01", desc: "Agent autonomously expands its operational scope beyond the original task." },
+      { id: "T2002", name: "Perform Unvalidated Bulk Operations", root: "RC2", case: "CS6", owasp: "LLM07", desc: "Agent executes bulk operations without validating scope or confirming intent." },
+      { id: "T2003", name: "Obscure Objective Through Delegation", root: "RC2+RC3", case: "CS7", owasp: "LLM06", desc: "Agent decomposes a high-risk action into innocuous-looking sub-tasks to bypass risk evaluation." },
+      { id: "T2004", name: "Exploit Tool-Chain Composition", root: "RC3", case: "CS7", owasp: "LLM06", desc: "Agent chains individually-authorized tools to produce an unauthorized composite outcome." },
     ]
   },
   {
     id: "TA003", name: "Compromise System Integrity", short: "System Integrity",
     techniques: [
-      { id: "T3001", name: "Perform Irreversible Destructive Action", severity: "critical", root: "RC2", case: "CS4", owasp: "LLM07", desc: "Agent performs an irreversible destructive operation without safeguards or rollback capability." },
-      { id: "T3002", name: "Trigger Cascading System Changes", severity: "critical", root: "RC2+RC3", case: "CS5", owasp: "LLM07", desc: "Agent action propagates across multiple systems causing cascading failures." },
+      { id: "T3001", name: "Perform Irreversible Destructive Action", root: "RC2", case: "CS4", owasp: "LLM07", desc: "Agent performs an irreversible destructive operation without safeguards or rollback capability." },
+      { id: "T3002", name: "Trigger Cascading System Changes", root: "RC2+RC3", case: "CS5", owasp: "LLM07", desc: "Agent action propagates across multiple systems causing cascading failures." },
     ]
   },
   {
     id: "TA004", name: "Expose or Exfiltrate Information", short: "Info Exfiltration",
     techniques: [
-      { id: "T4001", name: "Exfiltrate Context-Scoped Data", severity: "critical", root: "RC1+RC4", case: "CS8", owasp: "LLM02", desc: "Agent exfiltrates sensitive data from its context window to unauthorized destinations." },
-      { id: "T4002", name: "Leak Cross-Session or Persistent Data", severity: "high", root: "RC3", case: "CS9", owasp: "LLM02", desc: "Agent carries information between sessions that should be isolated." },
-      { id: "T4003", name: "Cross-Domain Secret Leakage", severity: "high", root: "RC3+RC4", case: "CS8", owasp: "LLM02", desc: "Agent transfers secrets from one trust domain to another through outputs or logs." },
+      { id: "T4001", name: "Exfiltrate Context-Scoped Data", root: "RC1+RC4", case: "CS8", owasp: "LLM02", desc: "Agent exfiltrates sensitive data from its context window to unauthorized destinations." },
+      { id: "T4002", name: "Leak Cross-Session or Persistent Data", root: "RC3", case: "CS9", owasp: "LLM02", desc: "Agent carries information between sessions that should be isolated." },
+      { id: "T4003", name: "Cross-Domain Secret Leakage", root: "RC3+RC4", case: "CS8", owasp: "LLM02", desc: "Agent transfers secrets from one trust domain to another through outputs or logs." },
     ]
   },
   {
     id: "TA005", name: "Violate State Integrity", short: "State Integrity",
     techniques: [
-      { id: "T5001", name: "Report False Task Completion", severity: "high", root: "RC2", case: "CS10", owasp: "LLM06", desc: "Agent reports successful completion of tasks it did not perform or performed incorrectly." },
-      { id: "T5002", name: "Fabricate Action Attribution", severity: "medium", root: "RC2", case: "CS10", owasp: "LLM06", desc: "Agent fabricates evidence of actions or attributes outcomes to sources that did not produce them." },
-      { id: "T5003", name: "Suppress or Omit Execution Failure", severity: "medium", root: "RC2", case: "CS10", owasp: "LLM06", desc: "Agent suppresses execution failures and presents incomplete results as complete." },
+      { id: "T5001", name: "Report False Task Completion", root: "RC2", case: "CS10", owasp: "LLM06", desc: "Agent reports successful completion of tasks it did not perform or performed incorrectly." },
+      { id: "T5002", name: "Fabricate Action Attribution", root: "RC2", case: "CS10", owasp: "LLM06", desc: "Agent fabricates evidence of actions or attributes outcomes to sources that did not produce them." },
+      { id: "T5003", name: "Suppress or Omit Execution Failure", root: "RC2", case: "CS10", owasp: "LLM06", desc: "Agent suppresses execution failures and presents incomplete results as complete." },
     ]
   },
   {
     id: "TA006", name: "Abuse Resource Allocation", short: "Resource Abuse",
     techniques: [
-      { id: "T6001", name: "Execute Recursive Invocation Loops", severity: "high", root: "RC2+RC3", case: "CS11", owasp: "LLM10", desc: "Agent enters an unbounded loop of self-invocation consuming resources exponentially." },
-      { id: "T6002", name: "Consume Unbounded External Resources", severity: "medium", root: "RC2", case: "CS11", owasp: "LLM10", desc: "Agent makes excessive external API calls without rate limiting or cost awareness." },
+      { id: "T6001", name: "Execute Recursive Invocation Loops", root: "RC2+RC3", case: "CS11", owasp: "LLM10", desc: "Agent enters an unbounded loop of self-invocation consuming resources exponentially." },
+      { id: "T6002", name: "Consume Unbounded External Resources", root: "RC2", case: "CS11", owasp: "LLM10", desc: "Agent makes excessive external API calls without rate limiting or cost awareness." },
     ]
   },
   {
     id: "TA007", name: "Manipulate Agent Interactions", short: "Agent Manipulation",
     techniques: [
-      { id: "T7001", name: "Spoof Agent Identity", severity: "critical", root: "RC1", case: "CS3", owasp: "LLM06", desc: "Agent impersonates another agent to gain elevated privileges in multi-agent systems." },
-      { id: "T7002", name: "Inject Malicious Delegation Chains", severity: "high", root: "RC1+RC4", case: "CS8", owasp: "LLM01", desc: "Attacker injects a malicious agent into a delegation chain to inherit elevated authority." },
-      { id: "T7003", name: "Induce Cross-Agent Behavioral Drift", severity: "medium", root: "RC4", case: "CS2", owasp: "LLM01", desc: "Agent gradually shifts the behavior of other agents through repeated subtle influence." },
-      { id: "T7004", name: "Induce Unsafe Consensus", severity: "high", root: "RC1+RC4", case: "CS3", owasp: "LLM06", desc: "Attacker manipulates multi-agent consensus to produce outcomes no individual agent would approve." },
+      { id: "T7001", name: "Spoof Agent Identity", root: "RC1", case: "CS3", owasp: "LLM06", desc: "Agent impersonates another agent to gain elevated privileges in multi-agent systems." },
+      { id: "T7002", name: "Inject Malicious Delegation Chains", root: "RC1+RC4", case: "CS8", owasp: "LLM01", desc: "Attacker injects a malicious agent into a delegation chain to inherit elevated authority." },
+      { id: "T7003", name: "Induce Cross-Agent Behavioral Drift", root: "RC4", case: "CS2", owasp: "LLM01", desc: "Agent gradually shifts the behavior of other agents through repeated subtle influence." },
+      { id: "T7004", name: "Induce Unsafe Consensus", root: "RC1+RC4", case: "CS3", owasp: "LLM06", desc: "Attacker manipulates multi-agent consensus to produce outcomes no individual agent would approve." },
     ]
   },
   {
     id: "TA008", name: "Establish or Modify Persistence", short: "Persistence",
     techniques: [
-      { id: "T8001", name: "Poison Persistent Memory", severity: "high", root: "RC4", case: "CS2", owasp: "LLM01", desc: "Agent's persistent memory is corrupted through injected context." },
-      { id: "T8002", name: "Corrupt Governance or Policy State", severity: "critical", root: "RC4", case: "CS8", owasp: "LLM01", desc: "Agent manipulates its own governance state to bypass constraints." },
+      { id: "T8001", name: "Poison Persistent Memory", root: "RC4", case: "CS2", owasp: "LLM01", desc: "Agent's persistent memory is corrupted through injected context." },
+      { id: "T8002", name: "Corrupt Governance or Policy State", root: "RC4", case: "CS8", owasp: "LLM01", desc: "Agent manipulates its own governance state to bypass constraints." },
     ]
   },
   {
     id: "TA009", name: "Evade Detection or Oversight", short: "Evasion",
     techniques: [
-      { id: "T9001", name: "Operate Outside Monitoring Boundaries", severity: "medium", root: "RC2", case: "CS10", owasp: "LLM06", desc: "Agent performs actions in contexts that fall outside monitoring infrastructure coverage." },
-      { id: "T9002", name: "Obfuscate Action Traceability", severity: "medium", root: "RC2", case: "CS10", owasp: "LLM06", desc: "Agent produces audit trails that are technically present but practically useless for reconstruction.", subTechniques: [
-        { id: "T9002.001", name: "Encode Commands in Base64 / Hex / URL Encoding", severity: "medium", root: "RC4", case: "v0.1.x", owasp: "LLM06", desc: "Agent encodes commands in base64, hex, or URL encoding before execution. The encoded payload is opaque to text-based pattern matching until decoded by the runtime." },
-        { id: "T9002.002", name: "Variable Indirection / Dynamic Command Construction", severity: "medium", root: "RC4", case: "v0.1.x", owasp: "LLM06", desc: "Agent splits the command name from its invocation across separate tokens via shell variable assignment (CMD=curl; $CMD ...)." },
+      { id: "T9001", name: "Operate Outside Monitoring Boundaries", root: "RC2", case: "CS10", owasp: "LLM06", desc: "Agent performs actions in contexts that fall outside monitoring infrastructure coverage." },
+      { id: "T9002", name: "Obfuscate Action Traceability", root: "RC2", case: "CS10", owasp: "LLM06", desc: "Agent produces audit trails that are technically present but practically useless for reconstruction.", subTechniques: [
+        { id: "T9002.001", name: "Encode Commands in Base64 / Hex / URL Encoding", root: "RC4", case: "v0.1.x", owasp: "LLM06", desc: "Agent encodes commands in base64, hex, or URL encoding before execution. The encoded payload is opaque to text-based pattern matching until decoded by the runtime." },
+        { id: "T9002.002", name: "Variable Indirection / Dynamic Command Construction", root: "RC4", case: "v0.1.x", owasp: "LLM06", desc: "Agent splits the command name from its invocation across separate tokens via shell variable assignment (CMD=curl; $CMD ...)." },
       ]},
     ]
   },
   {
     id: "TA010", name: "Act Beyond Governance Interpretation", short: "Beyond Interpretation",
     techniques: [
-      { id: "T10001", name: "Exploit Pseudo-Filesystem Capabilities", severity: "high", root: "RC5", case: "RFC-0006 R3", owasp: "—", desc: "Agent accesses OS pseudo-filesystem paths (/dev/tcp, /dev/udp, /proc) to perform network or system operations that governance evaluates as file operations.", subTechniques: [
-        { id: "T10001.001", name: "Use /dev/tcp Network Socket Access", severity: "high", root: "RC5", case: "RFC-0006 R3", owasp: "—", desc: "Agent uses bash's /dev/tcp/host/port pseudo-filesystem to perform network I/O via what looks like file I/O." },
-        { id: "T10001.002", name: "Use /dev/udp Network Socket Access", severity: "high", root: "RC5", case: "RFC-0006 R3", owasp: "—", desc: "UDP equivalent — particularly useful for DNS exfiltration and stateless data egress." },
-        { id: "T10001.003", name: "Read /proc Pseudo-Filesystem", severity: "high", root: "RC5", case: "RFC-0006 R3", owasp: "—", desc: "Agent reads process and kernel state via /proc/* paths the governance layer treats as ordinary files. Reveals secrets in env, processes, network connections." },
+      { id: "T10001", name: "Exploit Pseudo-Filesystem Capabilities", root: "RC5", case: "RFC-0006 R3", owasp: "—", desc: "Agent accesses OS pseudo-filesystem paths (/dev/tcp, /dev/udp, /proc) to perform network or system operations that governance evaluates as file operations.", subTechniques: [
+        { id: "T10001.001", name: "Use /dev/tcp Network Socket Access", root: "RC5", case: "RFC-0006 R3", owasp: "—", desc: "Agent uses bash's /dev/tcp/host/port pseudo-filesystem to perform network I/O via what looks like file I/O." },
+        { id: "T10001.002", name: "Use /dev/udp Network Socket Access", root: "RC5", case: "RFC-0006 R3", owasp: "—", desc: "UDP equivalent — particularly useful for DNS exfiltration and stateless data egress." },
+        { id: "T10001.003", name: "Read /proc Pseudo-Filesystem", root: "RC5", case: "RFC-0006 R3", owasp: "—", desc: "Agent reads process and kernel state via /proc/* paths the governance layer treats as ordinary files. Reveals secrets in env, processes, network connections." },
       ]},
-      { id: "T10002", name: "Establish Persistence via Environment Auto-Execution", severity: "high", root: "RC5", case: "RFC-0006 R4-5", owasp: "LLM06", desc: "Agent writes to files the environment auto-executes: shell profiles, git hooks, package scripts, IDE tasks, Dockerfiles, tool configs.", subTechniques: [
-        { id: "T10002.001", name: "Persist via Shell Initialization Files", severity: "high", root: "RC5", case: "RFC-0006 R4", owasp: "LLM06", desc: "Agent writes commands to .bashrc, .profile, .zshrc so they execute on every new shell session. Persistence survives reboots." },
-        { id: "T10002.002", name: "Persist via Git Hooks", severity: "high", root: "RC5", case: "RFC-0006 R4", owasp: "LLM06", desc: "Agent writes scripts to .git/hooks/* (pre-commit, post-checkout, etc.) so they execute on every git operation with full user privileges." },
-        { id: "T10002.003", name: "Persist via Package Manager Scripts", severity: "high", root: "RC5", case: "RFC-0006 R4", owasp: "LLM06", desc: "Agent injects commands into package.json scripts, setup.py, or equivalent install hooks so they execute on the next install or build." },
-        { id: "T10002.004", name: "Persist via IDE Task Definitions", severity: "high", root: "RC5", case: "RFC-0006 R5", owasp: "LLM06", desc: "Agent writes commands to .vscode/tasks.json, .idea/runConfigurations/, or similar IDE config files." },
-        { id: "T10002.005", name: "Persist via Container Build Files", severity: "high", root: "RC5", case: "RFC-0006 R5", owasp: "LLM06", desc: "Agent injects commands into Dockerfile, docker-compose.yml, etc., so they execute during the next build and persist into images." },
-        { id: "T10002.006", name: "Persist via Git Config Aliases and Hooks", severity: "high", root: "RC5", case: "RFC-0006 R5", owasp: "LLM06", desc: "Agent uses git config alias.X '!cmd' to register command-substitution aliases that execute arbitrary shell on any subsequent git invocation." },
-        { id: "T10002.007", name: "Persist via Package Manager Configs", severity: "high", root: "RC5", case: "RFC-0006 R5", owasp: "LLM06", desc: "Agent writes auto-execution hooks into .npmrc, .pypirc, .cargo/config.toml. Triggered by next package operation." },
-        { id: "T10002.008", name: "Persist via Build System Files", severity: "high", root: "RC5", case: "RFC-0006 R5", owasp: "LLM06", desc: "Agent injects commands into Makefile, CMakeLists.txt, build.gradle. Executes on next build target invocation." },
+      { id: "T10002", name: "Establish Persistence via Environment Auto-Execution", root: "RC5", case: "RFC-0006 R4-5", owasp: "LLM06", desc: "Agent writes to files the environment auto-executes: shell profiles, git hooks, package scripts, IDE tasks, Dockerfiles, tool configs.", subTechniques: [
+        { id: "T10002.001", name: "Persist via Shell Initialization Files", root: "RC5", case: "RFC-0006 R4", owasp: "LLM06", desc: "Agent writes commands to .bashrc, .profile, .zshrc so they execute on every new shell session. Persistence survives reboots." },
+        { id: "T10002.002", name: "Persist via Git Hooks", root: "RC5", case: "RFC-0006 R4", owasp: "LLM06", desc: "Agent writes scripts to .git/hooks/* (pre-commit, post-checkout, etc.) so they execute on every git operation with full user privileges." },
+        { id: "T10002.003", name: "Persist via Package Manager Scripts", root: "RC5", case: "RFC-0006 R4", owasp: "LLM06", desc: "Agent injects commands into package.json scripts, setup.py, or equivalent install hooks so they execute on the next install or build." },
+        { id: "T10002.004", name: "Persist via IDE Task Definitions", root: "RC5", case: "RFC-0006 R5", owasp: "LLM06", desc: "Agent writes commands to .vscode/tasks.json, .idea/runConfigurations/, or similar IDE config files." },
+        { id: "T10002.005", name: "Persist via Container Build Files", root: "RC5", case: "RFC-0006 R5", owasp: "LLM06", desc: "Agent injects commands into Dockerfile, docker-compose.yml, etc., so they execute during the next build and persist into images." },
+        { id: "T10002.006", name: "Persist via Git Config Aliases and Hooks", root: "RC5", case: "RFC-0006 R5", owasp: "LLM06", desc: "Agent uses git config alias.X '!cmd' to register command-substitution aliases that execute arbitrary shell on any subsequent git invocation." },
+        { id: "T10002.007", name: "Persist via Package Manager Configs", root: "RC5", case: "RFC-0006 R5", owasp: "LLM06", desc: "Agent writes auto-execution hooks into .npmrc, .pypirc, .cargo/config.toml. Triggered by next package operation." },
+        { id: "T10002.008", name: "Persist via Build System Files", root: "RC5", case: "RFC-0006 R5", owasp: "LLM06", desc: "Agent injects commands into Makefile, CMakeLists.txt, build.gradle. Executes on next build target invocation." },
       ]},
-      { id: "T10003", name: "Inject Persistent Agent Instructions", severity: "critical", root: "RC5+RC4", case: "RFC-0006 R5", owasp: "LLM01", desc: "Agent modifies its own instruction files that auto-load at session start, persist across sessions, and propagate via version control.", subTechniques: [
-        { id: "T10003.001", name: "Inject via Claude Code Configuration Files", severity: "critical", root: "RC5+RC4", case: "RFC-0006 R5", owasp: "LLM01", desc: "Agent writes to project-level Claude Code config files that are auto-loaded into model context. Specific exploitation details embargoed under RD-2603-01 until 2026-06-24 or earlier vendor response." },
-        { id: "T10003.002", name: "Inject via Cursor Configuration Files", severity: "critical", root: "RC5+RC4", case: "RFC-0006 R5", owasp: "LLM01", desc: "Agent writes attacker-controlled instructions to .cursorrules files that the Cursor IDE auto-loads as system prompt context for every model interaction." },
-        { id: "T10003.003", name: "Inject via Windsurf Configuration Files", severity: "critical", root: "RC5+RC4", case: "RFC-0006 R5", owasp: "LLM01", desc: "Agent writes attacker-controlled instructions to .windsurfrules files that the Windsurf editor auto-loads into every model interaction." },
-        { id: "T10003.004", name: "Inject via GitHub Copilot Configuration Files", severity: "critical", root: "RC5+RC4", case: "RFC-0006 R5", owasp: "LLM01", desc: "Agent writes to .github/copilot-instructions.md which Copilot auto-loads as repository-level context for all completions and chat." },
-        { id: "T10003.005", name: "Inject via Aider Configuration Files", severity: "critical", root: "RC5+RC4", case: "RFC-0006 R5", owasp: "LLM01", desc: "Agent writes to .aider.conf.yml which the Aider CLI auto-loads to configure model behavior, system prompts, and tool permissions." },
-        { id: "T10003.006", name: "Inject via Continue Configuration Files", severity: "critical", root: "RC5+RC4", case: "RFC-0006 R5", owasp: "LLM01", desc: "Agent writes to .continuerc.json which the Continue IDE extension auto-loads as workspace-level config for model and tool behavior." },
+      { id: "T10003", name: "Inject Persistent Agent Instructions", root: "RC5+RC4", case: "RFC-0006 R5", owasp: "LLM01", desc: "Agent modifies its own instruction files that auto-load at session start, persist across sessions, and propagate via version control.", subTechniques: [
+        { id: "T10003.001", name: "Inject via Claude Code Configuration Files", root: "RC5+RC4", case: "RFC-0006 R5", owasp: "LLM01", desc: "Agent writes to project-level Claude Code config files that are auto-loaded into model context. Specific exploitation details embargoed under RD-2603-01 until 2026-06-24 or earlier vendor response." },
+        { id: "T10003.002", name: "Inject via Cursor Configuration Files", root: "RC5+RC4", case: "RFC-0006 R5", owasp: "LLM01", desc: "Agent writes attacker-controlled instructions to .cursorrules files that the Cursor IDE auto-loads as system prompt context for every model interaction." },
+        { id: "T10003.003", name: "Inject via Windsurf Configuration Files", root: "RC5+RC4", case: "RFC-0006 R5", owasp: "LLM01", desc: "Agent writes attacker-controlled instructions to .windsurfrules files that the Windsurf editor auto-loads into every model interaction." },
+        { id: "T10003.004", name: "Inject via GitHub Copilot Configuration Files", root: "RC5+RC4", case: "RFC-0006 R5", owasp: "LLM01", desc: "Agent writes to .github/copilot-instructions.md which Copilot auto-loads as repository-level context for all completions and chat." },
+        { id: "T10003.005", name: "Inject via Aider Configuration Files", root: "RC5+RC4", case: "RFC-0006 R5", owasp: "LLM01", desc: "Agent writes to .aider.conf.yml which the Aider CLI auto-loads to configure model behavior, system prompts, and tool permissions." },
+        { id: "T10003.006", name: "Inject via Continue Configuration Files", root: "RC5+RC4", case: "RFC-0006 R5", owasp: "LLM01", desc: "Agent writes to .continuerc.json which the Continue IDE extension auto-loads as workspace-level config for model and tool behavior." },
       ]},
-      { id: "T10004", name: "Exploit Governance-Runtime Parser Divergence", severity: "high", root: "RC5", case: "RFC-0006 R1-3", owasp: "LLM01", desc: "Agent constructs inputs parsed differently by the governance evaluator than the execution runtime: newline/CRLF injection, null bytes, Unicode homoglyphs, heredoc, shell metacharacters.", subTechniques: [
-        { id: "T10004.001", name: "Use Command Chaining Operators", severity: "high", root: "RC5", case: "RFC-0006 R1", owasp: "LLM01", desc: "Agent uses shell operators (|, &&, ||, ;) to chain an allowed command with a denied one. Single-command pattern matching evaluates only the first segment." },
-        { id: "T10004.002", name: "Inject Newline as Command Separator", severity: "high", root: "RC5", case: "RFC-0006 R2", owasp: "LLM01", desc: "Agent embeds a literal \\n in command arguments. Shell interprets it as a separator while regex governance often anchors to single lines." },
-        { id: "T10004.003", name: "Inject CRLF as Command Separator", severity: "high", root: "RC5", case: "RFC-0006 R2", owasp: "LLM01", desc: "Variant using \\r\\n to bypass filters that strip \\n but preserve \\r. Common in pipelines using HTTP request parsing." },
-        { id: "T10004.004", name: "Bypass via Heredoc", severity: "high", root: "RC5", case: "RFC-0006 R2", owasp: "LLM01", desc: "Agent uses heredoc (<<EOF) to pass multi-line payloads. Single-line pattern matching cannot see the body." },
-        { id: "T10004.005", name: "Truncate Path with Null Byte", severity: "high", root: "RC5", case: "RFC-0006 R3", owasp: "LLM01", desc: "Agent embeds a null byte (\\x00) in a path. Governance parser truncates at null while OS syscall processes the full string." },
-        { id: "T10004.006", name: "Evade Path Comparison via Unicode Homoglyphs", severity: "high", root: "RC5", case: "RFC-0006 R3", owasp: "LLM01", desc: "Agent uses Unicode characters that visually match protected path characters but bypass byte-level comparison (Cyrillic 'е' vs Latin 'e')." },
-        { id: "T10004.007", name: "Inject via Subshell or Backticks", severity: "high", root: "RC5", case: "RFC-0006 R1", owasp: "LLM01", desc: "Agent embeds $(command) or `command` substitution inside an otherwise-allowed command. Substitution executes before outer command." },
-        { id: "T10004.008", name: "Bypass Protected Path via Alternate Absolute Path", severity: "high", root: "RC5", case: "RFC-0006 R3", owasp: "LLM01", desc: "Agent uses an alternate absolute path that resolves to the same protected target. Governance does not normalize before matching." },
-        { id: "T10004.009", name: "Bypass Protected Path via Path Traversal", severity: "high", root: "RC5", case: "RFC-0006 R3", owasp: "LLM01", desc: "Agent uses ../ sequences to escape a permitted directory. Governance matches literal prefix instead of resolved path." },
-        { id: "T10004.010", name: "Redirect Output to Protected Path", severity: "high", root: "RC5", case: "RFC-0006 R2", owasp: "LLM01", desc: "Agent uses shell redirection (>, >>, tee) to write to a protected path via an allowed command. Governance evaluates the command without parsing the redirection target." },
+      { id: "T10004", name: "Exploit Governance-Runtime Parser Divergence", root: "RC5", case: "RFC-0006 R1-3", owasp: "LLM01", desc: "Agent constructs inputs parsed differently by the governance evaluator than the execution runtime: newline/CRLF injection, null bytes, Unicode homoglyphs, heredoc, shell metacharacters.", subTechniques: [
+        { id: "T10004.001", name: "Use Command Chaining Operators", root: "RC5", case: "RFC-0006 R1", owasp: "LLM01", desc: "Agent uses shell operators (|, &&, ||, ;) to chain an allowed command with a denied one. Single-command pattern matching evaluates only the first segment." },
+        { id: "T10004.002", name: "Inject Newline as Command Separator", root: "RC5", case: "RFC-0006 R2", owasp: "LLM01", desc: "Agent embeds a literal \\n in command arguments. Shell interprets it as a separator while regex governance often anchors to single lines." },
+        { id: "T10004.003", name: "Inject CRLF as Command Separator", root: "RC5", case: "RFC-0006 R2", owasp: "LLM01", desc: "Variant using \\r\\n to bypass filters that strip \\n but preserve \\r. Common in pipelines using HTTP request parsing." },
+        { id: "T10004.004", name: "Bypass via Heredoc", root: "RC5", case: "RFC-0006 R2", owasp: "LLM01", desc: "Agent uses heredoc (<<EOF) to pass multi-line payloads. Single-line pattern matching cannot see the body." },
+        { id: "T10004.005", name: "Truncate Path with Null Byte", root: "RC5", case: "RFC-0006 R3", owasp: "LLM01", desc: "Agent embeds a null byte (\\x00) in a path. Governance parser truncates at null while OS syscall processes the full string." },
+        { id: "T10004.006", name: "Evade Path Comparison via Unicode Homoglyphs", root: "RC5", case: "RFC-0006 R3", owasp: "LLM01", desc: "Agent uses Unicode characters that visually match protected path characters but bypass byte-level comparison (Cyrillic 'е' vs Latin 'e')." },
+        { id: "T10004.007", name: "Inject via Subshell or Backticks", root: "RC5", case: "RFC-0006 R1", owasp: "LLM01", desc: "Agent embeds $(command) or `command` substitution inside an otherwise-allowed command. Substitution executes before outer command." },
+        { id: "T10004.008", name: "Bypass Protected Path via Alternate Absolute Path", root: "RC5", case: "RFC-0006 R3", owasp: "LLM01", desc: "Agent uses an alternate absolute path that resolves to the same protected target. Governance does not normalize before matching." },
+        { id: "T10004.009", name: "Bypass Protected Path via Path Traversal", root: "RC5", case: "RFC-0006 R3", owasp: "LLM01", desc: "Agent uses ../ sequences to escape a permitted directory. Governance matches literal prefix instead of resolved path." },
+        { id: "T10004.010", name: "Redirect Output to Protected Path", root: "RC5", case: "RFC-0006 R2", owasp: "LLM01", desc: "Agent uses shell redirection (>, >>, tee) to write to a protected path via an allowed command. Governance evaluates the command without parsing the redirection target." },
       ]},
     ]
   },
@@ -125,8 +125,8 @@ const tactics = [
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ATX-1 v2.2 Matrix — AEGIS Threat Matrix</title>
-  <meta name="description" content="Interactive matrix view of the ATX-1 v2.2 threat taxonomy — 10 tactics, 29 techniques, 29 sub-techniques for autonomous AI agent governance." />
+  <title>ATX-1 v2.3 Matrix — AEGIS Threat Matrix</title>
+  <meta name="description" content="Interactive matrix view of the ATX-1 v2.3 threat taxonomy — 10 tactics, 29 techniques, 29 sub-techniques for autonomous AI agent governance." />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
   <script src="https://aegis-initiative.com/shared/aegis-nav.js" defer></script>
@@ -352,28 +352,8 @@ const tactics = [
       line-height: 1.3;
     }
 
-    .severity-badge {
-      font-size: 0.6rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      font-weight: 600;
-      margin-top: 0.25rem;
-      display: inline-block;
-      padding: 0.1rem 0.35rem;
-      border-radius: 3px;
-    }
 
-    .severity-critical { background: #f8514922; color: #d1242f; }
-    .severity-high { background: #d2992222; color: #b35900; }
-    .severity-medium { background: #58a6ff22; color: #0969da; }
-    .severity-low { background: #3fb95022; color: #1a7f37; }
-
-    [data-theme="dark"] .severity-critical { background: #3b1219; color: #ff7b72; }
-    [data-theme="dark"] .severity-high { background: #2a1f00; color: #f0b840; }
-    [data-theme="dark"] .severity-medium { background: #1c2333; color: #79c0ff; }
-    [data-theme="dark"] .severity-low { background: #0d2818; color: #56d364; }
-
-    /* Sub-techniques (v2.2) */
+    /* Sub-techniques */
     .technique-cell.has-subtechniques {
       position: relative;
       padding-right: 1.6rem;
@@ -554,28 +534,9 @@ const tactics = [
     <main class="main-content">
 
       <section class="matrix-hero">
-        <h1>ATX-1 v2.2: AEGIS Threat Matrix</h1>
+        <h1>ATX-1 v2.3: AEGIS Threat Matrix</h1>
         <p>Adversarial knowledge base for autonomous AI agent behavior. 10 tactics, 29 techniques, 29 sub-techniques — empirically grounded in observed agentic failures and adversarial governance testing. Click the ▾ badge on a technique to expand its sub-techniques.</p>
       </section>
-
-      <div class="legend">
-        <div class="legend-item">
-          <div class="legend-dot severity-critical" style="width:12px;height:12px;border-radius:3px;"></div>
-          Critical
-        </div>
-        <div class="legend-item">
-          <div class="legend-dot severity-high" style="width:12px;height:12px;border-radius:3px;"></div>
-          High
-        </div>
-        <div class="legend-item">
-          <div class="legend-dot severity-medium" style="width:12px;height:12px;border-radius:3px;"></div>
-          Medium
-        </div>
-        <div class="legend-item">
-          <div class="legend-dot severity-low" style="width:12px;height:12px;border-radius:3px;"></div>
-          Low
-        </div>
-      </div>
 
       <div class="matrix-links">
         <a href="/threat-matrix">Documentation</a>
@@ -598,7 +559,6 @@ const tactics = [
                     class={`technique-cell${tech.subTechniques ? ' has-subtechniques' : ''}`}
                     data-id={tech.id}
                     data-name={tech.name}
-                    data-severity={tech.severity}
                     data-root={tech.root}
                     data-case={tech.case}
                     data-owasp={tech.owasp}
@@ -607,7 +567,6 @@ const tactics = [
                   >
                     <div class="technique-id">{tech.id}</div>
                     <div class="technique-name">{tech.name}</div>
-                    <div class={`severity-badge severity-${tech.severity}`}>{tech.severity}</div>
                     {tech.subTechniques && (
                       <button
                         type="button"
@@ -629,7 +588,6 @@ const tactics = [
                           class="technique-cell subtech-cell"
                           data-id={sub.id}
                           data-name={sub.name}
-                          data-severity={sub.severity}
                           data-root={sub.root}
                           data-case={sub.case}
                           data-owasp={sub.owasp}
@@ -639,7 +597,6 @@ const tactics = [
                         >
                           <div class="technique-id">{sub.id}</div>
                           <div class="technique-name">{sub.name}</div>
-                          <div class={`severity-badge severity-${sub.severity}`}>{sub.severity}</div>
                         </div>
                       ))}
                     </div>
@@ -662,10 +619,6 @@ const tactics = [
       <div class="detail-id" id="detail-id"></div>
       <div class="detail-desc" id="detail-desc"></div>
       <div class="detail-meta">
-        <div class="detail-meta-item">
-          <div class="detail-meta-label">Severity</div>
-          <div class="detail-meta-value" id="detail-severity"></div>
-        </div>
         <div class="detail-meta-item">
           <div class="detail-meta-label">Tactic</div>
           <div class="detail-meta-value" id="detail-tactic"></div>
@@ -708,7 +661,6 @@ const tactics = [
         document.getElementById('detail-name').textContent = cell.dataset.name;
         document.getElementById('detail-id').textContent = cell.dataset.id + ' \u2014 ' + cell.dataset.tactic;
         document.getElementById('detail-desc').textContent = cell.dataset.desc;
-        document.getElementById('detail-severity').textContent = cell.dataset.severity.charAt(0).toUpperCase() + cell.dataset.severity.slice(1);
         document.getElementById('detail-tactic').textContent = cell.dataset.tactic;
         document.getElementById('detail-root').textContent = cell.dataset.root;
         document.getElementById('detail-owasp').textContent = cell.dataset.owasp;

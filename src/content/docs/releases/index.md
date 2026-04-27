@@ -13,6 +13,7 @@ Release notes for the AEGIS Documentation site, generated automatically from Cal
 
 ### [April](/releases/26/4/)
 
+- [v26.4.26](/releases/26/4/#release--v26426) — Added TAXII and MISP to documentation dictionary
 - [v26.4.21](/releases/26/4/#release--v26421) — Updated Threat Matrix documentation to version 2.2
 - [v26.4.20](/releases/26/4/#release--v26420) — Custom 404 page with fuzzy matching and broken link tracking
 - [v26.4.13](/releases/26/4/#release--v26413) — Navigation improvements and design system consistency updates

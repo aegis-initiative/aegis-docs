@@ -14,6 +14,10 @@ const {
   title,
   description = "Official documentation for the AEGIS ecosystem — architecture, APIs, SDK, and guides",
 } = Astro.props;
+
+const pageUrl = new URL(Astro.url.pathname, Astro.site).toString();
+const fullTitle = `${title} | AEGIS Documentation`;
+const isHome = Astro.url.pathname === "/" || Astro.url.pathname === "";
 ---
 
 <!doctype html>
@@ -66,8 +70,7 @@ const {
     </script>
 
     <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
+    <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@graph": [
         {
@@ -80,20 +83,33 @@ const {
             "url": "https://aegis-initiative.com"
           }
         },
-        {
-          "@type": "TechArticle",
-          "name": "AEGIS Documentation",
-          "url": "https://aegis-docs.com",
+        isHome ? {
+          "@type": "WebPage",
+          "name": fullTitle,
+          "url": pageUrl,
+          "description": description,
+          "isPartOf": { "@id": "https://aegis-docs.com" },
           "publisher": {
             "@type": "Organization",
             "name": "AEGIS Initiative",
             "url": "https://aegis-initiative.com"
-          },
-          "description": "Official documentation for the AEGIS ecosystem — architecture, APIs, SDK, and guides"
+          }
+        } : {
+          "@type": "TechArticle",
+          "headline": title,
+          "name": fullTitle,
+          "url": pageUrl,
+          "description": description,
+          "isPartOf": { "@id": "https://aegis-docs.com" },
+          "publisher": {
+            "@type": "Organization",
+            "name": "AEGIS Initiative",
+            "url": "https://aegis-initiative.com"
+          }
         }
       ]
-    }
-    </script>
+    })} />
+
   </head>
   <body>
     

@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
+import sitemap from '@astrojs/sitemap';
 import { readSiteVersion } from '@aegis-initiative/design-system/build';
 import remarkAsides from './src/plugins/remark-asides.mjs';
 import rehypeAsides from './src/plugins/rehype-asides.mjs';
@@ -18,5 +19,5 @@ export default defineConfig({
     remarkPlugins: [remarkAsides],
     rehypePlugins: [rehypeAsides],
   },
-  integrations: [mdx()],
+  integrations: [mdx(), sitemap()],
 });

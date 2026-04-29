@@ -36,4 +36,4 @@ User-agent: meta-externalagent
 Disallow: /
 Allow: /.well-known/aegis/
 
-Sitemap: https://aegis-docs.com/sitemap.xml
+Sitemap: https://aegis-docs.com/sitemap-index.xml

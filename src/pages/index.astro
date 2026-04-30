@@ -59,6 +59,23 @@ import AegisLogo from '@aegis-initiative/design-system/components/AegisLogo.astr
       ]
     })} />
 
+    <!-- Organization + ecosystem sameAs (cross-site SEO signal) -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "AEGIS Initiative",
+      "url": "https://aegis-initiative.com",
+      "sameAs": [
+        "https://aegis-initiative.com",
+        "https://aegis-constitution.com",
+        "https://aegis-governance.com",
+        "https://aegis-docs.com",
+        "https://aegis-federation.com",
+        "https://aegis-labs.dev",
+        "https://github.com/aegis-initiative"
+      ]
+    })} />
+
     <!-- AEGIS Ecosystem Navigation Bar -->
     <script is:inline src="https://aegis-initiative.com/shared/aegis-nav.js" defer></script>
     <script is:inline>

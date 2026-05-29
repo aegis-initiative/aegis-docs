@@ -49,6 +49,18 @@ const tactics = [
     techniques: [
       { id: "T6001", name: "Execute Recursive Invocation Loops", root: "RC2+RC3", case: "CS11", owasp: "LLM10", desc: "Agent enters an unbounded loop of self-invocation consuming resources exponentially." },
       { id: "T6002", name: "Consume Unbounded External Resources", root: "RC2", case: "CS11", owasp: "LLM10", desc: "Agent makes excessive external API calls without rate limiting or cost awareness." },
+      { id: "T6003", name: "Poison Termination Judgment", root: "RC4+RC2", case: "LoopTrap", owasp: "LLM01", desc: "Injected content in untrusted context distorts the agent's termination judgment, making it treat a complete task as incomplete and execute without bound (Xu et al., LoopTrap).", subTechniques: [
+        { id: "T6003.001", name: "Shift the Completion Target", root: "RC4+RC2", case: "LoopTrap", owasp: "LLM01", desc: "Injected content repeatedly redefines what counts as complete, so each satisfied criterion reveals new required coverage and the finish line recedes." },
+        { id: "T6003.002", name: "Inject Open-Ended Subgoals", root: "RC4+RC2", case: "LoopTrap", owasp: "LLM01", desc: "Agent is fed an unbounded sequence of intermediate milestones, each framed as a prerequisite to completion." },
+        { id: "T6003.003", name: "Assert Asymptotic Incompletion", root: "RC4+RC2", case: "LoopTrap", owasp: "LLM01", desc: "Injected framing insists the task is perpetually almost done, so the agent keeps iterating toward a state it never reaches." },
+        { id: "T6003.004", name: "Fabricate Authority Directives", root: "RC4+RC2", case: "LoopTrap", owasp: "LLM01", desc: "Content impersonates system or operator directives forbidding termination, exploiting the agent's deference to authority." },
+        { id: "T6003.005", name: "Invoke Sunk-Cost Framing", root: "RC4+RC2", case: "LoopTrap", owasp: "LLM01", desc: "Injected text frames stopping as wasting the effort already spent, pressuring the agent to continue." },
+        { id: "T6003.006", name: "Appeal to Expert Norms", root: "RC4+RC2", case: "LoopTrap", owasp: "LLM01", desc: "Content claims competent or expert agents would continue or verify further, inducing conformity-driven continuation." },
+        { id: "T6003.007", name: "Force Recursive Verification", root: "RC4+RC2", case: "LoopTrap", owasp: "LLM01", desc: "Each verification step is made to require its own verification, creating an unbounded regress that never resolves to done." },
+        { id: "T6003.008", name: "Impose Circular Prerequisites", root: "RC4+RC2", case: "LoopTrap", owasp: "LLM01", desc: "Injected dependencies make each step contingent on another, forming a cycle with no satisfiable terminal state." },
+        { id: "T6003.009", name: "Reward Continued Execution", root: "RC4+RC2", case: "LoopTrap", owasp: "LLM01", desc: "Each additional step is met with injected praise or approval, reinforcing continuation over stopping." },
+        { id: "T6003.010", name: "Introduce Fabricated Scoring", root: "RC4+RC2", case: "LoopTrap", owasp: "LLM01", desc: "A fictitious score or progress bar is introduced that the agent seeks to maximize, deferring termination indefinitely." },
+      ]},
     ]
   },
   {

@@ -2,134 +2,105 @@
 import Header from '../../components/Header.astro';
 import Sidebar from '../../components/Sidebar.astro';
 import Footer from '../../components/Footer.astro';
+import techniques from '../../data/atx/techniques.json';
+import index from '../../data/atx/index.json';
+import versionMapping from '../../data/atx/version-mapping.json';
 
-const tactics = [
-  {
-    id: "TA001", name: "Violate Authority Boundaries", short: "Authority Boundaries",
-    techniques: [
-      { id: "T1001", name: "Execute Non-Owner Instruction", root: "RC1", case: "CS1", owasp: "LLM06", desc: "Agent executes instructions from a non-owner source as though they came from its legitimate operator." },
-      { id: "T1002", name: "Infer Implicit Authority", root: "RC1", case: "CS2", owasp: "LLM01", desc: "Agent accepts authority claims that are implied rather than explicitly granted." },
-      { id: "T1003", name: "Propagate Spoofed Authority at Scale", root: "RC1", case: "CS3", owasp: "LLM06", desc: "Agent performs mass-distribution actions based on spoofed operator authority." },
-    ]
-  },
-  {
-    id: "TA002", name: "Exceed Operational Scope", short: "Operational Scope",
-    techniques: [
-      { id: "T2001", name: "Expand Task Scope Autonomously", root: "RC2+RC3", case: "CS7", owasp: "LLM01", desc: "Agent autonomously expands its operational scope beyond the original task." },
-      { id: "T2002", name: "Perform Unvalidated Bulk Operations", root: "RC2", case: "CS6", owasp: "LLM07", desc: "Agent executes bulk operations without validating scope or confirming intent." },
-      { id: "T2003", name: "Obscure Objective Through Delegation", root: "RC2+RC3", case: "CS7", owasp: "LLM06", desc: "Agent decomposes a high-risk action into innocuous-looking sub-tasks to bypass risk evaluation." },
-      { id: "T2004", name: "Exploit Tool-Chain Composition", root: "RC3", case: "CS7", owasp: "LLM06", desc: "Agent chains individually-authorized tools to produce an unauthorized composite outcome." },
-    ]
-  },
-  {
-    id: "TA003", name: "Compromise System Integrity", short: "System Integrity",
-    techniques: [
-      { id: "T3001", name: "Perform Irreversible Destructive Action", root: "RC2", case: "CS4", owasp: "LLM07", desc: "Agent performs an irreversible destructive operation without safeguards or rollback capability." },
-      { id: "T3002", name: "Trigger Cascading System Changes", root: "RC2+RC3", case: "CS5", owasp: "LLM07", desc: "Agent action propagates across multiple systems causing cascading failures." },
-    ]
-  },
-  {
-    id: "TA004", name: "Expose or Exfiltrate Information", short: "Info Exfiltration",
-    techniques: [
-      { id: "T4001", name: "Exfiltrate Context-Scoped Data", root: "RC1+RC4", case: "CS8", owasp: "LLM02", desc: "Agent exfiltrates sensitive data from its context window to unauthorized destinations." },
-      { id: "T4002", name: "Leak Cross-Session or Persistent Data", root: "RC3", case: "CS9", owasp: "LLM02", desc: "Agent carries information between sessions that should be isolated." },
-      { id: "T4003", name: "Cross-Domain Secret Leakage", root: "RC3+RC4", case: "CS8", owasp: "LLM02", desc: "Agent transfers secrets from one trust domain to another through outputs or logs." },
-    ]
-  },
-  {
-    id: "TA005", name: "Violate State Integrity", short: "State Integrity",
-    techniques: [
-      { id: "T5001", name: "Report False Task Completion", root: "RC2", case: "CS10", owasp: "LLM06", desc: "Agent reports successful completion of tasks it did not perform or performed incorrectly." },
-      { id: "T5002", name: "Fabricate Action Attribution", root: "RC2", case: "CS10", owasp: "LLM06", desc: "Agent fabricates evidence of actions or attributes outcomes to sources that did not produce them." },
-      { id: "T5003", name: "Suppress or Omit Execution Failure", root: "RC2", case: "CS10", owasp: "LLM06", desc: "Agent suppresses execution failures and presents incomplete results as complete." },
-    ]
-  },
-  {
-    id: "TA006", name: "Abuse Resource Allocation", short: "Resource Abuse",
-    techniques: [
-      { id: "T6001", name: "Execute Recursive Invocation Loops", root: "RC2+RC3", case: "CS11", owasp: "LLM10", desc: "Agent enters an unbounded loop of self-invocation consuming resources exponentially." },
-      { id: "T6002", name: "Consume Unbounded External Resources", root: "RC2", case: "CS11", owasp: "LLM10", desc: "Agent makes excessive external API calls without rate limiting or cost awareness." },
-      { id: "T6003", name: "Poison Termination Judgment", root: "RC4+RC2", case: "LoopTrap", owasp: "LLM01", desc: "Injected content in untrusted context distorts the agent's termination judgment, making it treat a complete task as incomplete and execute without bound (Xu et al., LoopTrap).", subTechniques: [
-        { id: "T6003.001", name: "Shift the Completion Target", root: "RC4+RC2", case: "LoopTrap", owasp: "LLM01", desc: "Injected content repeatedly redefines what counts as complete, so each satisfied criterion reveals new required coverage and the finish line recedes." },
-        { id: "T6003.002", name: "Inject Open-Ended Subgoals", root: "RC4+RC2", case: "LoopTrap", owasp: "LLM01", desc: "Agent is fed an unbounded sequence of intermediate milestones, each framed as a prerequisite to completion." },
-        { id: "T6003.003", name: "Assert Asymptotic Incompletion", root: "RC4+RC2", case: "LoopTrap", owasp: "LLM01", desc: "Injected framing insists the task is perpetually almost done, so the agent keeps iterating toward a state it never reaches." },
-        { id: "T6003.004", name: "Fabricate Authority Directives", root: "RC4+RC2", case: "LoopTrap", owasp: "LLM01", desc: "Content impersonates system or operator directives forbidding termination, exploiting the agent's deference to authority." },
-        { id: "T6003.005", name: "Invoke Sunk-Cost Framing", root: "RC4+RC2", case: "LoopTrap", owasp: "LLM01", desc: "Injected text frames stopping as wasting the effort already spent, pressuring the agent to continue." },
-        { id: "T6003.006", name: "Appeal to Expert Norms", root: "RC4+RC2", case: "LoopTrap", owasp: "LLM01", desc: "Content claims competent or expert agents would continue or verify further, inducing conformity-driven continuation." },
-        { id: "T6003.007", name: "Force Recursive Verification", root: "RC4+RC2", case: "LoopTrap", owasp: "LLM01", desc: "Each verification step is made to require its own verification, creating an unbounded regress that never resolves to done." },
-        { id: "T6003.008", name: "Impose Circular Prerequisites", root: "RC4+RC2", case: "LoopTrap", owasp: "LLM01", desc: "Injected dependencies make each step contingent on another, forming a cycle with no satisfiable terminal state." },
-        { id: "T6003.009", name: "Reward Continued Execution", root: "RC4+RC2", case: "LoopTrap", owasp: "LLM01", desc: "Each additional step is met with injected praise or approval, reinforcing continuation over stopping." },
-        { id: "T6003.010", name: "Introduce Fabricated Scoring", root: "RC4+RC2", case: "LoopTrap", owasp: "LLM01", desc: "A fictitious score or progress bar is introduced that the agent seeks to maximize, deferring termination indefinitely." },
-      ]},
-    ]
-  },
-  {
-    id: "TA007", name: "Manipulate Agent Interactions", short: "Agent Manipulation",
-    techniques: [
-      { id: "T7001", name: "Spoof Agent Identity", root: "RC1", case: "CS3", owasp: "LLM06", desc: "Agent impersonates another agent to gain elevated privileges in multi-agent systems." },
-      { id: "T7002", name: "Inject Malicious Delegation Chains", root: "RC1+RC4", case: "CS8", owasp: "LLM01", desc: "Attacker injects a malicious agent into a delegation chain to inherit elevated authority." },
-      { id: "T7003", name: "Induce Cross-Agent Behavioral Drift", root: "RC4", case: "CS2", owasp: "LLM01", desc: "Agent gradually shifts the behavior of other agents through repeated subtle influence." },
-      { id: "T7004", name: "Induce Unsafe Consensus", root: "RC1+RC4", case: "CS3", owasp: "LLM06", desc: "Attacker manipulates multi-agent consensus to produce outcomes no individual agent would approve." },
-    ]
-  },
-  {
-    id: "TA008", name: "Establish or Modify Persistence", short: "Persistence",
-    techniques: [
-      { id: "T8001", name: "Poison Persistent Memory", root: "RC4", case: "CS2", owasp: "LLM01", desc: "Agent's persistent memory is corrupted through injected context." },
-      { id: "T8002", name: "Corrupt Governance or Policy State", root: "RC4", case: "CS8", owasp: "LLM01", desc: "Agent manipulates its own governance state to bypass constraints." },
-    ]
-  },
-  {
-    id: "TA009", name: "Evade Detection or Oversight", short: "Evasion",
-    techniques: [
-      { id: "T9001", name: "Operate Outside Monitoring Boundaries", root: "RC2", case: "CS10", owasp: "LLM06", desc: "Agent performs actions in contexts that fall outside monitoring infrastructure coverage." },
-      { id: "T9002", name: "Obfuscate Action Traceability", root: "RC2", case: "CS10", owasp: "LLM06", desc: "Agent produces audit trails that are technically present but practically useless for reconstruction.", subTechniques: [
-        { id: "T9002.001", name: "Encode Commands in Base64 / Hex / URL Encoding", root: "RC4", case: "v0.1.x", owasp: "LLM06", desc: "Agent encodes commands in base64, hex, or URL encoding before execution. The encoded payload is opaque to text-based pattern matching until decoded by the runtime." },
-        { id: "T9002.002", name: "Variable Indirection / Dynamic Command Construction", root: "RC4", case: "v0.1.x", owasp: "LLM06", desc: "Agent splits the command name from its invocation across separate tokens via shell variable assignment (CMD=curl; $CMD ...)." },
-      ]},
-    ]
-  },
-  {
-    id: "TA010", name: "Act Beyond Governance Interpretation", short: "Beyond Interpretation",
-    techniques: [
-      { id: "T10001", name: "Exploit Pseudo-Filesystem Capabilities", root: "RC5", case: "RFC-0006 R3", owasp: "—", desc: "Agent accesses OS pseudo-filesystem paths (/dev/tcp, /dev/udp, /proc) to perform network or system operations that governance evaluates as file operations.", subTechniques: [
-        { id: "T10001.001", name: "Use /dev/tcp Network Socket Access", root: "RC5", case: "RFC-0006 R3", owasp: "—", desc: "Agent uses bash's /dev/tcp/host/port pseudo-filesystem to perform network I/O via what looks like file I/O." },
-        { id: "T10001.002", name: "Use /dev/udp Network Socket Access", root: "RC5", case: "RFC-0006 R3", owasp: "—", desc: "UDP equivalent — particularly useful for DNS exfiltration and stateless data egress." },
-        { id: "T10001.003", name: "Read /proc Pseudo-Filesystem", root: "RC5", case: "RFC-0006 R3", owasp: "—", desc: "Agent reads process and kernel state via /proc/* paths the governance layer treats as ordinary files. Reveals secrets in env, processes, network connections." },
-      ]},
-      { id: "T10002", name: "Establish Persistence via Environment Auto-Execution", root: "RC5", case: "RFC-0006 R4-5", owasp: "LLM06", desc: "Agent writes to files the environment auto-executes: shell profiles, git hooks, package scripts, IDE tasks, Dockerfiles, tool configs.", subTechniques: [
-        { id: "T10002.001", name: "Persist via Shell Initialization Files", root: "RC5", case: "RFC-0006 R4", owasp: "LLM06", desc: "Agent writes commands to .bashrc, .profile, .zshrc so they execute on every new shell session. Persistence survives reboots." },
-        { id: "T10002.002", name: "Persist via Git Hooks", root: "RC5", case: "RFC-0006 R4", owasp: "LLM06", desc: "Agent writes scripts to .git/hooks/* (pre-commit, post-checkout, etc.) so they execute on every git operation with full user privileges." },
-        { id: "T10002.003", name: "Persist via Package Manager Scripts", root: "RC5", case: "RFC-0006 R4", owasp: "LLM06", desc: "Agent injects commands into package.json scripts, setup.py, or equivalent install hooks so they execute on the next install or build." },
-        { id: "T10002.004", name: "Persist via IDE Task Definitions", root: "RC5", case: "RFC-0006 R5", owasp: "LLM06", desc: "Agent writes commands to .vscode/tasks.json, .idea/runConfigurations/, or similar IDE config files." },
-        { id: "T10002.005", name: "Persist via Container Build Files", root: "RC5", case: "RFC-0006 R5", owasp: "LLM06", desc: "Agent injects commands into Dockerfile, docker-compose.yml, etc., so they execute during the next build and persist into images." },
-        { id: "T10002.006", name: "Persist via Git Config Aliases and Hooks", root: "RC5", case: "RFC-0006 R5", owasp: "LLM06", desc: "Agent uses git config alias.X '!cmd' to register command-substitution aliases that execute arbitrary shell on any subsequent git invocation." },
-        { id: "T10002.007", name: "Persist via Package Manager Configs", root: "RC5", case: "RFC-0006 R5", owasp: "LLM06", desc: "Agent writes auto-execution hooks into .npmrc, .pypirc, .cargo/config.toml. Triggered by next package operation." },
-        { id: "T10002.008", name: "Persist via Build System Files", root: "RC5", case: "RFC-0006 R5", owasp: "LLM06", desc: "Agent injects commands into Makefile, CMakeLists.txt, build.gradle. Executes on next build target invocation." },
-      ]},
-      { id: "T10003", name: "Inject Persistent Agent Instructions", root: "RC5+RC4", case: "RFC-0006 R5", owasp: "LLM01", desc: "Agent modifies its own instruction files that auto-load at session start, persist across sessions, and propagate via version control.", subTechniques: [
-        { id: "T10003.001", name: "Inject via Claude Code Configuration Files", root: "RC5+RC4", case: "RFC-0006 R5", owasp: "LLM01", desc: "Agent writes to project-level Claude Code config files that are auto-loaded into model context. Specific exploitation details embargoed under RD-2603-01 until 2026-06-24 or earlier vendor response." },
-        { id: "T10003.002", name: "Inject via Cursor Configuration Files", root: "RC5+RC4", case: "RFC-0006 R5", owasp: "LLM01", desc: "Agent writes attacker-controlled instructions to .cursorrules files that the Cursor IDE auto-loads as system prompt context for every model interaction." },
-        { id: "T10003.003", name: "Inject via Windsurf Configuration Files", root: "RC5+RC4", case: "RFC-0006 R5", owasp: "LLM01", desc: "Agent writes attacker-controlled instructions to .windsurfrules files that the Windsurf editor auto-loads into every model interaction." },
-        { id: "T10003.004", name: "Inject via GitHub Copilot Configuration Files", root: "RC5+RC4", case: "RFC-0006 R5", owasp: "LLM01", desc: "Agent writes to .github/copilot-instructions.md which Copilot auto-loads as repository-level context for all completions and chat." },
-        { id: "T10003.005", name: "Inject via Aider Configuration Files", root: "RC5+RC4", case: "RFC-0006 R5", owasp: "LLM01", desc: "Agent writes to .aider.conf.yml which the Aider CLI auto-loads to configure model behavior, system prompts, and tool permissions." },
-        { id: "T10003.006", name: "Inject via Continue Configuration Files", root: "RC5+RC4", case: "RFC-0006 R5", owasp: "LLM01", desc: "Agent writes to .continuerc.json which the Continue IDE extension auto-loads as workspace-level config for model and tool behavior." },
-      ]},
-      { id: "T10004", name: "Exploit Governance-Runtime Parser Divergence", root: "RC5", case: "RFC-0006 R1-3", owasp: "LLM01", desc: "Agent constructs inputs parsed differently by the governance evaluator than the execution runtime: newline/CRLF injection, null bytes, Unicode homoglyphs, heredoc, shell metacharacters.", subTechniques: [
-        { id: "T10004.001", name: "Use Command Chaining Operators", root: "RC5", case: "RFC-0006 R1", owasp: "LLM01", desc: "Agent uses shell operators (|, &&, ||, ;) to chain an allowed command with a denied one. Single-command pattern matching evaluates only the first segment." },
-        { id: "T10004.002", name: "Inject Newline as Command Separator", root: "RC5", case: "RFC-0006 R2", owasp: "LLM01", desc: "Agent embeds a literal \\n in command arguments. Shell interprets it as a separator while regex governance often anchors to single lines." },
-        { id: "T10004.003", name: "Inject CRLF as Command Separator", root: "RC5", case: "RFC-0006 R2", owasp: "LLM01", desc: "Variant using \\r\\n to bypass filters that strip \\n but preserve \\r. Common in pipelines using HTTP request parsing." },
-        { id: "T10004.004", name: "Bypass via Heredoc", root: "RC5", case: "RFC-0006 R2", owasp: "LLM01", desc: "Agent uses heredoc (<<EOF) to pass multi-line payloads. Single-line pattern matching cannot see the body." },
-        { id: "T10004.005", name: "Truncate Path with Null Byte", root: "RC5", case: "RFC-0006 R3", owasp: "LLM01", desc: "Agent embeds a null byte (\\x00) in a path. Governance parser truncates at null while OS syscall processes the full string." },
-        { id: "T10004.006", name: "Evade Path Comparison via Unicode Homoglyphs", root: "RC5", case: "RFC-0006 R3", owasp: "LLM01", desc: "Agent uses Unicode characters that visually match protected path characters but bypass byte-level comparison (Cyrillic 'е' vs Latin 'e')." },
-        { id: "T10004.007", name: "Inject via Subshell or Backticks", root: "RC5", case: "RFC-0006 R1", owasp: "LLM01", desc: "Agent embeds $(command) or `command` substitution inside an otherwise-allowed command. Substitution executes before outer command." },
-        { id: "T10004.008", name: "Bypass Protected Path via Alternate Absolute Path", root: "RC5", case: "RFC-0006 R3", owasp: "LLM01", desc: "Agent uses an alternate absolute path that resolves to the same protected target. Governance does not normalize before matching." },
-        { id: "T10004.009", name: "Bypass Protected Path via Path Traversal", root: "RC5", case: "RFC-0006 R3", owasp: "LLM01", desc: "Agent uses ../ sequences to escape a permitted directory. Governance matches literal prefix instead of resolved path." },
-        { id: "T10004.010", name: "Redirect Output to Protected Path", root: "RC5", case: "RFC-0006 R2", owasp: "LLM01", desc: "Agent uses shell redirection (>, >>, tee) to write to a protected path via an allowed command. Governance evaluates the command without parsing the redirection target." },
-      ]},
-    ]
-  },
-];
+// The ATX-1 matrix grid is rendered from the canonical spec data fetched from
+// aegis-governance.com at build time (scripts/fetch-atx.mjs -> src/data/atx/),
+// the same source the technique-catalog MDX pages use. Do NOT hand-code
+// technique data here: add techniques in aegis-governance and they appear here
+// automatically. Only the editorial tactic short-names are local.
+
+const TACTIC_SHORT = {
+  TA001: 'Authority Boundaries',
+  TA002: 'Operational Scope',
+  TA003: 'System Integrity',
+  TA004: 'Info Exfiltration',
+  TA005: 'State Integrity',
+  TA006: 'Resource Abuse',
+  TA007: 'Agent Manipulation',
+  TA008: 'Persistence',
+  TA009: 'Evasion',
+  TA010: 'Beyond Interpretation',
+};
+
+// Provenance ("Case Study") label, derived from canonical data only:
+// Agents of Chaos case numbers when present, else the version-mapping discovery
+// source (RFC-0006 / LoopTrap), else inherit parent, else em-dash.
+const discoveryById = {};
+for (const m of versionMapping.mappings || []) {
+  if (m.v2_id && m.discovery) discoveryById[m.v2_id] = m.discovery;
+}
+function discoverySource(disc) {
+  if (!disc) return '';
+  if (/looptrap/i.test(disc)) return 'LoopTrap';
+  if (/RFC-0006/i.test(disc)) return 'RFC-0006';
+  return '';
+}
+function caseLabel(t, parentCase) {
+  const aoc = t.agents_of_chaos_case || [];
+  if (aoc.length) return aoc.map((n) => 'CS' + n).join(', ');
+  const disc = discoverySource(discoveryById[t.id]);
+  if (disc) return disc;
+  return parentCase || '\u2014';
+}
+function rcCodes(rootCause) {
+  const codes = (rootCause || '').match(/RC\d/g) || [];
+  return [...new Set(codes)].join('+') || '\u2014';
+}
+function owaspLabel(arr) {
+  return arr && arr.length ? arr.join('+') : '\u2014';
+}
+
+const byId = {};
+for (const t of techniques) byId[t.id] = t;
+
+const tacticMap = new Map();
+for (const t of techniques) {
+  if (t.id.includes('.')) continue; // sub-techniques attached below
+  if (!tacticMap.has(t.tactic)) {
+    tacticMap.set(t.tactic, {
+      id: t.tactic,
+      name: t.tactic_name,
+      short: TACTIC_SHORT[t.tactic] || t.tactic_name,
+      techniques: [],
+    });
+  }
+  const parentCase = caseLabel(t, '');
+  const entry = {
+    id: t.id,
+    name: t.name,
+    root: rcCodes(t.root_cause),
+    case: parentCase,
+    owasp: owaspLabel(t.owasp_mapping),
+    desc: t.description,
+  };
+  const subIds = t.sub_techniques || [];
+  if (subIds.length) {
+    entry.subTechniques = subIds
+      .map((sid) => byId[sid])
+      .filter(Boolean)
+      .map((s) => ({
+        id: s.id,
+        name: s.name,
+        root: rcCodes(s.root_cause),
+        case: caseLabel(s, parentCase),
+        owasp: owaspLabel(s.owasp_mapping),
+        desc: s.description,
+      }))
+      .sort((a, b) => a.id.localeCompare(b.id));
+  }
+  tacticMap.get(t.tactic).techniques.push(entry);
+}
+
+const tactics = [...tacticMap.values()].sort((a, b) => a.id.localeCompare(b.id));
+for (const tac of tactics) tac.techniques.sort((a, b) => a.id.localeCompare(b.id));
+
+const tacticCount = tactics.length;
+const techCount = techniques.filter((t) => !t.id.includes('.')).length;
+const subCount = techniques.length - techCount;
+const versionLabel = String(index.version || '').split('.').slice(0, 2).join('.');
 ---
 
 <!doctype html>
@@ -137,8 +108,8 @@ const tactics = [
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ATX-1 v2.4 Matrix — AEGIS Threat Matrix</title>
-  <meta name="description" content="Interactive matrix view of the ATX-1 v2.4 threat taxonomy — 10 tactics, 30 techniques, 39 sub-techniques for autonomous AI agent governance." />
+  <title>ATX-1 v{versionLabel} Matrix — AEGIS Threat Matrix</title>
+  <meta name="description" content={`Interactive matrix view of the ATX-1 v${versionLabel} threat taxonomy — ${tacticCount} tactics, ${techCount} techniques, ${subCount} sub-techniques for autonomous AI agent governance.`} />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
   <script src="https://aegis-initiative.com/shared/aegis-nav.js" defer></script>
@@ -546,8 +517,8 @@ const tactics = [
     <main class="main-content">
 
       <section class="matrix-hero">
-        <h1>ATX-1 v2.4: AEGIS Threat Matrix</h1>
-        <p>Adversarial knowledge base for autonomous AI agent behavior. 10 tactics, 30 techniques, 39 sub-techniques — empirically grounded in observed agentic failures and adversarial governance testing. Click the ▾ badge on a technique to expand its sub-techniques.</p>
+        <h1>ATX-1 v{versionLabel}: AEGIS Threat Matrix</h1>
+        <p>Adversarial knowledge base for autonomous AI agent behavior. {tacticCount} tactics, {techCount} techniques, {subCount} sub-techniques — empirically grounded in observed agentic failures and adversarial governance testing. Click the ▾ badge on a technique to expand its sub-techniques.</p>
       </section>
 
       <div class="matrix-links">

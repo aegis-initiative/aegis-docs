@@ -137,9 +137,6 @@ docs/                       # Internal architecture / decision notes
 
 ## Known Follow-Ups
 
-- [`src/pages/threat-matrix/matrix.astro`](src/pages/threat-matrix/matrix.astro) hand-codes a duplicate copy of the
-  ATX-1 technique data (~690 lines). Should be refactored to consume `src/data/atx/techniques.json` like the MDX pages
-  do — separate change.
 - The two `.claude/rules/*.md` files (`component-comparison.md`, `product-knowledge.md`) date from 2026-03-23 when the
   design system was inline and the site had only six placeholder sections. They no longer reflect reality
   (design-system is consumed via npm; threat-matrix exists; release-notes pipeline exists; etc.). Either refresh or

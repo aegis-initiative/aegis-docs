@@ -1,6 +1,6 @@
 ---
 title: Machine-Readable Formats
-description: Consuming ATX-1 v2.3 data programmatically — STIX 2.1, JSON Schema, and structured datasets served from aegis-governance.com
+description: Consuming ATX-1 v2.4 data programmatically — STIX 2.1, JSON Schema, and structured datasets served from aegis-governance.com
 sidebar:
   order: 4
 ---
@@ -149,8 +149,8 @@ ajv validate -c ajv-formats -s atx-technique.schema.json -d techniques.json
 
 ```json
 {
-  "version": "2.3.0",
-  "date": "2026-04-24",
+  "version": "2.4.0",
+  "date": "2026-05-29",
   "techniques": [
     {
       "id": "T1001",

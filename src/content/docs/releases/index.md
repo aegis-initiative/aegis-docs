@@ -11,6 +11,11 @@ Release notes for the AEGIS Documentation site, generated automatically from Cal
 
 ## 2026
 
+
+### [May](/releases/26/5/)
+
+- [v26.5.29](/releases/26/5/#release--v26529) — Updated Threat Matrix to ATX-1 v2.4 with dynamic grid rendering
+
 ### [April](/releases/26/4/)
 
 - [v26.4.29](/releases/26/4/#release--v26429) — Added sitemap and enhanced metadata for improved SEO

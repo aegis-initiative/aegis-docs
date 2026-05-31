@@ -54,13 +54,13 @@ building with or learning about AEGIS™.
 
 ## Contributing to Docs
 
-Documentation contributions are welcome. All content lives in `src/content/`. Navigation is configured in
-`astro.config.mjs`.
+Documentation contributions are welcome. Site content lives in `sites/docs/src/content/`. Navigation is configured in
+`sites/docs/astro.config.mjs`.
 
 Guidelines:
 
 - All content in Markdown or MDX — no hand-edited HTML
-- New pages require a navigation entry in `astro.config.mjs`
+- New pages require a navigation entry in `sites/docs/astro.config.mjs`
 - All changes via pull request with 1 required review
 
 ---

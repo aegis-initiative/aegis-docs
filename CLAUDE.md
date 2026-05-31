@@ -34,8 +34,8 @@ It is NOT the spec site. Normative definitions of AGP-1, ATX-1, AIAM-1, GFN-1, e
 
 ### Content Collections
 
-Content lives in `src/content/docs/` using Astro's glob loader. Schema in `src/content.config.ts`: title, description,
-section?, sidebar.{order, hidden}.
+Site content lives in `sites/docs/src/content/docs/` using Astro's glob loader. Schema in
+`sites/docs/src/content.config.ts`: title, description, section?, sidebar.{order, hidden}.
 
 ### Local Content Sections
 
@@ -58,16 +58,16 @@ The threat-matrix section consumes the canonical ATX-1 spec from
 
 - **Fetcher:** [`scripts/fetch-atx.mjs`](scripts/fetch-atx.mjs) runs in `predev` and `prebuild`. Pulls `VERSION`,
   `index.json`, `techniques.json`, `regulatory-crossref.json`, `version-mapping.json`, `atm1-mapping.json`, and
-  `atx-technique.schema.json` into `src/data/atx/` (gitignored).
-- **Pinned minimum version:** `package.json#aegisGovernance.atxMinVersion`. The fetcher refuses to use a remote version
+  `atx-technique.schema.json` into `sites/docs/src/data/atx/` (gitignored).
+- **Pinned minimum version:** `sites/docs/package.json#aegisGovernance.atxMinVersion`. The fetcher refuses to use a remote version
   older than this.
-- **Render components:** [`src/components/atx/TechniqueCatalog.astro`](src/components/atx/TechniqueCatalog.astro) and
-  [`src/components/atx/RegulatoryCrossRef.astro`](src/components/atx/RegulatoryCrossRef.astro). Embedded in
+- **Render components:** [`sites/docs/src/components/atx/TechniqueCatalog.astro`](sites/docs/src/components/atx/TechniqueCatalog.astro) and
+  [`sites/docs/src/components/atx/RegulatoryCrossRef.astro`](sites/docs/src/components/atx/RegulatoryCrossRef.astro). Embedded in
   `techniques.mdx` and `regulatory-crossref.mdx`.
 - **Editorial framing stays local:** `index.md`, `tactics.md`, and `machine-readable.md` are hand-maintained
   operator-facing prose. Tactic descriptions and operator framing belong here, not in the spec.
-- **Offline mode:** `npm run fetch-atx:offline` (or `ATX_OFFLINE=1`) uses cached data without hitting the network.
-- **CI drift check:** `npm run fetch-atx:check` exits non-zero if local cache differs from remote.
+- **Offline mode:** `npm --prefix sites/docs run fetch-atx:offline` (or `ATX_OFFLINE=1`) uses cached data without hitting the network.
+- **CI drift check:** `npm --prefix sites/docs run fetch-atx:check` exits non-zero if local cache differs from remote.
 
 ### Cross-Repo Pointers (Read, Don't Restate)
 
@@ -85,7 +85,7 @@ The threat-matrix section consumes the canonical ATX-1 spec from
 
 ### Build Pipeline
 
-1. `predev` / `prebuild` runs `node scripts/fetch-atx.mjs` (refreshes ATX-1 cache from aegis-governance).
+1. `predev` / `prebuild` runs `node ../../scripts/fetch-atx.mjs` from `sites/docs` (refreshes ATX-1 cache from aegis-governance).
 2. `astro build` compiles MD/MDX + Astro components to static HTML.
 3. `pagefind --site dist` generates the search index.
 4. `postbuild` copies pagefind output to `public/` for dev mode.
@@ -95,20 +95,21 @@ Cloudflare Pages picks up `main` and runs the same pipeline on each push.
 ## Repo Structure
 
 ```
-src/
-  content.config.ts         # Content collection schema
-  content/docs/             # Documentation content (MD/MDX)
-  components/
-    atx/                    # ATX-1 render components (consume src/data/atx/)
-    *.astro                 # Site-local wrappers around design-system components
-  data/atx/                 # GITIGNORED — populated by scripts/fetch-atx.mjs
-  layouts/                  # DocLayout, BaseLayout
-  pages/                    # Astro pages (index, [...slug], threat-matrix/matrix)
-  plugins/                  # Remark/rehype plugins
-  assets/                   # SVG logos, optimized images
-public/
-  fonts/                    # Self-hosted IBM Plex Sans + Poppins
-  favicon.svg               # AEGIS shield favicon
+sites/docs/
+  src/
+    content.config.ts       # Content collection schema
+    content/docs/           # Documentation content (MD/MDX)
+    components/
+      atx/                  # ATX-1 render components (consume src/data/atx/)
+      *.astro               # Site-local wrappers around design-system components
+    data/atx/               # GITIGNORED — populated by ../../scripts/fetch-atx.mjs
+    layouts/                # DocLayout, BaseLayout
+    pages/                  # Astro pages (index, [...slug], threat-matrix/matrix)
+    plugins/                # Remark/rehype plugins
+    assets/                 # SVG logos, optimized images
+  public/
+    fonts/                  # Self-hosted IBM Plex Sans + Poppins
+    favicon.svg             # AEGIS shield favicon
 scripts/
   fetch-atx.mjs             # Build-time fetch of ATX-1 from aegis-governance
   append-dev-log.py         # Release pipeline (calendar versioning)
@@ -119,7 +120,7 @@ docs/                       # Internal architecture / decision notes
 
 ## Key Conventions
 
-- Content in `src/content/docs/` — one subdirectory per section.
+- Content in `sites/docs/src/content/docs/` — one subdirectory per section.
 - Custom Astro 6 build with MDX (no Starlight).
 - Self-hosted fonts (no CDN).
 - Pagefind for search (no server-side search).
@@ -133,7 +134,7 @@ docs/                       # Internal architecture / decision notes
 
 - ATX-1 current version live: <https://aegis-governance.com/atx-1/VERSION>
 - ATX-1 dataset index: <https://aegis-governance.com/atx-1/index.json>
-- Pinned minimum version: `package.json#aegisGovernance.atxMinVersion`
+- Pinned minimum version: `sites/docs/package.json#aegisGovernance.atxMinVersion`
 
 ## Known Follow-Ups
 

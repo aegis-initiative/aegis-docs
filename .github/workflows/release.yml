@@ -101,7 +101,7 @@ jobs:
 
           python3 scripts/append-dev-log.py
 
-          FILE="src/content/docs/releases/${YEAR}/${MONTH}/${DAY}.md"
+          FILE="sites/docs/src/content/docs/releases/${YEAR}/${MONTH}/${DAY}.md"
           git add "$FILE"
 
           if git diff --cached --quiet; then

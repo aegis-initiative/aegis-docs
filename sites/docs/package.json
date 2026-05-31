@@ -9,16 +9,16 @@
     "atxMinVersion": "2.4.0"
   },
   "scripts": {
-    "predev": "node scripts/fetch-atx.mjs",
+    "predev": "node ../../scripts/fetch-atx.mjs",
     "dev": "astro dev",
-    "prebuild": "node scripts/fetch-atx.mjs",
+    "prebuild": "node ../../scripts/fetch-atx.mjs",
     "build": "astro build && pagefind --site dist",
-    "postbuild": "cp -r dist/pagefind public/",
+    "postbuild": "node -e \"const fs=require('node:fs');fs.cpSync('dist/pagefind','public/pagefind',{recursive:true,force:true});\"",
     "preview": "astro preview",
     "astro": "astro",
-    "fetch-atx": "node scripts/fetch-atx.mjs",
-    "fetch-atx:check": "node scripts/fetch-atx.mjs --check",
-    "fetch-atx:offline": "node scripts/fetch-atx.mjs --offline"
+    "fetch-atx": "node ../../scripts/fetch-atx.mjs",
+    "fetch-atx:check": "node ../../scripts/fetch-atx.mjs --check",
+    "fetch-atx:offline": "node ../../scripts/fetch-atx.mjs --offline"
   },
   "dependencies": {
     "@aegis-initiative/design-system": "^0.6.0",

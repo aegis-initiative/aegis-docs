@@ -28,7 +28,7 @@ day = os.environ["DAY"]
 month_name = datetime.now(timezone.utc).strftime("%B")
 day_int = int(day)
 
-file_dir = f"src/content/docs/releases/{year}/{month}"
+file_dir = f"sites/docs/src/content/docs/releases/{year}/{month}"
 file_path = f"{file_dir}/{day}.md"
 os.makedirs(file_dir, exist_ok=True)
 

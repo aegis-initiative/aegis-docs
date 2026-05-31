@@ -106,3 +106,30 @@
 # to list HTML-serving path prefixes explicitly (/constitution/*,
 # /doctrine/*, /releases/*, etc.) so they don't overlap with the
 # immutable-asset rules above.
+
+# ─────────────────────────────────────────────────────────────
+# Security response headers — applied site-wide
+# ─────────────────────────────────────────────────────────────
+#
+# A /* rule is SAFE here even though the catch-all was removed above
+# for Cache-Control. Cloudflare Pages concatenates the values of
+# matching rules per header NAME; every header below is a distinct
+# name from Cache-Control, so they never merge with the per-path
+# cache rules and the concatenation regression documented above
+# cannot recur. Do NOT add Cache-Control to this block.
+#
+# The CSP intentionally sets only framing / base-uri / object
+# restrictions — NOT default-src / script-src / style-src — so it
+# hardens against clickjacking, <base> injection, and plugin
+# embedding without constraining how the site loads its own
+# scripts, styles, fonts, or the shared nav script. A full content
+# CSP (script-src incl. https://aegis-initiative.com, plus SRI on —
+# or self-hosting of — the shared nav script) is a tracked follow-up
+# that needs a per-site build + live verification before it can ship
+# safely.
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Cross-Origin-Opener-Policy: same-origin
+  Content-Security-Policy: frame-ancestors 'none'; base-uri 'self'; object-src 'none'

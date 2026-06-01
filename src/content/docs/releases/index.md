@@ -12,6 +12,11 @@ Release notes for the AEGIS Documentation site, generated automatically from Cal
 ## 2026
 
 
+### [June](/releases/26/5/)
+
+- [v26.5.31](/releases/26/5/#release--v26531) — Added security headers and self-hosted navigation script
+
+
 ### [May](/releases/26/5/)
 
 - [v26.5.29](/releases/26/5/#release--v26529) — Updated Threat Matrix to ATX-1 v2.4 with dynamic grid rendering

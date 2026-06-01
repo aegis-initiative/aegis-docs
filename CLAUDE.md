@@ -59,14 +59,18 @@ The threat-matrix section consumes the canonical ATX-1 spec from
 - **Fetcher:** [`scripts/fetch-atx.mjs`](scripts/fetch-atx.mjs) runs in `predev` and `prebuild`. Pulls `VERSION`,
   `index.json`, `techniques.json`, `regulatory-crossref.json`, `version-mapping.json`, `atm1-mapping.json`, and
   `atx-technique.schema.json` into `sites/docs/src/data/atx/` (gitignored).
-- **Pinned minimum version:** `sites/docs/package.json#aegisGovernance.atxMinVersion`. The fetcher refuses to use a remote version
-  older than this.
-- **Render components:** [`sites/docs/src/components/atx/TechniqueCatalog.astro`](sites/docs/src/components/atx/TechniqueCatalog.astro) and
-  [`sites/docs/src/components/atx/RegulatoryCrossRef.astro`](sites/docs/src/components/atx/RegulatoryCrossRef.astro). Embedded in
+- **Pinned minimum version:** `sites/docs/package.json#aegisGovernance.atxMinVersion`.
+  The fetcher refuses to use a remote version older than this.
+- **Render components:**
+  [`sites/docs/src/components/atx/TechniqueCatalog.astro`](sites/docs/src/components/atx/TechniqueCatalog.astro)
+  and
+  [`sites/docs/src/components/atx/RegulatoryCrossRef.astro`](sites/docs/src/components/atx/RegulatoryCrossRef.astro).
+  Embedded in
   `techniques.mdx` and `regulatory-crossref.mdx`.
 - **Editorial framing stays local:** `index.md`, `tactics.md`, and `machine-readable.md` are hand-maintained
   operator-facing prose. Tactic descriptions and operator framing belong here, not in the spec.
-- **Offline mode:** `npm --prefix sites/docs run fetch-atx:offline` (or `ATX_OFFLINE=1`) uses cached data without hitting the network.
+- **Offline mode:** `npm --prefix sites/docs run fetch-atx:offline` (or `ATX_OFFLINE=1`)
+  uses cached data without hitting the network.
 - **CI drift check:** `npm --prefix sites/docs run fetch-atx:check` exits non-zero if local cache differs from remote.
 
 ### Cross-Repo Pointers (Read, Don't Restate)

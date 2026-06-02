@@ -80,7 +80,20 @@
     "prebuild",
     "urlopen",
     "TAXII",
-    "MISP"
+    "MISP",
+    "ibmplexsans",
+    "variablefont",
+    "wdthwght",
+    "wordmarks",
+    "frontmatter",
+    "FastAPI",
+    "uvicorn",
+    "AEGISMCP",
+    "HMAC",
+    "TOCTOU",
+    "metacharacters",
+    "dataclasses",
+    "dataclass"
   ],
   "ignorePaths": [
     "node_modules/**",

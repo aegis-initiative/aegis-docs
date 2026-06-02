@@ -3,7 +3,7 @@
 // Source of truth: aegis-governance owns the spec. This site renders it.
 //
 // Run modes:
-//   default    Fetch from network, validate, write to src/data/atx/ (gitignored).
+//   default    Fetch from network, validate, write to sites/docs/src/data/atx/ (gitignored).
 //   --offline  Skip fetch; require cache to exist (for air-gapped or rate-limited builds).
 //   --check    Fetch + verify against the cache without writing (CI drift detection).
 //
@@ -20,14 +20,15 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(__dirname, "..");
-const CACHE_DIR = join(REPO_ROOT, "src", "data", "atx");
+const SITE_ROOT = join(REPO_ROOT, "sites", "docs");
+const CACHE_DIR = join(SITE_ROOT, "src", "data", "atx");
 
 const SOURCE_BASE = process.env.ATX_SOURCE ?? "https://aegis-governance.com";
 const OFFLINE = process.argv.includes("--offline") || process.env.ATX_OFFLINE === "1";
 const CHECK_ONLY = process.argv.includes("--check");
 
 // Read minimum acceptable spec version from package.json so it travels with the code.
-const pkg = JSON.parse(await readFile(join(REPO_ROOT, "package.json"), "utf8"));
+const pkg = JSON.parse(await readFile(join(SITE_ROOT, "package.json"), "utf8"));
 const MIN_VERSION = pkg.aegisGovernance?.atxMinVersion;
 if (!MIN_VERSION) {
   console.error("[fetch-atx][err] package.json missing aegisGovernance.atxMinVersion");

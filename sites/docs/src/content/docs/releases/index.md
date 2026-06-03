@@ -12,6 +12,11 @@ Release notes for the AEGIS Documentation site, generated automatically from Cal
 ## 2026
 
 
+### [June](/releases/26/6/)
+
+- [v26.6.2](/releases/26/6/#release--v2662) — Reorganized documentation site structure for improved maintainability
+
+
 ### [June](/releases/26/5/)
 
 - [v26.5.31](/releases/26/5/#release--v26531) — Added security headers and self-hosted navigation script

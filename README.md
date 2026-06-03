@@ -83,5 +83,5 @@ Dual-licensed:
 - **Code:** [Apache License 2.0](LICENSE)
 - **Documentation & non-code content:** [CC-BY-SA-4.0](LICENSE-DOCS)
 
-AEGIS™ and **"Capability without constraint is not intelligence™"** are trademarks of **Finnoybu IP LLC**, used under
+AEGIS™ and **"Capability without constraint is not intelligence™"** are trademarks of **AEGIS Initiative**, used under
 license by **AEGIS Operations LLC**.

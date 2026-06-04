@@ -14,6 +14,7 @@ Release notes for the AEGIS Documentation site, generated automatically from Cal
 
 ### [June](/releases/26/6/)
 
+- [v26.6.3](/releases/26/6/#release--v2663) — Added AEGIS trademark attribution and restructured Claude AI docs
 - [v26.6.2](/releases/26/6/#release--v2662) — Reorganized documentation site structure for improved maintainability
 
 

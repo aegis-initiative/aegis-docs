@@ -61,7 +61,7 @@ gitignored `sites/docs/src/data/atx/` from aegis-governance.com.
 ## Identifier registry
 
 - **GitHub Org**: [github.com/aegis-initiative](https://github.com/aegis-initiative)
-- **Operating Entity**: AEGIS Operations LLC
+- **Operating Entity**: AEGIS Initiative
 - **Trademark Owner**: AEGIS Initiative (public attribution rule — internal IP-holder context lives in the
   workspace CLAUDE.md, never in public repo content)
 - **Domain**: aegis-docs.com

@@ -41,7 +41,7 @@ tooling.
 
 | STIX Object Type | ATX-1 Mapping |
 |---|---|
-| `identity` | ATX-1 / AEGIS Operations LLC as the source identity |
+| `identity` | ATX-1 / AEGIS Initiative as the source identity |
 | `x-mitre-matrix` | The ATX-1 matrix container |
 | `x-mitre-tactic` | All tactics (TA001–TA010) |
 | `attack-pattern` | All techniques and sub-techniques |

@@ -116,8 +116,8 @@ See the [Decision Records](/architecture/adr/) page for more details on the ADR 
 
 ## IP Notice
 
-All contributions to AEGIS repositories become proprietary intellectual property of **Finnoybu IP LLC** under the terms
-of the contributor agreement. AEGIS is a trademark of Finnoybu IP LLC.
+All contributions to AEGIS repositories become proprietary intellectual property of **AEGIS Initiative** under the terms
+of the contributor agreement. AEGIS is a trademark of AEGIS Initiative.
 
 For the full contributing guidelines for the governance repository, see the [CONTRIBUTING.md in
 aegis](https://github.com/aegis-initiative/aegis/blob/main/CONTRIBUTING.md).

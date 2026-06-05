@@ -117,7 +117,7 @@ should be designated.
 
 | Data Point | Repos That State It | Currently Consistent? |
 |---|---|---|
-| IP Owner: Finnoybu IP LLC | All 11 | Yes |
+| IP Owner: AEGIS Initiative | All 11 | Yes |
 | Parent: Finnoybu Holdings LLC | 8 of 11 | Yes |
 | Trademark: AEGIS™ + tagline | All 11 | Yes (except NCCoE paper — see aegis-governance finding) |
 | GitHub org: aegis-initiative | All 11 | Yes |
@@ -194,7 +194,7 @@ should be designated.
 
 | Severity | Finding |
 |---|---|
-| CRITICAL | NCCoE position paper attributes trademarks to "AEGIS Initiative" instead of "Finnoybu IP LLC" |
+| CRITICAL | NCCoE position paper attributes trademarks to "AEGIS Initiative" instead of "AEGIS Initiative" |
 | CRITICAL | Multiple specs say "immutable audit records" but RFC-0010 documents this as wrong — should be "tamper-evident" |
 | MODERATE | Same Zenodo DOI (10.5281/zenodo.19162696) cited for two different artifacts in NCCoE paper |
 | MODERATE | RFC version format inconsistency (0.2 vs 0.2.0) |
@@ -270,7 +270,7 @@ should be designated.
 | License | Repos |
 |---|---|
 | Apache 2.0 | aegis-docs, aegis-governance, aegis-initiative, aegis-sdk |
-| Proprietary (Finnoybu IP LLC) | aegis, aegis-federation, aegis-platform |
+| Proprietary (AEGIS Initiative) | aegis, aegis-federation, aegis-platform |
 | **Missing entirely** | aegis-constitution, aegis-core, aegis-labs, aegis-ops |
 | **Internal conflict** | aegis-sdk (README badge says Apache 2.0, packages say BSL-1.1) |
 
@@ -322,7 +322,7 @@ match actual source code.
 
 3. **Fix aegis-sdk license conflict.** README badge says Apache 2.0, packages say BSL-1.1. Pick one.
 
-4. **Fix aegis-governance NCCoE trademark attribution.** "AEGIS Initiative" → "Finnoybu IP LLC".
+4. **Fix aegis-governance NCCoE trademark attribution.** "AEGIS Initiative" → "AEGIS Initiative".
 
 5. **Fix "immutable" → "tamper-evident"** in aegis-governance specs (manifesto, constitution, protocol index, system
 overview). RFC-0010 already documents this as a known gap.

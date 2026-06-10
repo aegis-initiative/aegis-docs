@@ -218,7 +218,7 @@ def generate_release_summary(raw_entries):
     joined = "\n".join(raw_entries)
 
     payload = {
-        "model": "claude-sonnet-4-5",
+        "model": "claude-sonnet-4-6",
         "max_tokens": 1024,
         "messages": [
             {
@@ -293,7 +293,7 @@ def generate_index_summary(release_entries):
     joined = "\n".join(release_entries)
 
     payload = {
-        "model": "claude-sonnet-4-5",
+        "model": "claude-sonnet-4-6",
         "max_tokens": 100,
         "messages": [
             {

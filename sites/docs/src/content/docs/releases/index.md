@@ -12,6 +12,11 @@ Release notes for the AEGIS Documentation site, generated automatically from Cal
 ## 2026
 
 
+### [July](/releases/26/7/)
+
+- [v26.7.9](/releases/26/7/#release--v2679) — Fixed incorrect month labels in releases index page
+
+
 ### [June](/releases/26/6/)
 
 - [v26.6.3](/releases/26/6/#release--v2663) — Added AEGIS trademark attribution and restructured Claude AI docs

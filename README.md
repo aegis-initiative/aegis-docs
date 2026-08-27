@@ -24,7 +24,7 @@ ecosystem, deployed at [aegis-docs.com](https://aegis-docs.com). It is
 the primary reference for developers, operators, researchers, and anyone
 building with or learning about AEGIS™.
 
-> **Capability without constraint is not intelligence™**
+> **Capability without constraint is not intelligence®**
 
 ---
 
@@ -83,5 +83,5 @@ Dual-licensed:
 - **Code:** [Apache License 2.0](LICENSE)
 - **Documentation & non-code content:** [CC-BY-SA-4.0](LICENSE-DOCS)
 
-AEGIS™ and **"Capability without constraint is not intelligence™"** are trademarks of **AEGIS Initiative**, used under
+AEGIS™ and **"Capability without constraint is not intelligence®"** are trademarks of **AEGIS Initiative**, used under
 license by **AEGIS Initiative**.

@@ -10,7 +10,7 @@ is a governance architecture that enforces deterministic constitutional
 governance over AI-generated actions before they interact with
 infrastructure.
 
-> **Capability without constraint is not intelligence™**
+> **Capability without constraint is not intelligence®**
 
 ## The Problem
 

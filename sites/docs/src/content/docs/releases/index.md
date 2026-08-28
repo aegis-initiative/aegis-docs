@@ -12,19 +12,20 @@ Release notes for the AEGIS Documentation site, generated automatically from Cal
 ## 2026
 
 
+### [July](/releases/26/7/)
+
+- [v26.7.9](/releases/26/7/#release--v2679) — Fixed incorrect month labels in releases index page
+
+
 ### [June](/releases/26/6/)
 
 - [v26.6.3](/releases/26/6/#release--v2663) — Added AEGIS trademark attribution and restructured Claude AI docs
 - [v26.6.2](/releases/26/6/#release--v2662) — Reorganized documentation site structure for improved maintainability
 
 
-### [June](/releases/26/5/)
-
-- [v26.5.31](/releases/26/5/#release--v26531) — Added security headers and self-hosted navigation script
-
-
 ### [May](/releases/26/5/)
 
+- [v26.5.31](/releases/26/5/#release--v26531) — Added security headers and self-hosted navigation script
 - [v26.5.29](/releases/26/5/#release--v26529) — Updated Threat Matrix to ATX-1 v2.4 with dynamic grid rendering
 
 ### [April](/releases/26/4/)
@@ -40,6 +41,6 @@ Release notes for the AEGIS Documentation site, generated automatically from Cal
 - [v26.4.9](/releases/26/4/#release--v2649) — ATX-1 v2.2 sub-technique accordion on the threat matrix page
 - [v26.4.1](/releases/26/4/#release--v2641) — Initial CalVer release automation
 
-### [March](/releases/26/3/)
+### March
 
 *Site launched March 2026. CalVer automation begins April 2026.*

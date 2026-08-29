@@ -12,6 +12,11 @@ Release notes for the AEGIS Documentation site, generated automatically from Cal
 ## 2026
 
 
+### [August](/releases/26/8/)
+
+- [v26.8.28](/releases/26/8/#release--v26828) — Merge remote-tracking branch with origin/main
+
+
 ### [July](/releases/26/7/)
 
 - [v26.7.9](/releases/26/7/#release--v2679) — Fixed incorrect month labels in releases index page

@@ -14,6 +14,7 @@ Release notes for the AEGIS Documentation site, generated automatically from Cal
 
 ### [August](/releases/26/8/)
 
+- [v26.8.29](/releases/26/8/#release--v26829) — Fix Markdown linting issue causing pipeline failures
 - [v26.8.28](/releases/26/8/#release--v26828) — Merge remote-tracking branch with origin/main
 
 

@@ -21,7 +21,7 @@
     "fetch-atx:offline": "node ../../scripts/fetch-atx.mjs --offline"
   },
   "dependencies": {
-    "@aegis-initiative/design-system": "^0.6.0",
+    "@aegis-initiative/design-system": "^0.7.0",
     "@astrojs/mdx": "^5.0.2",
     "@pagefind/default-ui": "^1.4.0",
     "astro": "^6.0.8"

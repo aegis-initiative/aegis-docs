@@ -6,13 +6,18 @@
  */
 import SharedSidebar from '@aegis-initiative/design-system/components/Sidebar.astro';
 
-interface NavItem {
+export interface NavItem {
   label: string;
   slug: string;
   items?: NavItem[];
 }
 
-const nav: NavItem[] = [
+// Exported (not just a local const) so [...slug].astro can derive prev/next
+// page order from this single source instead of hand-maintaining a second
+// array that can drift out of sync with the sidebar. See
+// aegis-initiative/aegis-initiative#66 for the ecosystem-wide version of
+// this problem in sibling repos.
+export const nav: NavItem[] = [
   {
     label: 'Getting Started',
     slug: 'getting-started',

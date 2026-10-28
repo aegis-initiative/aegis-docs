@@ -11,6 +11,10 @@ Release notes for the AEGIS Documentation site, generated automatically from Cal
 
 ## 2026
 
+### [October](/releases/26/10/)
+
+- [v26.10.27](/releases/26/10/#release--v261027) — Added sequential prev/next page navigation to documentation
+
 
 ### [August](/releases/26/8/)
 

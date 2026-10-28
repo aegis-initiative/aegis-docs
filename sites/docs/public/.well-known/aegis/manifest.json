@@ -6,7 +6,7 @@
   "type": "documentation",
   "owner": {
     "name": "AEGIS Initiative",
-    "url": "https://finnoybu.com",
+    "url": "https://aegis-initiative.com",
     "org": "AEGIS Initiative",
     "orgUrl": "https://github.com/aegis-initiative"
   },
@@ -34,20 +34,20 @@
   ],
   "relatedSites": [
     {
-      "name": "AEGIS Platform",
-      "url": "https://aegis-platform.net",
+      "name": "AEGIS Initiative",
+      "url": "https://aegis-initiative.com",
       "relationship": "parent",
-      "description": "Primary project site — governance doctrine, architecture, and the AEGIS authority"
+      "description": "Org home and public roadmap"
     },
     {
       "name": "AEGIS Governance",
-      "url": "https://aegis-governance.net",
+      "url": "https://aegis-governance.com",
       "relationship": "sibling",
       "description": "Governance specifications — AGP protocol, threat model, federation rules"
     },
     {
       "name": "AEGIS Constitution",
-      "url": "https://aegis-constitution.org",
+      "url": "https://aegis-constitution.com",
       "relationship": "sibling",
       "description": "Public governance charter — foundational principles and rights"
     },
@@ -64,6 +64,6 @@
       "description": "Source code, issues, and contribution for all AEGIS components"
     }
   ],
-  "generatedAt": "2026-03-25T00:00:00Z",
+  "generatedAt": "2026-10-28T00:00:00Z",
   "generatedBy": "Claude, at Ken Tannenbaum's direction"
 }

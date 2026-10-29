@@ -13,6 +13,7 @@ Release notes for the AEGIS Documentation site, generated automatically from Cal
 
 ### [October](/releases/26/10/)
 
+- [v26.10.28](/releases/26/10/#release--v261028) — Fixed monthly release workflow version tagging and publishing
 - [v26.10.27](/releases/26/10/#release--v261027) — Added sequential prev/next page navigation to documentation
 
 

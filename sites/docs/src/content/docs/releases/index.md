@@ -13,6 +13,7 @@ Release notes for the AEGIS Documentation site, generated automatically from Cal
 
 ### [October](/releases/26/10/)
 
+- [v26.10.30](/releases/26/10/#release--v261030) — Fix dev log year display and auto-link bare URLs
 - [v26.10.29](/releases/26/10/#release--v261029) — Fixed release notes not displaying correctly on the documentation site
 - [v26.10.28](/releases/26/10/#release--v261028) — Fixed monthly release workflow version tagging and publishing
 - [v26.10.27](/releases/26/10/#release--v261027) — Added sequential prev/next page navigation to documentation

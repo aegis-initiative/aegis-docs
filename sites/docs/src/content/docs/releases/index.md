@@ -11,6 +11,10 @@ Release notes for the AEGIS Documentation site, generated automatically from Cal
 
 ## 2026
 
+### [November](/releases/26/11/)
+
+- [v26.11.1](/releases/26/11/#release--v26111) — Fixed contributor attribution and well-known manifest domain entries
+
 ### [October](/releases/26/10/)
 
 - [v26.10.30](/releases/26/10/#release--v261030) — Fix dev log year display and auto-link bare URLs

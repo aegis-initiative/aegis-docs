@@ -16,8 +16,35 @@ const {
 } = Astro.props;
 
 const pageUrl = new URL(Astro.url.pathname, Astro.site).toString();
-const fullTitle = `${title} | AEGIS Documentation`;
+// Keep <title> within ~65 chars for search results: fall back to the shorter
+// "AEGIS Docs" suffix when the full suffix would make the title too long.
+const MAX_TITLE = 65;
+const fullTitle =
+  `${title} | AEGIS Documentation`.length <= MAX_TITLE
+    ? `${title} | AEGIS Documentation`
+    : `${title} | AEGIS Docs`;
 const isHome = Astro.url.pathname === "/" || Astro.url.pathname === "";
+
+// Search-snippet description. When a page description is short, append the
+// context of the documentation section it belongs to, in the meta/OG/Twitter
+// tags only. The frontmatter description is reproduced verbatim.
+const SECTION_CONTEXT: Record<string, string> = {
+  "getting-started": "Part of the AEGIS getting-started guide for governing autonomous AI agents.",
+  architecture: "Part of the AEGIS architecture documentation for operators and integrators.",
+  api: "Part of the AEGIS platform API reference for governance, enforcement, and audit.",
+  sdk: "Part of the AEGIS SDK documentation for TypeScript and Python integrations.",
+  guides: "Part of the AEGIS operational guides for deploying and running AI agent governance.",
+  contributing: "Part of the contributor guide for the open source AEGIS Initiative.",
+  aiam: "Part of the AEGIS documentation on identity and access management for AI agents.",
+  "threat-matrix": "Part of the AEGIS documentation for the ATX-1 threat taxonomy for agentic AI.",
+};
+const SITE_CONTEXT = "From the AEGIS documentation: the operator's guide to governing autonomous AI agents.";
+const SHORT_DESCRIPTION = 120;
+const section = Astro.url.pathname.split("/").filter(Boolean)[0] ?? "";
+const metaDescription =
+  description.length < SHORT_DESCRIPTION
+    ? `${description.replace(/[.\s]+$/, "")}. ${SECTION_CONTEXT[section] ?? SITE_CONTEXT}`
+    : description;
 ---
 
 <!doctype html>
@@ -25,13 +52,13 @@ const isHome = Astro.url.pathname === "/" || Astro.url.pathname === "";
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title} | AEGIS Documentation</title>
-    <meta name="description" content={description} />
+    <title>{fullTitle}</title>
+    <meta name="description" content={metaDescription} />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content={`${title} | AEGIS Documentation`} />
-    <meta property="og:description" content={description} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={metaDescription} />
     <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site).toString()} />
     <meta property="og:image" content={new URL('/OG_image.png', Astro.site).toString()} />
     <meta property="og:image:width" content="1200" />
@@ -40,8 +67,8 @@ const isHome = Astro.url.pathname === "/" || Astro.url.pathname === "";
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={`${title} | AEGIS Documentation`} />
-    <meta name="twitter:description" content={description} />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={metaDescription} />
     <meta name="twitter:image" content={new URL('/OG_image.png', Astro.site).toString()} />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />

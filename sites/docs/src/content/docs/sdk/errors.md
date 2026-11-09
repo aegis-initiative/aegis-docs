@@ -10,7 +10,9 @@ sidebar:
 Every error from the AEGIS governance runtime carries structured
 metadata: a machine-readable error code, a human-readable message,
 the specific cause, and a documentation URL. This page documents
-all 37 error codes.
+all 37 runtime error codes, plus the client-side errors raised by
+the Python and TypeScript SDKs (see
+[SDK Client Errors](#sdk-client-errors-aegis_sdk)).
 
 ## Error Structure
 
@@ -21,7 +23,7 @@ All AEGIS errors include:
 | `error_code` | string | Machine-readable code (`AEGIS-{CAT}-{NNN}`) |
 | `message` | string | Human-readable explanation |
 | `cause` | string or null | The specific field, policy, or rule that triggered the error |
-| `help_url` | string | Link to this documentation |
+| `help_url` | string | Link to this page, at the section for the error's category |
 | `type` | string | Exception class name |
 
 ### Example Error Response
@@ -32,7 +34,7 @@ All AEGIS errors include:
   "error_code": "AEGIS-VAL-002",
   "message": "agent_id is required but was empty or whitespace-only",
   "cause": "request.agent_id",
-  "help_url": "https://aegis-docs.com/errors/aegis_val_002"
+  "help_url": "https://aegis-docs.com/sdk/errors/#validation-errors-aegis-val"
 }
 ```
 
@@ -157,6 +159,74 @@ was made but not recorded.
 |---|---|---|---|
 | AEGIS-AUD-001 | Failed to persist audit record | Database error | Check SQLite database path, permissions, and disk space |
 | AEGIS-AUD-002 | Failed to persist batch records | Database error | Check database connectivity; batch will be rolled back |
+
+---
+
+## SDK Client Errors (AEGIS_SDK)
+
+Raised by the AEGIS SDK clients themselves, not by the governance
+runtime. Both SDKs use the same codes for the same conditions, so a
+code in a Python traceback and a code in a browser console mean the
+same thing. Each error carries `code` and a link back to its section
+below (`help_url` in Python, `helpUrl` in TypeScript). The canonical
+taxonomy is
+[`docs/errors.md`](https://github.com/aegis-initiative/aegis-sdk/blob/main/docs/errors.md)
+in aegis-sdk.
+
+| Code | Class | Raised when |
+|---|---|---|
+| `AEGIS_SDK_GENERAL_001` | `AegisError` | The API returned an error status, or the response could not be parsed |
+| `AEGIS_SDK_CONN_001` | `AegisConnectionError` | The SDK could not reach the AEGIS platform API |
+| `AEGIS_SDK_AUTH_001` | `AegisAuthError` | Authentication failed (HTTP 401/403) |
+| `AEGIS_SDK_DENIED_001` | `AegisDeniedError` | Not raised by the SDK; available for callers who want to raise on a DENY verdict |
+
+### AEGIS_SDK_GENERAL_001
+
+The base error class, also used directly in two situations:
+
+- The governance API responded with a non-2xx status other than
+  401/403 (for example a 500, or a 400 from a malformed proposal).
+  The message includes the HTTP status and the first 500 characters
+  of the response body.
+- The response body could not be parsed: invalid JSON, missing
+  required fields, or an unrecognized `decision` value.
+
+**Resolution:** check the status code and detail in the message. A
+400 almost always means the proposal body is malformed, such as a
+missing `actor` or an empty `resource`; compare the request against
+the `ActionProposal` type.
+
+### AEGIS_SDK_CONN_001
+
+The HTTP request failed before a response arrived: DNS failure,
+refused connection, or a timeout while connecting or reading.
+
+**Resolution:** confirm `base_url` (Python) or `baseUrl` (TypeScript)
+is correct and reachable, and that the platform service is running.
+If it happens intermittently under load, increase the client
+timeout.
+
+### AEGIS_SDK_AUTH_001
+
+The platform responded with HTTP 401 or 403.
+
+**Resolution:** confirm `api_key` (Python) or `apiKey` (TypeScript)
+is set and current. On the public demo the key is a short-lived
+per-visitor sandbox token, so an expired or missing token is the
+most common cause.
+
+### AEGIS_SDK_DENIED_001
+
+Not raised by the SDK. `AegisClient.propose()` returns every verdict
+(`ALLOW`, `DENY`, `ESCALATE`, `REQUIRE_CONFIRMATION`) as a normal
+`GovernanceDecision`, because a denial is a valid outcome of
+evaluation rather than a failed call. `AegisDeniedError` is exported
+for callers who prefer exceptions for control flow:
+
+```python
+if decision.decision is Verdict.DENY:
+    raise AegisDeniedError(decision.reason, decision.policy_ids)
+```
 
 ---
 

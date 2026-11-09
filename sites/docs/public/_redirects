@@ -1,0 +1,17 @@
+# Cloudflare Pages redirects
+# Format: <from>  <to>  <status>
+#
+# Error help links. aegis-core builds help URLs as /errors/<code>
+# (aegis_core/exceptions.py) and earlier SDK releases used
+# /sdk/errors/<name>. Neither path has its own page; the error reference
+# lives at /sdk/errors/. Redirect so links in shipped versions still work.
+/errors/:code          /sdk/errors/   301
+/errors/:code/         /sdk/errors/   301
+/sdk/errors/:slug      /sdk/errors/   301
+/sdk/errors/:slug/     /sdk/errors/   301
+/sdk/python/errors     /sdk/errors/   301
+/sdk/python/errors/    /sdk/errors/   301
+
+# Federation onboarding (referenced by RFC-0016) lives on aegis-federation.com.
+/federation/joining    https://aegis-federation.com/spec/node-architecture/   301
+/federation/joining/   https://aegis-federation.com/spec/node-architecture/   301

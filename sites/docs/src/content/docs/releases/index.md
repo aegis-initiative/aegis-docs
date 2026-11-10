@@ -13,6 +13,7 @@ Release notes for the AEGIS Documentation site, generated automatically from Cal
 
 ### [November](/releases/26/11/)
 
+- [v26.11.9](/releases/26/11/#release--v26119) — Improved SEO, fixed broken links, and added SDK errors to error reference docs
 - [v26.11.2](/releases/26/11/#release--v26112) — Added PR gate build check to catch errors before they reach the docs site
 - [v26.11.1](/releases/26/11/#release--v26111) — Fixed contributor attribution and well-known manifest domain entries
 
